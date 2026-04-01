@@ -16,19 +16,19 @@
 
 <!-- NAVBAR -->
 <nav class="navbar">
-  <div class="logo-text">
-    <span>G</span>rid <span>S</span>tart
-  </div>
 
   <ul class="nav-menu">
     <li>Roadmap</li>
     <li>Edukasi</li>
     <li>Simulasi</li>
-    <li>Pit Stop</li>
     <li>Support</li>
   </ul>
+  
+  <div class="logo-text">
+    <span>G</span>rid <span>S</span>tart
+  </div>
 
-  <a href="#" class="cta-btn">Mulai Belajar</a>
+  <a href="/signon" class="cta-btn">Mulai Belajar</a>
 </nav>
 
 <!-- CONTENT MASUK SINI -->

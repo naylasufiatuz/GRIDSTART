@@ -5,20 +5,20 @@
 <!-- HERO -->
 <section class="hero">
   <div class="hero-content fade-up">
-    <small>SAFETY FIRST · F1 MINDSET</small>
+    <small>Learn · Play · Drive Safe</small>
     <h1>Grid Start</h1>
     <p>
       Edukasi keselamatan berkendara dengan pendekatan motorsport.
       Belajar dari START GRID sampai FINISH LINE.
     </p>
-    <a href="#">Jelajahi Roadmap</a>
+    <a href="#roadmap">Jelajahi Roadmap</a>
   </div>
 </section>
 
 <!-- ROADMAP -->
 <section class="roadmap-section">
 
-    <div class="roadmap-container">
+    <div class="roadmap-container" id="roadmap">
 
         <!-- LEFT VISUAL -->
         <div class="roadmap-visual reveal-left">
