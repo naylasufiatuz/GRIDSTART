@@ -32,7 +32,7 @@
     </div>
 
     <div class="lesson-nav">
-        <a href="/racing-line" class="btn back">Kembali</a>
+        <a href="/racing-line" class="btn back">Kembali ke racing line</a>
         <a href="#" class="btn next">Lanjut ke Brake Zone</a>
     </div>
 
