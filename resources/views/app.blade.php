@@ -28,8 +28,13 @@
     <span>G</span>rid <span>S</span>tart
   </div>
 
+@guest
   <a href="/signon" class="cta-btn">Mulai Belajar</a>
-  <a href="/profile">Profile</a>
+@endguest
+
+@auth
+  <a href="/profile" class="cta-btn">Profile</a>
+@endauth
 </nav>
 
 <!-- CONTENT MASUK SINI -->

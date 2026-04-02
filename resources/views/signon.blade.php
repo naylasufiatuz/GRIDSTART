@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Daftar ke GridStart</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
   <link rel="stylesheet" href="{{ asset('css/signon.css') }}"/>
 </head>
 <body>
@@ -35,13 +36,34 @@
         <input type="email" id="email" name="email" placeholder="Nama@gmail.com" value="{{ old('email') }}"/>
       </div>
       <div class="form-group">
-        <label for="password">Password</label>
-        <input type="password" id="password" name="password" placeholder=".........." minlength="5" required/>
+        <div class="password-input-container">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" placeholder="........"/>
+          <i class="fas fa-eye" id="togglePassword"></i>
+        </div>
       </div>
       <div class="form-group">
-        <label for="konfirmasi">Konfirmasi Password</label>
-        <input type="password" id="konfirmasi" name="password_confirmation" placeholder=".........." minlength="5" required/>
+        <div class="password-input-container">
+          <label for="konfirmasi">Konfirmasi Password</label>
+          <input type="password" id="password_confirmation" name="password_confirmation" placeholder="........"/>
+          <i class="fas fa-eye" id="togglePassword"></i>
+        </div>
       </div>
+
+            <script>
+        document.getElementById('togglePassword').addEventListener('click', function() {
+          var x = document.getElementById("password");
+          if (x.type === "password") {
+            x.type = "text";
+            this.classList.remove('fa-eye');
+            this.classList.add('fa-eye-slash');
+          } else {
+            x.type = "password";
+            this.classList.remove('fa-eye-slash');
+            this.classList.add('fa-eye');
+          }
+        });
+      </script>
 
       <button type="submit" class="btn-submit">Masuk ke Grid</button>
     </form>

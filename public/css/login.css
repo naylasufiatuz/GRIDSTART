@@ -136,6 +136,28 @@
       background: #fff;
     }
 
+    .password-input-container {
+      position: relative;
+    }
+
+    .password-input-container input {
+      padding-right: 40px;
+    }
+
+    .password-input-container i {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      color: #bbb;
+      font-size: 16px;
+    }
+
+    .password-input-container i:hover {
+      color: #888;
+    }
+
     .btn-submit {
       width: 100%;
       padding: 15px;
