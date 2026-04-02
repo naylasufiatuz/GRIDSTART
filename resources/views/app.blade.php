@@ -18,10 +18,10 @@
 <nav class="navbar">
 
   <ul class="nav-menu">
-    <li>Roadmap</li>
-    <li>Edukasi</li>
-    <li>Simulasi</li>
-    <li>Support</li>
+    <li><a href="/roadmap">Roadmap</a></li>
+    <li><a href="/edukasi">Edukasi</a></li>
+    <li><a href="/simulasi">Simulasi</a></li>
+    <li><a href="/support">Support</a></li>
   </ul>
   
   <div class="logo-text">
@@ -29,6 +29,7 @@
   </div>
 
   <a href="/signon" class="cta-btn">Mulai Belajar</a>
+  <a href="/profile">Profile</a>
 </nav>
 
 <!-- CONTENT MASUK SINI -->
