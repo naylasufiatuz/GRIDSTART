@@ -166,3 +166,30 @@
     }
 
     .logout-link a:hover { color: #c0392b; text-decoration: underline; }
+
+    /* ── BACK BUTTON ── */
+    .back-btn {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.85);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(0,0,0,0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #3f3a36;
+      text-decoration: none;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+      transition: all 0.2s ease;
+      z-index: 1000;
+    }
+
+    .back-btn:hover {
+      background: #fff;
+      transform: translateX(-2px);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+    }
