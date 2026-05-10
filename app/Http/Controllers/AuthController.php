@@ -18,9 +18,14 @@ class AuthController extends Controller
 public function signon(Request $request)
 {
     $request->validate([
-        'username' => 'required|string|max:255',
+        // Tambahkan unique:users pada username
+        'username' => 'required|string|max:255|unique:users', 
         'email' => 'required|string|email|max:255|unique:users',
         'password' => 'required|string|min:5|confirmed',
+    ], [
+        // Kustomisasi pesan error agar lebih mudah dipahami user
+        'username.unique' => 'Username ini sudah digunakan oleh user lain, silakan gunakan username yang lain.',
+        'email.unique' => 'Email ini sudah terdaftar sebelumnya.'
     ]);
 
     $user = User::create([
@@ -39,6 +44,7 @@ public function signon(Request $request)
     {
         return view('login');
     }
+
 public function login(Request $request)
 {
     $request->validate([

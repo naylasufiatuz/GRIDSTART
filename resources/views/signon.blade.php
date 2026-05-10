@@ -50,6 +50,18 @@
             <label for="password">Password</label>
             <input type="password" id="password" name="password" placeholder="........"/>
             <i class="fas fa-eye toggle-icon"></i>
+            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+                  @if($errors->any())
+                  <script>
+                      Swal.fire({
+                          icon: 'error',
+                          title: 'Gagal Masuk Grid!',
+                          text: '{{ $errors->first() }}', // Ini akan mengambil pesan dari controller
+                          confirmButtonColor: '#e74c3c', // Bisa kamu sesuaikan dengan warna tombol/tema GridStart
+                          confirmButtonText: 'Coba Lagi'
+                      });
+                  </script>
+                  @endif
           </div>
         </div>
 
