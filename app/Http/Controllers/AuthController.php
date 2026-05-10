@@ -67,4 +67,5 @@ public function login(Request $request)
         Auth::logout();
         return redirect('/')->with('success', 'Logout berhasil!');
     }
+    
 }
