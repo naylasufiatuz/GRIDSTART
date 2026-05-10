@@ -5,11 +5,17 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Login - GridStart</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
     <link rel="stylesheet" href="{{ asset('css/login.css') }}"/>
 </head>
 <body>
+
+<!-- BACK BUTTON -->
+<a href="/" class="back-button">
+  <i class="fas fa-arrow-left"></i>
+  <span>Kembali</span>
+</a>
 
 <?php
 $error   = '';
@@ -85,6 +91,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       <button type="submit" class="btn-submit">Masuk ke Grid</button>
     </form>
 
+    <!-- Divider -->
+    <div class="divider">
+      <span>atau masuk dengan</span>
+    </div>
+
+    <!-- Social Buttons -->
+    <div class="social-buttons">
+      <a href="{{ route('social.redirect', 'github') }}" class="btn-social btn-github">
+        <i class="fab fa-github"></i>
+        <span>GitHub</span>
+      </a>
+      <a href="{{ route('social.redirect', 'google') }}" class="btn-social btn-google">
+        <i class="fab fa-google"></i>
+        <span>Google</span>
+      </a>
+    </div>
+    
     <p class="register-link">Belum punya akun? <a href="/signon">Daftar di sini</a></p>
   </div>
 </div>

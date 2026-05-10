@@ -32,5 +32,10 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function gameScore()
+    {
+        return $this->hasOne(GameScore::class);
+    }
 }
 

@@ -3,29 +3,44 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\SocialAuthController;
+use App\Http\Controllers\LeaderboardController;
+
+Route::get('/leaderboard', [LeaderboardController::class, 'index'])->name('leaderboard');
+
+Route::get('/auth/{provider}/redirect', [SocialAuthController::class, 'redirect'])->name('social.redirect');
+Route::get('/auth/{provider}/callback', [SocialAuthController::class, 'callback'])->name('social.callback');
 
 Route::get('/', function () {
     return view('gridstart');
 });
 
 Route::get('/start-grid', function () {
-    return view('roadmap.lesson-start-grid');
+    return view('lesson-start-grid');
 });
 
 Route::get('/yellow-flag', function () {
-    return view('roadmap.lesson-yellow-flag');
+    return view('lesson-yellow-flag');
 });
 
 Route::get('/racing-line', function () {
-    return view('roadmap.lesson-racing-line');
+    return view('lesson-racing-line');
 });
 
 Route::get('/brake', function () {
-    return view('roadmap.lesson-brake-zone');
+    return view('lesson-brake-zone');
 });
 
 Route::get('/brake-zone', function () {
-    return view('roadmap.lesson-brake-zone');
+    return view('lesson-brake-zone');
+});
+
+Route::get('/pit-stop', function () {
+    return view('lesson-pit-stop');
+});
+
+Route::get('/finish-line', function () {
+    return view('lesson-finish-line');
 });
 
 Route::get('/signon', [AuthController::class, 'showSignon'])->name('signon');
@@ -57,6 +72,11 @@ Route::get('/support', function () {
     return view('support');
 });
 
+Route::get('/contact', function () {
+    return view('contact');
+});
+
 Route::get('/profile', function () {
     return view('profile');
 })->middleware('auth');
+

@@ -4,20 +4,29 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Daftar ke GridStart</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
   <link rel="stylesheet" href="{{ asset('css/signon.css') }}"/>
 </head>
 <body>
 
+<!-- BACK BUTTON -->
+<a href="/" class="back-button">
+  <i class="fas fa-arrow-left"></i>
+  <span>Kembali</span>
+</a>
+
 <!-- LEFT -->
 <div class="left-panel">
-  <div class="form-card">
-    <p class="badge">New Racer</p>
-    <h1>Daftar ke GridStart</h1>
-    <p>Bergabunglah dan pelajari keselamatan berkendara dengan pendekatan motorsport dari Start Grid hingga Finish Line.</p>
+  <div class="left-container">
+    <div class="form-card">
+      <div class="form-header">
+        <p class="badge">New Racer</p>
+        <h1>Daftar ke GridStart</h1>
+        <p class="form-description">Bergabunglah dan pelajari keselamatan berkendara dengan pendekatan motorsport dari Start Grid hingga Finish Line.</p>
+      </div>
 
-    @if(session('error'))
+      @if(session('error'))
   <div class="alert alert-error">{{ session('error') }}</div>
 @endif
 
@@ -25,50 +34,71 @@
   <div class="alert alert-success">{{ session('success') }}</div>
 @endif
 
-    <form method="POST" action="{{ route('signon') }}">
-      @csrf
-      <div class="form-group">
-        <label for="nama">User Name</label>
-        <input type="text" id="nama" name="username" placeholder="Username" value="{{ old('username') }}"/>
-      </div>
-      <div class="form-group">
-        <label for="email">Email</label>
-        <input type="email" id="email" name="email" placeholder="Nama@gmail.com" value="{{ old('email') }}"/>
-      </div>
-      <div class="form-group">
-        <div class="password-input-container">
-          <label for="password">Password</label>
-          <input type="password" id="password" name="password" placeholder="........"/>
-          <i class="fas fa-eye" id="togglePassword"></i>
+      <form method="POST" action="{{ route('signon') }}">
+        @csrf
+        <div class="form-group">
+          <label for="nama">Nama Langkap</label>
+          <input type="text" id="nama" name="username" placeholder="Nama kamu" value="{{ old('username') }}"/>
         </div>
-      </div>
-      <div class="form-group">
-        <div class="password-input-container">
-          <label for="konfirmasi">Konfirmasi Password</label>
-          <input type="password" id="password_confirmation" name="password_confirmation" placeholder="........"/>
-          <i class="fas fa-eye" id="togglePassword"></i>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" placeholder="Nama@gmail.com" value="{{ old('email') }}"/>
         </div>
+        <!-- Password -->
+        <div class="form-group">
+          <div class="password-input-container">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" placeholder="........"/>
+            <i class="fas fa-eye toggle-icon"></i>
+          </div>
+        </div>
+
+        <!-- Konfirmasi Password -->
+        <div class="form-group">
+          <div class="password-input-container">
+            <label for="password_confirmation">Konfirmasi Password</label>
+            <input type="password" id="password_confirmation" name="password_confirmation" placeholder="........"/>
+            <i class="fas fa-eye toggle-icon"></i>
+          </div>
+        </div>
+
+        <script>
+          document.getElementById('togglePassword').addEventListener('click', function() {
+            var x = document.getElementById("password");
+            if (x.type === "password") {
+              x.type = "text";
+              this.classList.remove('fa-eye');
+              this.classList.add('fa-eye-slash');
+            } else {
+              x.type = "password";
+              this.classList.remove('fa-eye-slash');
+              this.classList.add('fa-eye');
+            }
+          });
+        </script>
+
+        <button type="submit" class="btn-submit">Masuk ke Grid</button>
+      </form>
+
+      <!-- Divider -->
+      <div class="divider">
+        <span>atau daftar dengan</span>
       </div>
 
-            <script>
-        document.getElementById('togglePassword').addEventListener('click', function() {
-          var x = document.getElementById("password");
-          if (x.type === "password") {
-            x.type = "text";
-            this.classList.remove('fa-eye');
-            this.classList.add('fa-eye-slash');
-          } else {
-            x.type = "password";
-            this.classList.remove('fa-eye-slash');
-            this.classList.add('fa-eye');
-          }
-        });
-      </script>
+      <!-- Social Buttons -->
+      <div class="social-buttons">
+        <a href="{{ route('social.redirect', 'github') }}" class="btn-social btn-github">
+          <i class="fab fa-github"></i>
+          <span>GitHub</span>
+        </a>
+        <a href="{{ route('social.redirect', 'google') }}" class="btn-social btn-google">
+          <i class="fab fa-google"></i>
+          <span>Google</span>
+        </a>
+      </div>
 
-      <button type="submit" class="btn-submit">Masuk ke Grid</button>
-    </form>
-
-    <p class="login-link">Sudah punya akun? <a href="/login">Login di sini</a></p>
+      <p class="login-link">Sudah punya akun? <a href="/login">Login di sini</a></p>
+    </div>
   </div>
 </div>
 
@@ -81,6 +111,21 @@
     <p>Setiap perjalanan yang aman selalu dimulai dengan persiapan yang benar. Di Start Grid, kamu akan belajar memahami keselamatan berkendara sebelum mulai melaju di jalan.</p>
   </div>
 </div>
+
+<script>
+  document.querySelectorAll('.toggle-icon').forEach(function(icon) {
+    icon.addEventListener('click', function() {
+      var input = this.closest('.password-input-container').querySelector('input');
+      if (input.type === 'password') {
+        input.type = 'text';
+        this.classList.replace('fa-eye', 'fa-eye-slash');
+      } else {
+        input.type = 'password';
+        this.classList.replace('fa-eye-slash', 'fa-eye');
+      }
+    });
+  });
+</script>
 
 </body>
 </html>
