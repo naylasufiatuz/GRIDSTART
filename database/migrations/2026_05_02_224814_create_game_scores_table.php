@@ -6,8 +6,9 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    public function up(): void
-    {
+public function up(): void
+{
+    if (!Schema::hasTable('game_scores')) {
         Schema::create('game_scores', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
@@ -16,6 +17,7 @@ return new class extends Migration
             $table->timestamps();
         });
     }
+}
 
     public function down(): void
     {

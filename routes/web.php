@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\SocialAuthController;
 use App\Http\Controllers\LeaderboardController;
+use App\Http\Controllers\AdminController;
 
 Route::get('/leaderboard', [LeaderboardController::class, 'index'])->name('leaderboard');
 
@@ -80,3 +81,6 @@ Route::get('/profile', function () {
     return view('profile');
 })->middleware('auth');
 
+Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard')->middleware('auth');
+
+Route::post('/admin/logout', [AuthController::class, 'logout'])->name('admin.logout');
