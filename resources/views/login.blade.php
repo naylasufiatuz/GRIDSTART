@@ -28,8 +28,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   if (empty($username) || empty($password)) {
     $error = 'Username dan password wajib diisi.';
   } else {
-    // TODO: cek ke database
-    // Contoh: $user = User::where('username', $username)->first();
     $success = 'Login berhasil! Selamat datang kembali.';
   }
 }

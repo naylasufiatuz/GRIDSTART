@@ -66,7 +66,7 @@ Route::get('/edukasi', function () {
 });
 
 Route::get('/simulasi', function () {
-    return view('simulasi');
+    return view('simulation');
 });
 
 Route::get('/support', function () {
