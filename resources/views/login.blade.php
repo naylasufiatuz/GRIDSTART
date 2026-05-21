@@ -91,15 +91,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <!-- Divider -->
     <div class="divider">
-      <span>atau masuk dengan</span>
+      <span>atau masuk dengan Google</span>
     </div>
 
     <!-- Social Buttons -->
     <div class="social-buttons">
-      <a href="{{ route('social.redirect', 'github') }}" class="btn-social btn-github">
-        <i class="fab fa-github"></i>
-        <span>GitHub</span>
-      </a>
       <a href="{{ route('social.redirect', 'google') }}" class="btn-social btn-google">
         <i class="fab fa-google"></i>
         <span>Google</span>

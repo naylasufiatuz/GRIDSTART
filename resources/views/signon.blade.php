@@ -74,35 +74,17 @@
           </div>
         </div>
 
-        <script>
-          document.getElementById('togglePassword').addEventListener('click', function() {
-            var x = document.getElementById("password");
-            if (x.type === "password") {
-              x.type = "text";
-              this.classList.remove('fa-eye');
-              this.classList.add('fa-eye-slash');
-            } else {
-              x.type = "password";
-              this.classList.remove('fa-eye-slash');
-              this.classList.add('fa-eye');
-            }
-          });
-        </script>
 
         <button type="submit" class="btn-submit">Masuk ke Grid</button>
       </form>
 
       <!-- Divider -->
       <div class="divider">
-        <span>atau daftar dengan</span>
+        <span>atau daftar dengan Google</span>
       </div>
 
       <!-- Social Buttons -->
       <div class="social-buttons">
-        <a href="{{ route('social.redirect', 'github') }}" class="btn-social btn-github">
-          <i class="fab fa-github"></i>
-          <span>GitHub</span>
-        </a>
         <a href="{{ route('social.redirect', 'google') }}" class="btn-social btn-google">
           <i class="fab fa-google"></i>
           <span>Google</span>

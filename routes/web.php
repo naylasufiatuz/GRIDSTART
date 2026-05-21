@@ -57,7 +57,9 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::get('/profile', function () {
     return view('profile');
-})->middleware('auth');
+})->middleware('auth')->name('profile');
+
+Route::put('/profile', [AuthController::class, 'updateProfile'])->name('profile.update')->middleware('auth');
 
 Route::get('/roadmap', function () {
     return view('gridstart');
@@ -79,9 +81,6 @@ Route::get('/contact', function () {
     return view('contact');
 });
 
-Route::get('/profile', function () {
-    return view('profile');
-})->middleware('auth');
 
 Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard')->middleware('auth');
 

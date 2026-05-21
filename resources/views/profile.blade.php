@@ -36,10 +36,14 @@ $user = Auth::user();
     <!-- Avatar -->
     <div class="avatar-wrapper">
       <div class="avatar">
-        <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="50" cy="38" r="20" fill="#1a1a1a"/>
-          <ellipse cx="50" cy="85" rx="30" ry="20" fill="#1a1a1a"/>
-        </svg>
+        @if(Auth::user()->avatar)
+          <img src="{{ Auth::user()->avatar }}" alt="{{ Auth::user()->username }}" class="avatar-image"/>
+        @else
+          <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="50" cy="38" r="20" fill="#1a1a1a"/>
+            <ellipse cx="50" cy="85" rx="30" ry="20" fill="#1a1a1a"/>
+          </svg>
+        @endif
       </div>
     </div>
 
@@ -49,7 +53,11 @@ $user = Auth::user();
     @if(session('success'))
       <div class="alert alert-success">{{ session('success') }}</div>
     @endif
+    @if($errors->any())
+      <div class="alert alert-error">{{ $errors->first() }}</div>
+    @endif
 
+    <form method="POST" action="{{ route('profile.update') }}">
       @csrf
       @method('PUT')
       <div class="form-group">
@@ -57,7 +65,7 @@ $user = Auth::user();
         <input type="text" id="username" name="username" placeholder=".........." value="{{ Auth::user()->username }}"/>
       </div>
       <div class="form-group">
-        <label for="password">Password</label>
+        <label for="password">Password (kosongkan jika tidak ingin diubah)</label>
         <input type="password" id="password" name="password" placeholder=".........."/>
       </div>
 

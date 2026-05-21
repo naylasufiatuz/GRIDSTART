@@ -74,4 +74,28 @@ class AuthController extends Controller
         Auth::logout();
         return redirect('/')->with('success', 'Logout berhasil!');
     }
+
+    // ── UPDATE PROFILE ──
+    public function updateProfile(Request $request)
+    {
+        $user = Auth::user();
+
+        $request->validate([
+            'username' => 'required|string|max:255|unique:users,username,' . $user->id_user . ',id_user',
+            'password' => 'nullable|string|min:5',
+        ], [
+            'username.unique' => 'Username sudah digunakan, coba yang lain.',
+            'password.min'    => 'Password minimal harus 5 karakter.',
+        ]);
+
+        $user->username = $request->username;
+
+        if ($request->filled('password')) {
+            $user->password = Hash::make($request->password);
+        }
+
+        $user->save();
+
+        return back()->with('success', 'Profil berhasil diperbarui!');
+    }
 }
