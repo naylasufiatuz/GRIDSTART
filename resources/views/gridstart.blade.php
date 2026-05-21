@@ -2,7 +2,6 @@
 
 @section('content')
 
-<!-- HERO -->
 <section class="hero">
   <div class="hero-content fade-up">
     <small>Learn · Play · Drive Safe</small>
@@ -15,15 +14,12 @@
   </div>
 </section>
 
-<!-- ROADMAP -->
 <section class="roadmap-section">
 
     <div class="roadmap-container" id="roadmap">
 
-        <!-- LEFT VISUAL -->
         <div class="roadmap-visual reveal-left">
         <div class="video-wrapper">
-            <!-- Main Video -->
             <a href="https://www.youtube.com/watch?v=fVl88Q5DJ2w" target="_blank" class="video-thumb">
             <img src="https://img.youtube.com/vi/fVl88Q5DJ2w/maxresdefault.jpg" alt="Edukasi Berkendara"/>
             <div class="play-btn">
@@ -33,7 +29,6 @@
             </div>
             </a>
 
-            <!-- Button -->
             <button class="btn-other-videos" onclick="document.getElementById('modal-videos').style.display='flex'">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
                 <path d="M15 10l4.553-2.277A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M3 8a2 2 0 012-2h8a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V8z"/>
@@ -43,7 +38,6 @@
         </div>
         </div>
 
-        <!-- MODAL -->
         <div class="modal-videos" id="modal-videos" onclick="if(event.target===this)this.style.display='none'">
         <div class="modal-content">
             <div class="modal-header">
@@ -81,7 +75,6 @@
         </div>
         </div>
 
-        <!-- RIGHT CONTENT -->
         <div class="roadmap-content">
 
             <p class="roadmap-sub reveal-top">LEARNING TRACE • ROADMAP</p>
@@ -113,12 +106,20 @@
                     <p>PIT STOP</p>
                 </a>
 
-                <div class="roadmap-item reveal-item delay-6 blue">
-                    <span class="number">5</span>
-                    <p>SIMULATION</p>
-                </div>
+                @auth
+                    <a href="/simulasi" class="roadmap-item reveal-item delay-6 blue" style="text-decoration: none; cursor: pointer;">
+                        <span class="number">5</span>
+                        <p>SIMULATION</p>
+                    </a>
+                @endauth
 
-                 <a href="/finish-line" class="roadmap-item reveal-item delay-7 finish">
+                @guest
+                    <a href="#" onclick="alert('Kamu harus Login dulu ya untuk bisa main Simulasi!'); window.location.href='/login'; return false;" class="roadmap-item reveal-item delay-6 blue" style="text-decoration: none; cursor: pointer; filter: blur(2.5px); opacity: 0.6; transition: 0.3s;">
+                        <span class="number">5</span>
+                        <p>SIMULATION</p>
+                    </a>
+                @endguest
+                <a href="/finish-line" class="roadmap-item reveal-item delay-7 finish">
                     <span class="number dark"></span>
                     <p>FINISH LINE</p>
                 </a>
@@ -131,7 +132,6 @@
 
 </section>
 
-<!-- TOP DRIVERS PREVIEW -->
 <section class="top-drivers-section">
   <div class="top-drivers-container">
 
@@ -204,7 +204,6 @@
   </div>
 </section>
 
-<!-- CONTACT CTA -->
 <section class="contact-cta-section">
   <div class="contact-cta-container">
     <div class="contact-cta-content">
