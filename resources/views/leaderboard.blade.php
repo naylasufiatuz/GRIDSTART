@@ -71,7 +71,7 @@
             </tr>
           </thead>
           <tbody>
-            @foreach($byPoints as $i => $row)
+            @forelse($byPoints as $i => $row)
             <tr class="{{ $i < 3 ? 'top-three' : '' }}">
               <td>
                 <span class="pos-badge {{ $i === 0 ? 'pos-gold' : ($i === 1 ? 'pos-silver' : ($i === 2 ? 'pos-bronze' : '')) }}">
@@ -90,7 +90,13 @@
                 @if($i === 0) — @else +{{ number_format($byPoints[0]->score - $row->score) }} @endif
               </td>
             </tr>
-            @endforeach
+            @empty
+            <tr>
+              <td colspan="5" style="text-align: center; padding: 40px; color: #a0aec0; font-style: italic;">
+                Belum ada skor tercatat. Jadilah yang pertama dengan bermain di <a href="/simulasi" style="color: #ffaa00; text-decoration: underline; font-weight: bold;">Simulasi</a>!
+              </td>
+            </tr>
+            @endforelse
           </tbody>
         </table>
       </div>
@@ -134,7 +140,7 @@
             </tr>
           </thead>
           <tbody>
-            @foreach($byTime as $i => $row)
+            @forelse($byTime as $i => $row)
             <tr>
               <td>
                 <span class="pos-badge {{ $i === 0 ? 'pos-gold' : ($i === 1 ? 'pos-silver' : ($i === 2 ? 'pos-bronze' : '')) }}">
@@ -150,7 +156,13 @@
               <td><strong>{{ $row->best_time }}</strong></td>
               <td class="muted">{{ number_format($row->score) }}</td>
             </tr>
-            @endforeach
+            @empty
+            <tr>
+              <td colspan="4" style="text-align: center; padding: 40px; color: #a0aec0; font-style: italic;">
+                Belum ada catatan waktu. Jadilah yang pertama dengan bermain di <a href="/simulasi" style="color: #ffaa00; text-decoration: underline; font-weight: bold;">Simulasi</a>!
+              </td>
+            </tr>
+            @endforelse
           </tbody>
         </table>
       </div>

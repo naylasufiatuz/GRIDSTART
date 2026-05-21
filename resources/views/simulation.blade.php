@@ -3,12 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Grid Start - Simulation</title>
     <style>
         body { margin: 0; overflow: hidden; background-color: #87CEEB; font-family: 'Segoe UI', sans-serif; touch-action: none; }
-        canvas { display: block; }
         
-        #game-ui { position: absolute; top: 20px; right: 20px; display: flex; gap: 15px; z-index: 10; }
+        /* Pastikan canvas berada di kasta paling bawah (z-index: 1) */
+        canvas { display: block; position: absolute; top: 0; left: 0; z-index: 1; }
+        
+        /* UI Game: Semua z-index dinaikkan agar tidak tertimpa canvas */
+        #game-ui { position: absolute; top: 20px; right: 20px; display: flex; gap: 15px; z-index: 100; }
         .hud-box { background: rgba(255, 255, 255, 0.9); padding: 8px 15px; border-radius: 8px; font-weight: bold; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
         
         .gas-container { display: flex; align-items: center; gap: 10px; }
@@ -16,20 +20,21 @@
         .gas-bar-fill { height: 100%; background: #2ed573; width: 100%; transition: width 0.2s, background 0.3s; }
         #pause-btn { background: #ff4757; color: white; border: none; padding: 8px 15px; border-radius: 8px; cursor: pointer; font-weight: bold; }
 
-        /* Modal Overlay Universal (Glassmorphism) */
+        /* Modal Overlay Universal - z-index 1000 ke atas! */
         .overlay-bg {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(8px);
-            display: none; justify-content: center; align-items: center; z-index: 50;
+            display: none; justify-content: center; align-items: center; z-index: 1000;
         }
         .modal-box {
             background: rgba(255, 255, 255, 0.95); padding: 30px; border-radius: 15px;
             width: 90%; max-width: 600px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); text-align: center;
+            pointer-events: auto; /* Memastikan modal selalu bisa diklik */
         }
         .modal-box h2 { margin-top: 0; color: #ffaa00; }
         
-        /* Modal Start Grid Khusus (Muncul di Awal) */
-        #start-overlay { display: flex; z-index: 60; } /* Otomatis flex di awal */
+        /* Start Grid Khusus */
+        #start-overlay { display: flex; z-index: 1100; } 
         .btn-action { margin-top: 20px; padding: 12px 30px; background: #2ed573; color: white; border: none; border-radius: 8px; font-size: 18px; font-weight: bold; cursor: pointer; transition: 0.2s; }
         .btn-action:hover { background: #26b360; transform: scale(1.05); }
 
@@ -37,18 +42,13 @@
         #timer-container { display: none; width: 100%; height: 10px; background: #eee; border-radius: 5px; margin-top: 15px; overflow: hidden; }
         #timer-bar { height: 100%; width: 100%; background: #ff4757; transition: width 0.1s linear; }
 
-        /* Kuis */
+        /* Tombol Kuis */
         .quiz-options { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; }
         .quiz-btn { padding: 12px; border: 2px solid #ddd; background: white; border-radius: 8px; font-weight: bold; cursor: pointer; transition: 0.2s; text-align: left; }
         .quiz-btn:hover { border-color: #ffaa00; background: #fff8eb; }
 
-        /* Leaderboard Table */
-        .leaderboard-table { width: 100%; border-collapse: collapse; margin-top: 15px; text-align: left; }
-        .leaderboard-table th, .leaderboard-table td { padding: 10px; border-bottom: 1px solid #eee; }
-        .leaderboard-table th { background: #f1f2f6; }
-
-        /* Kontrol Bawah */
-        #mobile-controls { position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); display: flex; gap: 20px; z-index: 10; user-select: none; }
+        /* Kontrol Bawah Mobile */
+        #mobile-controls { position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); display: flex; gap: 20px; z-index: 100; user-select: none; }
         .control-btn { background: rgba(0,0,0,0.4); color: white; border: 2px solid rgba(255,255,255,0.6); border-radius: 50%; width: 60px; height: 60px; font-size: 24px; font-weight: bold; cursor: pointer; display: flex; justify-content: center; align-items: center; backdrop-filter: blur(4px); }
         #btn-brake { border-radius: 20px; width: 90px; font-size: 16px; background: rgba(255,71,87,0.5); }
         .control-btn:active { background: rgba(255,255,255,0.8); color: black; transform: scale(0.95); }
@@ -89,23 +89,13 @@
     </div>
 
     <div id="finish-overlay" class="overlay-bg">
-        <div class="modal-box" style="max-width: 650px;">
+        <div class="modal-box">
             <h2 style="color: #2ed573;">🏁 FINISH LINE ACCESSED!</h2>
             <p>Selamat! Kamu telah menyelesaikan simulasi berkendara dengan sukses.</p>
             <h3>Total Poin Diperoleh: <span id="final-score" style="color: #ffaa00; font-size: 28px;">0</span></h3>
+            <p id="saving-status" style="color: #666; font-style: italic;">Sedang menyimpan skor ke klasemen...</p>
             
-            <h3 style="text-align: left; margin-top: 20px;">🏆 Papan Peringkat (Leaderboard)</h3>
-            <table class="leaderboard-table">
-                <thead>
-                    <tr><th>Posisi</th><th>Username</th><th>Total Poin</th><th>Terakhir Main</th></tr>
-                </thead>
-                <tbody>
-                    <tr><td><b>1</b></td><td>admin</td><td>120</td><td>Barusan</td></tr>
-                    <tr><td><b>2</b></td><td>max</td><td>95</td><td>2026-04-01</td></tr>
-                    <tr><td><b>3</b></td><td>lando</td><td>80</td><td>2026-04-01</td></tr>
-                </tbody>
-            </table>
-            <button id="close-finish-btn" class="btn-action">Selesai & Keluar</button>
+            <button id="close-finish-btn" class="btn-action" style="display: none;">Lihat Papan Peringkat</button>
         </div>
     </div>
 
@@ -138,19 +128,19 @@
         // Jalanan
         const road = new THREE.GridHelper(40, 40, 0x555555, 0xaaaaaa); road.position.y = 0; scene.add(road);
         
-        // Garis Finish (Visual Aspal Kotak-Kotak)
-        const canvas = document.createElement('canvas'); canvas.width = 128; canvas.height = 128;
-        const ctx = canvas.getContext('2d');
-        ctx.fillStyle = '#ffffff'; ctx.fillRect(0,0,128,128); // Background Putih
-        ctx.fillStyle = '#111111'; ctx.fillRect(0,0,64,64); ctx.fillRect(64,64,64,64); // Kotak Hitam
-        const finishTexture = new THREE.CanvasTexture(canvas);
+        // Garis Finish
+        const finishCanvas = document.createElement('canvas'); finishCanvas.width = 128; finishCanvas.height = 128;
+        const ctx = finishCanvas.getContext('2d');
+        ctx.fillStyle = '#ffffff'; ctx.fillRect(0,0,128,128); 
+        ctx.fillStyle = '#111111'; ctx.fillRect(0,0,64,64); ctx.fillRect(64,64,64,64); 
+        const finishTexture = new THREE.CanvasTexture(finishCanvas);
         finishTexture.wrapS = THREE.RepeatWrapping; finishTexture.wrapT = THREE.RepeatWrapping;
         finishTexture.repeat.set(10, 3);
         
         const finishMat = new THREE.MeshStandardMaterial({ map: finishTexture });
         const finishMesh = new THREE.Mesh(new THREE.PlaneGeometry(16, 4), finishMat);
         finishMesh.rotation.x = -Math.PI / 2;
-        finishMesh.position.set(0, 0.02, -100); // Disembunyikan jauh di belakang dulu
+        finishMesh.position.set(0, 0.02, -100); 
         scene.add(finishMesh);
 
         // Mobil
@@ -161,20 +151,54 @@
 
         // State Game Utama
         let speed = 0.5; 
-        let isPaused = true; // GAME LANGSUNG PAUSE DI AWAL KARENA ADA START GRID
+        let isPaused = true; 
         let distance = 0;
         let score = 0;
         let gas = 100;
         
         let isGameOver = false;
         let hasHitFinishLine = false;
-        let hasDonePitStop = false; // Flag bensin 1 kali habis
+        let hasDonePitStop = false; 
 
-        // Tombol Start Grid
-        document.getElementById('btn-start-game').addEventListener('click', () => {
+        // Variabel Timer
+        let startTime = 0;
+        let bestTimeStr = "";
+
+        // ==========================================
+        // SISTEM TOMBOL ANTI-MACET (KLIK & SENTUH)
+        // ==========================================
+        const btnStart = document.getElementById('btn-start-game');
+        const handleStart = (e) => {
+            if (e && e.type === 'touchstart') e.preventDefault(); // Cegah ghost-click di HP
             document.getElementById('start-overlay').style.display = 'none';
-            isPaused = false; // Mobil mulai jalan!
-        });
+            isPaused = false; 
+            startTime = Date.now();
+        };
+        btnStart.addEventListener('click', handleStart);
+        btnStart.addEventListener('touchstart', handleStart, { passive: false });
+
+        const btnPause = document.getElementById('pause-btn');
+        const handlePause = (e) => {
+            if (e && e.type === 'touchstart') e.preventDefault();
+            const isAnyModalOpen = document.getElementById('quiz-overlay').style.display === 'flex' || 
+                                   document.getElementById('finish-overlay').style.display === 'flex' ||
+                                   document.getElementById('start-overlay').style.display === 'flex';
+            if(!isGameOver && !hasHitFinishLine && !isAnyModalOpen) { 
+                isPaused = !isPaused; 
+                btnPause.innerText = isPaused ? "RESUME" : "PAUSE"; 
+            }
+        };
+        btnPause.addEventListener('click', handlePause);
+        btnPause.addEventListener('touchstart', handlePause, { passive: false });
+
+        const btnCloseFinish = document.getElementById('close-finish-btn');
+        const handleCloseFinish = (e) => {
+            if (e && e.type === 'touchstart') e.preventDefault();
+            window.location.href = '/leaderboard'; 
+        };
+        btnCloseFinish.addEventListener('click', handleCloseFinish);
+        btnCloseFinish.addEventListener('touchstart', handleCloseFinish, { passive: false });
+
 
         const keys = { ArrowLeft: false, ArrowRight: false, ArrowDown: false };
         window.addEventListener('keydown', (e) => { 
@@ -188,7 +212,7 @@
             if(e.key === 'ArrowDown' || e.code === 'ArrowDown') keys.ArrowDown = false;
         });
         
-        const setupButton = (id, keyName) => {
+        const setupDriveBtn = (id, keyName) => {
             const btn = document.getElementById(id);
             btn.addEventListener('touchstart', (e) => { e.preventDefault(); keys[keyName] = true; });
             btn.addEventListener('touchend', (e) => { e.preventDefault(); keys[keyName] = false; });
@@ -196,7 +220,7 @@
             btn.addEventListener('mouseup', () => { keys[keyName] = false; });
             btn.addEventListener('mouseleave', () => { keys[keyName] = false; });
         };
-        setupButton('btn-left', 'ArrowLeft'); setupButton('btn-right', 'ArrowRight'); setupButton('btn-brake', 'ArrowDown');
+        setupDriveBtn('btn-left', 'ArrowLeft'); setupDriveBtn('btn-right', 'ArrowRight'); setupDriveBtn('btn-brake', 'ArrowDown');
 
         // ==========================================
         // DATA KUIS & LOGIKA PIT STOP
@@ -274,7 +298,8 @@
         }
 
         quizButtons.forEach(btn => {
-            btn.addEventListener('click', (e) => {
+            const handleQuizAnswer = (e) => {
+                if (e && e.type === 'touchstart') e.preventDefault();
                 const isCorrect = e.target.getAttribute('data-correct') === 'true';
                 if (currentActiveQuizMode === 'article') {
                     if(isCorrect) { score += 10; alert("Benar! Poin bertambah +10."); } 
@@ -283,15 +308,18 @@
                     quizOverlay.style.display = 'none'; currentActiveQuizMode = ''; isPaused = false;
                 } 
                 else if (currentActiveQuizMode === 'pitstop') { handlePitStopAnswer(isCorrect); }
-            });
+            };
+            btn.addEventListener('click', handleQuizAnswer);
+            btn.addEventListener('touchstart', handleQuizAnswer, { passive: false });
         });
 
-        // Loop Render Utama
+        // ==========================================
+        // LOOP RENDER UTAMA
+        // ==========================================
         function animate() {
             requestAnimationFrame(animate);
 
             if (!isPaused && !isGameOver && !hasHitFinishLine) {
-                // Pergerakan jalan
                 road.position.z += speed;
                 if (road.position.z > 1) road.position.z = 0;
 
@@ -299,51 +327,77 @@
                 let currentDistance = Math.floor(distance);
                 document.getElementById('distance-ui').innerText = currentDistance;
 
-                // ==========================================
-                // LOGIKA BENSIN (HABIS PERSIS DI JARAK 650M)
-                // ==========================================
                 if (!hasDonePitStop) {
-                    // Rumus ini menjamin bensin akan persis menyentuh 0% saat jarak mencapai 650
                     gas = 100 - (distance / 650) * 100;
-                    if(gas <= 0) {
-                        gas = 0; 
-                        startPitStop(); // TRIGGER PIT STOP!
-                    }
+                    if(gas <= 0) { gas = 0; startPitStop(); }
                 } else {
-                    // Setelah lewat pitstop, bensin tetap berkurang tapi sangat pelan, 
-                    // dijamin tidak akan habis sebelum garis finish.
                     gas -= 0.01; 
                 }
                 
-                // Update UI Bensin
                 const gasFill = document.getElementById('gas-fill');
                 gasFill.style.width = gas + "%";
                 if(gas < 30) gasFill.style.background = "#ff4757"; 
                 else gasFill.style.background = "#2ed573"; 
 
-                // TRIGGER KUIS ARTIKEL
                 articleQuizzes.forEach(quiz => {
                     if (currentDistance === quiz.triggerDistance && !quiz.triggered) { showArticleQuiz(quiz); }
                 });
 
-                // ==========================================
-                // LOGIKA FINISH LINE VISUAL
-                // ==========================================
                 if (distance >= 850 && distance < 1000) {
-                    // Hitung sisa jarak dan sinkronkan dengan posisi Z dari visual aspal kotak-kotak
                     let remainingDistance = 1000 - distance;
-                    // Kalikan 5 agar pergerakan visualnya cocok dengan laju kecepatan jalan (speed 0.5 vs speed*0.2)
                     finishMesh.position.z = -(remainingDistance * 5); 
                 }
 
-                if (currentDistance >= 1000) {
+                if (currentDistance >= 1000 && !hasHitFinishLine) {
                     hasHitFinishLine = true;
                     isPaused = true;
+                    
+                    let timeDiff = Date.now() - startTime;
+                    let minutes = Math.floor(timeDiff / 60000);
+                    let seconds = Math.floor((timeDiff % 60000) / 1000);
+                    let ms = Math.floor((timeDiff % 1000) / 10);
+                    bestTimeStr = (minutes < 10 ? "0" : "") + minutes + ":" + 
+                                  (seconds < 10 ? "0" : "") + seconds + "." + 
+                                  (ms < 10 ? "0" : "") + ms;
+
                     document.getElementById('final-score').innerText = score;
                     document.getElementById('finish-overlay').style.display = 'flex';
+
+                    fetch('/save-score', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                        },
+                        body: JSON.stringify({ 
+                            score: score,
+                            best_time: bestTimeStr 
+                        })
+                    })
+                    .then(response => {
+                        if (!response.ok) {
+                            return response.json().then(err => { throw err; });
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        if (data.success) {
+                            console.log('Skor tersimpan!', data);
+                            document.getElementById('saving-status').innerText = "Skor dan waktu (" + bestTimeStr + ") berhasil disimpan!";
+                            document.getElementById('saving-status').style.color = "#2ed573";
+                        } else {
+                            throw new Error(data.message || "Gagal menyimpan skor.");
+                        }
+                        document.getElementById('close-finish-btn').style.display = "inline-block";
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        document.getElementById('saving-status').innerText = error.message || "Gagal menyimpan skor ke server.";
+                        document.getElementById('saving-status').style.color = "#ff4757";
+                        document.getElementById('close-finish-btn').style.display = "inline-block";
+                    });
                 }
 
-                // Kontrol Mobil
                 const turnSpeed = 0.15;
                 if (keys.ArrowLeft && car.position.x > -4) car.position.x -= turnSpeed;
                 if (keys.ArrowRight && car.position.x < 4) car.position.x += turnSpeed;
@@ -356,22 +410,6 @@
 
         window.addEventListener('resize', () => { renderer.setSize(window.innerWidth, window.innerHeight); camera.aspect = window.innerWidth / window.innerHeight; camera.updateProjectionMatrix(); });
         
-        document.getElementById('pause-btn').addEventListener('click', () => { 
-            // Tidak bisa dipause saat kuis atau finish atau start grid
-            const isAnyModalOpen = document.getElementById('quiz-overlay').style.display === 'flex' || 
-                                   document.getElementById('finish-overlay').style.display === 'flex' ||
-                                   document.getElementById('start-overlay').style.display === 'flex';
-            if(!isGameOver && !hasHitFinishLine && !isAnyModalOpen) { 
-                isPaused = !isPaused; 
-                document.getElementById('pause-btn').innerText = isPaused ? "RESUME" : "PAUSE"; 
-            } 
-        });
-
-        document.getElementById('close-finish-btn').addEventListener('click', () => {
-            document.getElementById('finish-overlay').style.display = 'none';
-            window.location.href = '/leaderboard'; 
-        });
-
     </script>
 </body>
 </html>

@@ -9,6 +9,8 @@ use App\Http\Controllers\AdminController;
 
 Route::get('/leaderboard', [LeaderboardController::class, 'index'])->name('leaderboard');
 
+Route::post('/save-score', [LeaderboardController::class, 'saveScore'])->name('save.score');
+
 Route::get('/auth/{provider}/redirect', [SocialAuthController::class, 'redirect'])->name('social.redirect');
 Route::get('/auth/{provider}/callback', [SocialAuthController::class, 'callback'])->name('social.callback');
 
@@ -67,7 +69,7 @@ Route::get('/edukasi', function () {
 
 Route::get('/simulasi', function () {
     return view('simulation');
-});
+})->middleware('auth');
 
 Route::get('/support', function () {
     return view('support');

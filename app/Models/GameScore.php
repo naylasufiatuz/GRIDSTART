@@ -2,14 +2,19 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class GameScore extends Model
 {
-    protected $fillable = ['user_id', 'score', 'best_time'];
+    use HasFactory;
+
+    // WAJIB: Izinkan semua kolom diisi
+    protected $guarded = [];
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        // WAJIB: Sesuaikan dengan struktur databasemu (user_id ke id_user)
+        return $this->belongsTo(User::class, 'user_id', 'id_user');
     }
 }

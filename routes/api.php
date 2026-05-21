@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Api\Admin\GameSettingController;
+use App\Http\Controllers\Api\Admin\QuizController;
 
 // Users
 Route::get('/admin/users',         [AdminController::class, 'apiUsers']);

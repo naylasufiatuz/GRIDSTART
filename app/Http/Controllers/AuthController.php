@@ -34,7 +34,7 @@ class AuthController extends Controller
 
         Auth::login($user);
 
-        return redirect()->route('app')->with('success', 'Akun berhasil dibuat!');
+        return redirect()->intended(route('app'))->with('success', 'Akun berhasil dibuat!');
     }
 
     // ── LOGIN ──
@@ -62,7 +62,7 @@ class AuthController extends Controller
         // Login user biasa
         if (Auth::attempt(['username' => $request->username, 'password' => $request->password])) {
             $request->session()->regenerate();
-            return redirect()->route('app')->with('success', 'Login berhasil!');
+            return redirect()->intended(route('app'))->with('success', 'Login berhasil!');
         }
 
         return back()->withErrors(['username' => 'Username atau password salah.']);
