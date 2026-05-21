@@ -18,6 +18,9 @@ class User extends Authenticatable
         'username',
         'email',
         'password',
+        'provider',
+        'provider_id',
+        'avatar',
     ];
 
     protected $hidden = [
@@ -31,6 +34,11 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function gameScore()
+    {
+        return $this->hasOne(GameScore::class);
     }
 }
 

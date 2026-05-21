@@ -3,29 +3,47 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\SocialAuthController;
+use App\Http\Controllers\LeaderboardController;
+use App\Http\Controllers\AdminController;
+
+Route::get('/leaderboard', [LeaderboardController::class, 'index'])->name('leaderboard');
+
+Route::post('/save-score', [LeaderboardController::class, 'saveScore'])->name('save.score');
+
+Route::get('/auth/{provider}/redirect', [SocialAuthController::class, 'redirect'])->name('social.redirect');
+Route::get('/auth/{provider}/callback', [SocialAuthController::class, 'callback'])->name('social.callback');
 
 Route::get('/', function () {
     return view('gridstart');
 });
 
 Route::get('/start-grid', function () {
-    return view('roadmap.lesson-start-grid');
+    return view('lesson-start-grid');
 });
 
 Route::get('/yellow-flag', function () {
-    return view('roadmap.lesson-yellow-flag');
+    return view('lesson-yellow-flag');
 });
 
 Route::get('/racing-line', function () {
-    return view('roadmap.lesson-racing-line');
+    return view('lesson-racing-line');
 });
 
 Route::get('/brake', function () {
-    return view('roadmap.lesson-brake-zone');
+    return view('lesson-brake-zone');
 });
 
 Route::get('/brake-zone', function () {
-    return view('roadmap.lesson-brake-zone');
+    return view('lesson-brake-zone');
+});
+
+Route::get('/pit-stop', function () {
+    return view('lesson-pit-stop');
+});
+
+Route::get('/finish-line', function () {
+    return view('lesson-finish-line');
 });
 
 Route::get('/signon', [AuthController::class, 'showSignon'])->name('signon');
@@ -39,7 +57,9 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::get('/profile', function () {
     return view('profile');
-})->middleware('auth');
+})->middleware('auth')->name('profile');
+
+Route::put('/profile', [AuthController::class, 'updateProfile'])->name('profile.update')->middleware('auth');
 
 Route::get('/roadmap', function () {
     return view('gridstart');
@@ -50,13 +70,18 @@ Route::get('/edukasi', function () {
 });
 
 Route::get('/simulasi', function () {
-    return view('simulasi');
-});
+    return view('simulation');
+})->middleware('auth');
 
 Route::get('/support', function () {
     return view('support');
 });
 
-Route::get('/profile', function () {
-    return view('profile');
-})->middleware('auth');
+Route::get('/contact', function () {
+    return view('contact');
+});
+
+
+Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard')->middleware('auth');
+
+Route::post('/admin/logout', [AuthController::class, 'logout'])->name('admin.logout');

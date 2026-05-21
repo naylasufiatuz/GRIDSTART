@@ -16,29 +16,32 @@
 
 <!-- NAVBAR -->
 <nav class="navbar">
-
   <ul class="nav-menu">
-    <li><a href="/roadmap">Roadmap</a></li>
-    <li><a href="/edukasi">Edukasi</a></li>
+    <li><a href="/">Roadmap</a></li>
     <li><a href="/simulasi">Simulasi</a></li>
-    <li><a href="/support">Support</a></li>
+    <li><a href="/leaderboard">Leaderboard</a></li>
+    <li><a href="/contact">Contact</a></li>
   </ul>
-  
-  <div class="logo-text">
-    <span>G</span>rid <span>S</span>tart
-  </div>
 
-@guest
-  <a href="/signon" class="cta-btn">Mulai Belajar</a>
-@endguest
+  <a href="/" class="logo-center">
+    <img src="{{ asset('images/GridStart_logo.png') }}" alt="GridStart" class="logo-img"/>
+    <span class="logo-name">GRID<em>START</em></span>
+  </a>
 
-@auth
-  <a href="/profile" class="cta-btn">Profile</a>
-@endauth
+  @guest
+    <a href="/login" class="cta-btn">Mulai Belajar</a>
+  @endguest
+  @auth
+    <a href="/profile" class="cta-btn">Profile</a>
+  @endauth
 </nav>
 
 <!-- CONTENT MASUK SINI -->
 @yield('content')
+
+<!-- FOOTER -->
+@include('components.footer')
+
 <script>
   const reveals = document.querySelectorAll(
     ".reveal-left, .reveal-top, .reveal-item"
