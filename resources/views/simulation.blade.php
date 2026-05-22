@@ -18,39 +18,38 @@
 
         body { 
             margin: 0; overflow: hidden; 
-            background-color: #b5eaea; /* Pastel Sky Fallback */
+            background-color: #b5eaea; 
             font-family: 'Poppins', sans-serif; 
             touch-action: none; 
         }
         canvas { display: block; position: absolute; top: 0; left: 0; z-index: 1; }
         
         /* =========================================
-           UI HUD (Kiri Atas ala Referensi) 
+           UI HUD (Kiri Atas) 
            ========================================= */
         #hud-panel {
             position: absolute; top: 30px; left: 30px; z-index: 100;
             background: var(--glass-bg);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
             border: 1px solid var(--glass-border);
-            border-radius: 24px;
-            padding: 20px 25px;
+            border-radius: 24px; padding: 20px 25px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-            color: var(--text-dark);
-            min-width: 150px;
+            color: var(--text-dark); min-width: 150px;
         }
         .hud-item {
             font-size: 16px; font-weight: 600; margin-bottom: 8px;
             display: flex; justify-content: space-between; align-items: center;
         }
         .hud-item:last-child { margin-bottom: 0; }
-        .hud-value { font-weight: 800; color: #fff; text-shadow: 1px 1px 2px rgba(0,0,0,0.2); }
+        
+        /* Warna tulisan Jarak & Poin diubah jadi gelap agar kontras */
+        .hud-value { font-weight: 800; color: var(--text-dark); font-size: 18px; }
         
         /* Bar Bensin Modern */
         .gas-bar-container { width: 100%; height: 12px; background: rgba(0,0,0,0.1); border-radius: 10px; overflow: hidden; margin-top: 5px; box-shadow: inset 0 2px 4px rgba(0,0,0,0.1); }
         .gas-bar-fill { height: 100%; width: 100%; background: linear-gradient(90deg, #55efc4, #00b894); transition: width 0.3s, background 0.3s; }
 
-        /* Tombol Pause & Sound (Kanan Bawah ala Referensi) */
+        /* Tombol Pause (Kanan Bawah - Speaker Dihapus) */
         #action-panel { position: absolute; bottom: 30px; right: 30px; z-index: 100; display: flex; flex-direction: column; gap: 15px; }
         .circle-btn {
             width: 60px; height: 60px; border-radius: 50%;
@@ -77,14 +76,32 @@
             box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: 0.1s;
         }
         .d-btn:active { background: rgba(255, 255, 255, 0.8); transform: scale(0.92); }
-        /* Posisi Grid */
         #btn-up { grid-column: 2; grid-row: 1; background: rgba(120, 224, 143, 0.6); color: white; } 
         #btn-left { grid-column: 1; grid-row: 2; }
         #btn-brake { grid-column: 2; grid-row: 2; background: rgba(255, 118, 117, 0.6); color: white; font-size: 16px; font-weight: bold; }
         #btn-right { grid-column: 3; grid-row: 2; }
 
         /* =========================================
-           MODAL & OVERLAYS (Sleek & Clean)
+           CUSTOM TOAST NOTIFICATION (Pengganti Alert)
+           ========================================= */
+        #toast-container {
+            position: absolute; top: 20px; left: 50%; transform: translateX(-50%);
+            z-index: 2000; display: flex; flex-direction: column; gap: 10px; pointer-events: none;
+        }
+        .toast {
+            background: rgba(45, 52, 54, 0.95); color: white; padding: 12px 25px;
+            border-radius: 50px; font-weight: 600; font-size: 14px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            opacity: 0; transform: translateY(-20px);
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            text-align: center; backdrop-filter: blur(5px); border: 1px solid rgba(255,255,255,0.1);
+        }
+        .toast.show { opacity: 1; transform: translateY(0); }
+        .toast.success { border-bottom: 3px solid var(--accent-green); }
+        .toast.error { border-bottom: 3px solid var(--accent-red); }
+
+        /* =========================================
+           MODAL & OVERLAYS
            ========================================= */
         .overlay-bg {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
@@ -94,8 +111,7 @@
         .modal-card {
             background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(255,255,255,0.85));
             border: 1px solid white; border-radius: 30px; padding: 40px;
-            width: 85%; max-width: 550px; box-shadow: 0 20px 50px rgba(0,0,0,0.2);
-            text-align: center;
+            width: 85%; max-width: 550px; box-shadow: 0 20px 50px rgba(0,0,0,0.2); text-align: center;
         }
         .modal-card h2 { margin: 0 0 15px 0; font-size: 28px; color: var(--text-dark); letter-spacing: -0.5px; }
         .modal-card p { font-size: 16px; color: #636e72; line-height: 1.6; margin-bottom: 25px; }
@@ -107,7 +123,6 @@
         }
         .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 15px 25px rgba(0, 184, 148, 0.4); }
 
-        /* Kuis Options */
         .quiz-opts { display: flex; flex-direction: column; gap: 12px; }
         .quiz-btn {
             background: white; border: 2px solid #dfe6e9; border-radius: 16px;
@@ -125,6 +140,8 @@
 </head>
 <body>
 
+    <div id="toast-container"></div>
+
     <div id="hud-panel">
         <div class="hud-item">Jarak <span class="hud-value"><span id="distance-ui">0</span>m</span></div>
         <div class="hud-item">Poin <span class="hud-value" id="score-ui">0</span></div>
@@ -134,7 +151,6 @@
 
     <div id="action-panel">
         <div class="circle-btn" id="pause-btn">⏸</div>
-        <div class="circle-btn">🔊</div> 
     </div>
 
     <div id="d-pad">
@@ -172,7 +188,7 @@
             <div style="font-size: 18px; color: #636e72; margin: 20px 0;">Total Poin</div>
             <div style="font-size: 48px; font-weight: 800; color: var(--accent-yellow); margin-bottom: 20px;" id="final-score">0</div>
             <p id="saving-status" style="font-style: italic; font-size: 14px;">Menyimpan skor ke server...</p>
-            <button id="close-finish-btn" class="btn-primary" style="display: none; width: 100%;">Lihat Papan Peringkat</button>
+            <button id="close-finish-btn" class="btn-primary" style="display: none; width: 100%; margin-top:15px;">Lihat Papan Peringkat</button>
         </div>
     </div>
 
@@ -182,6 +198,26 @@
 
     <script type="module">
         import * as THREE from 'three';
+
+        // ==========================================
+        // 0. FUNGSI CUSTOM TOAST (Pengganti Alert)
+        // ==========================================
+        function showToast(message, type = 'info') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.innerHTML = message;
+            container.appendChild(toast);
+            
+            // Animasi masuk
+            setTimeout(() => { toast.classList.add('show'); }, 10);
+            
+            // Animasi hilang & hapus elemen setelah 3 detik
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
 
         // ==========================================
         // 1. SETUP SCENE, CAMERA, RENDERER
@@ -201,7 +237,7 @@
         document.body.appendChild(renderer.domElement);
 
         // ==========================================
-        // 2. LIGHTING (WARM PASTEL)
+        // 2. LIGHTING 
         // ==========================================
         const hemiLight = new THREE.HemisphereLight(0xffffff, 0xc8e6c9, 0.6);
         scene.add(hemiLight);
@@ -209,54 +245,74 @@
         const dirLight = new THREE.DirectionalLight(0xffeaa7, 0.8);
         dirLight.position.set(50, 100, 50);
         dirLight.castShadow = true;
-        dirLight.shadow.camera.top = 100;
-        dirLight.shadow.camera.bottom = -100;
-        dirLight.shadow.camera.left = -100;
-        dirLight.shadow.camera.right = 100;
-        dirLight.shadow.mapSize.width = 2048;
-        dirLight.shadow.mapSize.height = 2048;
+        dirLight.shadow.camera.top = 100; dirLight.shadow.camera.bottom = -100;
+        dirLight.shadow.camera.left = -100; dirLight.shadow.camera.right = 100;
+        dirLight.shadow.mapSize.width = 2048; dirLight.shadow.mapSize.height = 2048;
         scene.add(dirLight);
 
         // ==========================================
-        // 3. LOW-POLY PROCEDURAL GENERATOR
+        // 3. GENERATOR MOBIL REALISTIS & LINGKUNGAN
         // ==========================================
         const matGround = new THREE.MeshStandardMaterial({ color: 0xe1f2e3, flatShading: true }); 
         const matRoad = new THREE.MeshStandardMaterial({ color: 0x95a5a6, roughness: 0.9 });
         const matLine = new THREE.MeshBasicMaterial({ color: 0xffffff });
         const matWood = new THREE.MeshStandardMaterial({ color: 0x8b5a2b, flatShading: true });
         const matLeaves = new THREE.MeshStandardMaterial({ color: 0x55efc4, flatShading: true });
-        const matCarBody = new THREE.MeshStandardMaterial({ color: 0xff7675, flatShading: true }); 
-        const matDark = new THREE.MeshStandardMaterial({ color: 0x2d3436, flatShading: true });
-        const matGlass = new THREE.MeshStandardMaterial({ color: 0x74b9ff, roughness: 0.1 });
+        
+        // Material Mobil
+        const matGlass = new THREE.MeshStandardMaterial({ color: 0x222222, roughness: 0.1, metalness: 0.8 });
+        const matDark = new THREE.MeshStandardMaterial({ color: 0x111111, roughness: 0.9 });
+        const matHeadlight = new THREE.MeshBasicMaterial({ color: 0xffffff });
+        const matTaillight = new THREE.MeshBasicMaterial({ color: 0xff4757 });
 
         const ground = new THREE.Mesh(new THREE.PlaneGeometry(500, 500), matGround);
-        ground.rotation.x = -Math.PI / 2;
-        ground.receiveShadow = true;
-        scene.add(ground);
+        ground.rotation.x = -Math.PI / 2; ground.receiveShadow = true; scene.add(ground);
 
         const road = new THREE.Mesh(new THREE.PlaneGeometry(12, 500), matRoad);
-        road.rotation.x = -Math.PI / 2;
-        road.position.y = 0.01;
-        road.receiveShadow = true;
-        scene.add(road);
+        road.rotation.x = -Math.PI / 2; road.position.y = 0.01; road.receiveShadow = true; scene.add(road);
 
-        function createLowPolyCar(colorMaterial) {
-            const carGroup = new THREE.Group();
-            const bottom = new THREE.Mesh(new THREE.BoxGeometry(2, 0.6, 4), colorMaterial);
-            bottom.position.y = 0.5; bottom.castShadow = true;
-            carGroup.add(bottom);
-            const top = new THREE.Mesh(new THREE.BoxGeometry(1.5, 0.5, 2), matGlass);
-            top.position.set(0, 1.05, -0.2); top.castShadow = true;
-            carGroup.add(top);
-            const wheelGeo = new THREE.CylinderGeometry(0.35, 0.35, 0.3, 12); wheelGeo.rotateZ(Math.PI / 2);
-            [[-1.1, 0.35, 1.2], [1.1, 0.35, 1.2], [-1.1, 0.35, -1.2], [1.1, 0.35, -1.2]].forEach(pos => {
+        // Desain Mobil Baru (Sleek Sports Car)
+        function createRealisticCar(primaryColorHex) {
+            const car = new THREE.Group();
+            const matBody = new THREE.MeshStandardMaterial({ color: primaryColorHex, roughness: 0.4, metalness: 0.5, flatShading:true });
+
+            // Chassis Bawah (Lebih panjang & ceper)
+            const chassis = new THREE.Mesh(new THREE.BoxGeometry(2.2, 0.4, 4.8), matBody);
+            chassis.position.y = 0.4; chassis.castShadow = true;
+            car.add(chassis);
+
+            // Kabin (Melengkung aerodinamis)
+            const cabin = new THREE.Mesh(new THREE.BoxGeometry(1.6, 0.5, 2.2), matGlass);
+            cabin.position.set(0, 0.85, -0.2); cabin.castShadow = true;
+            car.add(cabin);
+
+            // Spoiler Belakang (Sayap mobil balap)
+            const pillarL = new THREE.Mesh(new THREE.BoxGeometry(0.1, 0.3, 0.2), matDark);
+            pillarL.position.set(-0.8, 0.7, 2.2);
+            const pillarR = new THREE.Mesh(new THREE.BoxGeometry(0.1, 0.3, 0.2), matDark);
+            pillarR.position.set(0.8, 0.7, 2.2);
+            const spoilerWing = new THREE.Mesh(new THREE.BoxGeometry(2.0, 0.1, 0.4), matBody);
+            spoilerWing.position.set(0, 0.9, 2.3); spoilerWing.castShadow = true;
+            car.add(pillarL, pillarR, spoilerWing);
+
+            // Lampu Depan & Belakang
+            const hlL = new THREE.Mesh(new THREE.BoxGeometry(0.4, 0.1, 0.1), matHeadlight); hlL.position.set(-0.7, 0.5, -2.4);
+            const hlR = new THREE.Mesh(new THREE.BoxGeometry(0.4, 0.1, 0.1), matHeadlight); hlR.position.set(0.7, 0.5, -2.4);
+            const tlL = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.1, 0.1), matTaillight); tlL.position.set(-0.7, 0.5, 2.4);
+            const tlR = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.1, 0.1), matTaillight); tlR.position.set(0.7, 0.5, 2.4);
+            car.add(hlL, hlR, tlL, tlR);
+
+            // 4 Ban Lebar
+            const wheelGeo = new THREE.CylinderGeometry(0.4, 0.4, 0.4, 16); wheelGeo.rotateZ(Math.PI / 2);
+            [[-1.1, 0.4, 1.4], [1.1, 0.4, 1.4], [-1.1, 0.4, -1.4], [1.1, 0.4, -1.4]].forEach(pos => {
                 const wheel = new THREE.Mesh(wheelGeo, matDark);
-                wheel.position.set(...pos); wheel.castShadow = true; carGroup.add(wheel);
+                wheel.position.set(...pos); wheel.castShadow = true; car.add(wheel);
             });
-            return carGroup;
+            return car;
         }
 
-        const playerCar = createLowPolyCar(matCarBody);
+        // Spawn Mobil Player (Merah)
+        const playerCar = createRealisticCar(0xff4757);
         scene.add(playerCar);
 
         function createLowPolyTree() {
@@ -280,6 +336,7 @@
         }
 
         let worldObjects = [];
+        let fireParticles = []; // Array untuk efek api kecelakaan
 
         function spawnEnvironment() {
             const line = new THREE.Mesh(new THREE.PlaneGeometry(0.2, 2), matLine);
@@ -292,26 +349,52 @@
         }
 
         // ==========================================
-        // 4. SKENARIO OBJEK KHUSUS (ACCIDENT, TRAFFIC, DLL)
+        // 4. SKENARIO OBJEK KHUSUS (DRAMATIS & REALISTIS)
         // ==========================================
         function createAccident() {
             const group = new THREE.Group();
-            const car1 = createLowPolyCar(new THREE.MeshStandardMaterial({color:0x74b9ff, flatShading:true}));
-            car1.rotation.y = Math.PI/4; car1.position.set(-2, 0, 0);
-            const car2 = createLowPolyCar(new THREE.MeshStandardMaterial({color:0x2d3436, flatShading:true}));
-            car2.rotation.y = -Math.PI/3; car2.position.set(-3, 0, 2);
-            group.add(car1); group.add(car2);
-            group.position.set(-2, 0, -100); 
+            
+            // Mobil 1: Terguling / Terbalik
+            const car1 = createRealisticCar(0x0984e3); // Biru
+            car1.rotation.z = Math.PI; // Terbalik 180 derajat
+            car1.rotation.y = Math.PI/6;
+            car1.position.set(-2, 0.8, 0); 
+            
+            // Mobil 2: Menabrak dari samping
+            const car2 = createRealisticCar(0x2d3436); // Hitam
+            car2.rotation.y = -Math.PI/4;
+            car2.position.set(-3.5, 0, 3);
+            
+            group.add(car1, car2);
+
+            // PARTICLE SYSTEM API & ASAP (FIRE EFFECT)
+            const fireGeo = new THREE.TetrahedronGeometry(0.5);
+            const fireMat = new THREE.MeshBasicMaterial({ color: 0xff7675, transparent: true, opacity: 0.8 });
+            for(let i=0; i<40; i++) {
+                const p = new THREE.Mesh(fireGeo, fireMat.clone());
+                p.position.set(-2.5 + (Math.random()-0.5)*2, Math.random()*2, 1.5 + (Math.random()-0.5)*2);
+                p.userData = { life: Math.random(), speed: 0.03 + Math.random()*0.05, scale: Math.random()*0.5 + 0.5 };
+                group.add(p); fireParticles.push(p); 
+            }
+
+            // Cahaya Api Dramatis
+            const fLight = new THREE.PointLight(0xff7675, 2, 15);
+            fLight.position.set(-2.5, 1, 1.5);
+            group.add(fLight);
+
+            group.position.set(-1, 0, -100); 
             scene.add(group); worldObjects.push({mesh: group, isEvent: true});
         }
 
         function createTraffic() {
             const group = new THREE.Group();
-            const c1 = createLowPolyCar(new THREE.MeshStandardMaterial({color:0xfdcb6e, flatShading:true}));
-            c1.position.set(3, 0, 0);
-            const c2 = createLowPolyCar(new THREE.MeshStandardMaterial({color:0x00cec9, flatShading:true}));
-            c2.position.set(3, 0, -6);
-            group.add(c1); group.add(c2);
+            // Deretan 3 mobil macet rapat di lajur kanan
+            const colors = [0xe84393, 0x00b894, 0xfdcb6e]; // Pink, Hijau, Kuning
+            for(let i=0; i<3; i++) {
+                const c = createRealisticCar(colors[i]);
+                c.position.set(3, 0, i * -5.5); // Jarak antar mobil sangat dekat (5.5 unit)
+                group.add(c);
+            }
             group.position.set(0, 0, -100);
             scene.add(group); worldObjects.push({mesh: group, isEvent: true});
         }
@@ -331,7 +414,7 @@
 
         function createPotholes() {
             const group = new THREE.Group();
-            const holeMat = new THREE.MeshBasicMaterial({color: 0x2d3436});
+            const holeMat = new THREE.MeshBasicMaterial({color: 0x1a1a1a});
             const h1 = new THREE.Mesh(new THREE.CircleGeometry(1.2, 8), holeMat); h1.rotation.x = -Math.PI/2; h1.position.set(3, 0.02, 0);
             const h2 = new THREE.Mesh(new THREE.CircleGeometry(0.8, 6), holeMat); h2.rotation.x = -Math.PI/2; h2.position.set(2, 0.02, 3);
             const h3 = new THREE.Mesh(new THREE.CircleGeometry(1.5, 7), holeMat); h3.rotation.x = -Math.PI/2; h3.position.set(4, 0.02, -2);
@@ -366,7 +449,6 @@
         window.addEventListener('keydown', (e) => mapKey(e, true));
         window.addEventListener('keyup', (e) => mapKey(e, false));
 
-        // Setup D-Pad Buttons (Tetap menggunakan touchstart khusus untuk kontrol mobil agar responsif)
         const setupDriveBtn = (id, keyName) => {
             const btn = document.getElementById(id);
             btn.addEventListener('touchstart', (e) => { e.preventDefault(); keys[keyName] = true; }, {passive: false});
@@ -377,7 +459,6 @@
         };
         setupDriveBtn('btn-left', 'ArrowLeft'); setupDriveBtn('btn-right', 'ArrowRight'); setupDriveBtn('btn-brake', 'ArrowDown'); setupDriveBtn('btn-up', 'ArrowUp');
 
-        // UI Buttons FIX: Menggunakan onclick untuk mencegah Double Firing Bug di HP
         document.getElementById('btn-start-game').onclick = () => {
             document.getElementById('start-overlay').style.display = 'none';
             isPaused = false; startTime = Date.now();
@@ -423,9 +504,9 @@
         }
 
         function triggerPitStop() {
-            if (hasDonePitStop) return; // Mencegah kepanggil dua kali
+            if (hasDonePitStop) return; 
             currentQuizMode = 'pitstop'; isPaused = true; hasDonePitStop = true; pitIndex = 0;
-            playerCar.position.x = -8; // Mobil pindah ke atap Pit Stop
+            playerCar.position.x = -8; 
             qOverlay.style.display = 'flex'; loadPitQ();
         }
 
@@ -444,7 +525,12 @@
 
         function handlePitAnswer(isCorrect) {
             clearInterval(pitTimer);
-            if(isCorrect) { gas += 34; if(gas>100) gas=100; alert("Benar! +Bensin."); } else { alert("Salah / Waktu Habis!"); }
+            if(isCorrect) { 
+                gas += 34; if(gas>100) gas=100; 
+                showToast("✅ Benar! +1 Bar Bensin.", "success"); 
+            } else { 
+                showToast("❌ Salah / Waktu Habis!", "error"); 
+            }
             
             pitIndex++;
             if(pitIndex < pitStopQs.length) {
@@ -452,21 +538,23 @@
             } else {
                 qOverlay.style.display = 'none'; currentQuizMode = '';
                 if(gas <= 0) { 
-                    isGameOver = true; alert("GAME OVER! Bensin Habis."); 
+                    isGameOver = true; showToast("GAME OVER! Bensin Habis.", "error"); 
                 } else { 
-                    alert("Pit Stop Selesai! Melanjutkan perjalanan."); 
-                    playerCar.position.x = 0; // Kembalikan mobil ke jalan utama
-                    isPaused = false; 
+                    showToast("✅ Pit Stop Selesai! Melanjutkan perjalanan.", "success"); 
+                    playerCar.position.x = 0; isPaused = false; 
                 } 
             }
         }
 
-        // UI BUTTON FIX: Menggunakan onclick langsung untuk mematikan double-firing event
         qBtns.forEach(btn => {
             btn.onclick = (e) => {
                 const isCorrect = e.target.getAttribute('data-correct') === 'true';
                 if (currentQuizMode === 'article') {
-                    if(isCorrect) { score += 10; alert("Benar! +10 Poin."); } else { score -= 10; alert("Salah! -10 Poin."); }
+                    if(isCorrect) { 
+                        score += 10; showToast("✅ Jawaban Tepat! +10 Poin.", "success"); 
+                    } else { 
+                        score -= 10; showToast("❌ Jawaban Salah! -10 Poin.", "error"); 
+                    }
                     document.getElementById('score-ui').innerText = score;
                     qOverlay.style.display = 'none'; currentQuizMode = ''; isPaused = false;
                 } else if (currentQuizMode === 'pitstop') {
@@ -482,31 +570,50 @@
             requestAnimationFrame(animate);
 
             if (!isPaused && !isGameOver && !hasHitFinishLine) {
-                // Update Jarak
                 let moveSpeed = keys.ArrowUp ? speed * 1.5 : (keys.ArrowDown ? speed * 0.4 : speed);
                 distance += (moveSpeed * 0.2); 
                 let currentDist = Math.floor(distance);
                 document.getElementById('distance-ui').innerText = currentDist;
 
-                // Spawner Lingkungan
                 envSpawnTimer++;
                 if(envSpawnTimer > 30 / moveSpeed) { spawnEnvironment(); envSpawnTimer = 0; }
 
-                // Move World Objects
                 for (let i = worldObjects.length - 1; i >= 0; i--) {
                     let obj = worldObjects[i];
                     let mesh = obj.mesh || obj; 
                     mesh.position.z += moveSpeed;
                     
-                    // TRIGGER EVENT SAAT BANGUNAN MENCAPAI KAMERA
                     if(obj.isEvent && Math.abs(mesh.position.z) < 1) {
                         if(obj.isPitstop) triggerPitStop();
-                        obj.isEvent = false; // Matikan trigger agar tidak loop
+                        obj.isEvent = false; 
                     }
 
                     if (mesh.position.z > 20) {
                         scene.remove(mesh); worldObjects.splice(i, 1);
                     }
+                }
+
+                // ANIMASI EFEK API KECELAKAAN (Bergerak & Berubah Warna)
+                if (fireParticles.length > 0) {
+                    fireParticles.forEach(p => {
+                        // Cek kalau partikel masih berada di dalam scene (parent ada)
+                        if (p.parent) {
+                            p.position.y += p.userData.speed;
+                            p.userData.life -= 0.02;
+                            p.scale.setScalar(p.userData.life * p.userData.scale);
+                            
+                            // Reset particle
+                            if(p.userData.life <= 0) {
+                                p.position.y = 0; 
+                                p.userData.life = 1;
+                            }
+                            
+                            // Gradasi Warna: Kuning -> Merah -> Abu-abu asap
+                            if(p.userData.life > 0.6) p.material.color.setHex(0xfdcb6e); 
+                            else if(p.userData.life > 0.3) p.material.color.setHex(0xff7675); 
+                            else p.material.color.setHex(0x636e72); 
+                        }
+                    });
                 }
 
                 if(currentDist === 190) createAccident(); 
@@ -516,19 +623,15 @@
 
                 articleQuizzes.forEach(q => { if(currentDist === q.dist && !q.triggered) triggerQuiz(q); });
 
-                // SINKRONISASI BENSIN FIX: Akan tepat 0 saat jarak 660m (saat bangunan Pit Stop sampai)
                 if (!hasDonePitStop) {
                     gas = 100 - (distance / 660) * 100;
-                    if(gas <= 0) { gas = 0; } 
-                } else { 
-                    gas -= 0.01; 
-                }
+                    if(gas <= 0) gas = 0; 
+                } else { gas -= 0.01; }
                 
                 const gasFill = document.getElementById('gas-fill');
                 gasFill.style.width = gas + "%";
                 gasFill.style.background = gas < 30 ? "linear-gradient(90deg, #ff7675, #d63031)" : "linear-gradient(90deg, #55efc4, #00b894)";
 
-                // Kontrol Setir Mobil
                 const turnSpeed = 0.15;
                 if (keys.ArrowLeft && playerCar.position.x > -4) playerCar.position.x -= turnSpeed;
                 if (keys.ArrowRight && playerCar.position.x < 4) playerCar.position.x += turnSpeed;
