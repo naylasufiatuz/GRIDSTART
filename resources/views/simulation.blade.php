@@ -162,7 +162,7 @@
 
     <div id="start-overlay" class="overlay-bg">
         <div class="modal-card">
-            <h2>🏁 START GRID</h2>
+            <h2>START GRID</h2>
             <p><strong>Pengenalan Keselamatan Berkendara</strong><br><br>Persiapkan mental dan pahami prinsip <em>Safety First</em>. Hindari kelalaian, dan selalu utamakan keselamatan di atas kecepatan!</p>
             <button id="btn-start-game" class="btn-primary">TANCAP GAS!</button>
         </div>
@@ -183,7 +183,7 @@
 
     <div id="finish-overlay" class="overlay-bg">
         <div class="modal-card">
-            <h2 style="color: var(--accent-green);">🏁 FINISH LINE!</h2>
+            <h2 style="color: var(--accent-green);">FINISH LINE!</h2>
             <p>Simulasi berkendara telah selesai dengan sukses.</p>
             <div style="font-size: 18px; color: #636e72; margin: 20px 0;">Total Poin</div>
             <div style="font-size: 48px; font-weight: 800; color: var(--accent-yellow); margin-bottom: 20px;" id="final-score">0</div>
@@ -480,9 +480,9 @@
         // ==========================================
         let currentQuizMode = ''; 
         const articleQuizzes = [
-            { dist: 200, title: "⚠️ YELLOW FLAG", q: "Ada kecelakaan di bagian kiri jalan. Tindakan antisipasi terbaik?", a: [{t: "Melaju maksimal", c: false}, {t: "Turunkan kecepatan & berhati-hati", c: true}, {t: "Pindah kanan & gaspol", c: false}], triggered: false },
-            { dist: 500, title: "🛣️ RACING LINE", q: "Kondisi lalu lintas padat di lajur kanan. Langkah aman?", a: [{t: "Pindah ke lajur kosong & sesuaikan kecepatan", c: true}, {t: "Paksa masuk ke kanan", c: false}, {t: "Rem mendadak", c: false}], triggered: false },
-            { dist: 800, title: "🛑 BRAKE ZONE", q: "Jalanan rusak parah di kanan lintasan. Teknik pengereman yang tepat?", a: [{t: "Melaju berliku tanpa rem", c: false}, {t: "Tarik rem tangan mendadak", c: false}, {t: "Rem bertahap sebelum lubang & menghindar", c: true}], triggered: false }
+            { dist: 200, title: "YELLOW FLAG", q: "Ada kecelakaan di bagian kiri jalan. Tindakan antisipasi terbaik?", a: [{t: "Melaju maksimal", c: false}, {t: "Turunkan kecepatan & berhati-hati", c: true}, {t: "Pindah kanan & gaspol", c: false}], triggered: false },
+            { dist: 500, title: "RACING LINE", q: "Kondisi lalu lintas padat di lajur kanan. Langkah aman?", a: [{t: "Pindah ke lajur kosong & sesuaikan kecepatan", c: true}, {t: "Paksa masuk ke kanan", c: false}, {t: "Rem mendadak", c: false}], triggered: false },
+            { dist: 800, title: "BRAKE ZONE", q: "Jalanan rusak parah di kanan lintasan. Teknik pengereman yang tepat?", a: [{t: "Melaju berliku tanpa rem", c: false}, {t: "Tarik rem tangan mendadak", c: false}, {t: "Rem bertahap sebelum lubang & menghindar", c: true}], triggered: false }
         ];
         const pitStopQs = [
             { q: "(1/3) Fungsi utama oli mesin?", a: [{t: "Mendinginkan AC", c: false}, {t: "Melumasi komponen internal", c: true}, {t: "Menambah listrik", c: false}] },
@@ -513,7 +513,7 @@
         function loadPitQ() {
             clearInterval(pitTimer); timeLeft = 100; document.getElementById('timer-bar-fill').style.width = "100%";
             document.getElementById('timer-bar-wrap').style.display = 'block';
-            document.getElementById('quiz-title').innerText = "⛽ PIT STOP";
+            document.getElementById('quiz-title').innerText = "PIT STOP";
             document.getElementById('quiz-question').innerText = pitStopQs[pitIndex].q;
             qBtns.forEach((btn, i) => { btn.innerText = pitStopQs[pitIndex].a[i].t; btn.setAttribute('data-correct', pitStopQs[pitIndex].a[i].c); });
             
@@ -527,9 +527,9 @@
             clearInterval(pitTimer);
             if(isCorrect) { 
                 gas += 34; if(gas>100) gas=100; 
-                showToast("✅ Benar! +1 Bar Bensin.", "success"); 
+                showToast("Benar! +1 Bar Bensin.", "success"); 
             } else { 
-                showToast("❌ Salah / Waktu Habis!", "error"); 
+                showToast("Salah / Waktu Habis!", "error"); 
             }
             
             pitIndex++;
@@ -540,7 +540,7 @@
                 if(gas <= 0) { 
                     isGameOver = true; showToast("GAME OVER! Bensin Habis.", "error"); 
                 } else { 
-                    showToast("✅ Pit Stop Selesai! Melanjutkan perjalanan.", "success"); 
+                    showToast("Pit Stop Selesai! Melanjutkan perjalanan.", "success"); 
                     playerCar.position.x = 0; isPaused = false; 
                 } 
             }
@@ -551,9 +551,9 @@
                 const isCorrect = e.target.getAttribute('data-correct') === 'true';
                 if (currentQuizMode === 'article') {
                     if(isCorrect) { 
-                        score += 10; showToast("✅ Jawaban Tepat! +10 Poin.", "success"); 
+                        score += 10; showToast("Jawaban Tepat! +10 Poin.", "success"); 
                     } else { 
-                        score -= 10; showToast("❌ Jawaban Salah! -10 Poin.", "error"); 
+                        score -= 10; showToast("Jawaban Salah! -10 Poin.", "error"); 
                     }
                     document.getElementById('score-ui').innerText = score;
                     qOverlay.style.display = 'none'; currentQuizMode = ''; isPaused = false;
