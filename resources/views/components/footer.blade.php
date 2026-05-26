@@ -28,11 +28,9 @@
     <div class="footer-section">
       <h4 class="section-title">Resources</h4>
       <ul class="footer-links">
+        <li><a href="/contact">Contact Us</a></li>
         <li><a href="/edukasi">Edukasi</a></li>
         <li><a href="/simulasi">Simulasi</a></li>
-        <li><a href="/support">Support</a></li>
-        <li><a href="/blog">Blog</a></li>
-        <li><a href="/faq">FAQ</a></li>
       </ul>
     </div>
 

@@ -76,21 +76,6 @@
           >
         </div>
 
-        <!-- SUBJECT SELECT -->
-        <div class="form-group">
-          <label for="subject" class="form-label">Topik Pertanyaan</label>
-          <select id="subject" name="subject" class="form-input neumorphic-inset" required>
-            <option value="">Pilih topik...</option>
-            <option value="general">Pertanyaan Umum</option>
-            <option value="edukasi">Tentang Edukasi</option>
-            <option value="simulasi">Tentang Simulasi</option>
-            <option value="bug">Laporin Bug</option>
-            <option value="partnership">Kerjasama</option>
-            <option value="other">Lainnya</option>
-          </select>
-          <span class="form-error" id="subjectError"></span>
-        </div>
-
         <!-- MESSAGE TEXTAREA -->
         <div class="form-group">
           <label for="message" class="form-label">Pesan</label>
@@ -115,7 +100,7 @@
             required
           >
           <label for="agree" class="checkbox-label">
-            Boleh aku dihubungi via email
+            Boleh aku dihubungi via email (opsional)
           </label>
           <span class="form-error" id="agreeError"></span>
         </div>
@@ -218,15 +203,6 @@
       </div>
 
     </div>
-  </div>
-</section>
-
-<!-- CTA SECTION -->
-<section class="cta-contact-section">
-  <div class="cta-content">
-    <h2>Siap Jadi Bagian dari GridStart?</h2>
-    <p>Mulai belajar berkendara aman hari ini dan dapatkan sertifikat digital</p>
-    <a href="/start-grid" class="cta-contact-btn">Mulai Belajar Sekarang</a>
   </div>
 </section>
 
