@@ -8,7 +8,7 @@
         <span class="gs-logo">Grid<span>Start</span></span>
         <p class="tagline">Learn • Play • Drive Safe</p>
       </div>
-      <p class="footer-desc">Edukasi keselamatan berkendara dengan pendekatan motorsport. Dari START GRID sampai FINISH LINE. 🏁</p>
+      <p class="footer-desc">Edukasi keselamatan berkendara dengan pendekatan motorsport. Dari START GRID sampai FINISH LINE.</p>
     </div>
 
     <!-- GRID 2: ROADMAP -->
@@ -64,7 +64,7 @@
           </svg>
         </a>
       </div>
-      <p class="footer-cta">Join our community! 🚀</p>
+      <p class="footer-cta">Join our community!</p>
     </div>
 
   </div>

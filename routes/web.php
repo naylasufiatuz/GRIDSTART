@@ -81,7 +81,6 @@ Route::get('/contact', function () {
     return view('contact');
 });
 
-
 Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard')->middleware('auth');
 
 Route::post('/admin/logout', [AuthController::class, 'logout'])->name('admin.logout');
