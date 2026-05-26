@@ -28,7 +28,7 @@
   <div class="contact-container single-column">
 
     <!-- LEFT: FORM -->
-    <div class="contact-form-wrapper">
+    <div class="contact-form-wrapper neumorphic">
       <div class="form-header">
         <h2>Pesen Kami</h2>
         <p>Isi detail singkat, kami akan bantu jawab dengan jelas dan cepat.</p>
@@ -43,7 +43,7 @@
             type="text" 
             id="name" 
             name="name" 
-            class="form-input" 
+            class="form-input neumorphic-inset" 
             placeholder="Nama kamu"
             required
           >
@@ -57,7 +57,7 @@
             type="email" 
             id="email" 
             name="email" 
-            class="form-input" 
+            class="form-input neumorphic-inset" 
             placeholder="email@example.com"
             required
           >
@@ -71,7 +71,7 @@
             type="tel" 
             id="phone" 
             name="phone" 
-            class="form-input" 
+            class="form-input neumorphic-inset" 
             placeholder="+62 XXX XXXX XXXX"
           >
         </div>
@@ -79,7 +79,7 @@
         <!-- SUBJECT SELECT -->
         <div class="form-group">
           <label for="subject" class="form-label">Topik Pertanyaan</label>
-          <select id="subject" name="subject" class="form-input" required>
+          <select id="subject" name="subject" class="form-input neumorphic-inset" required>
             <option value="">Pilih topik...</option>
             <option value="general">Pertanyaan Umum</option>
             <option value="edukasi">Tentang Edukasi</option>
@@ -97,7 +97,7 @@
           <textarea 
             id="message" 
             name="message" 
-            class="form-textarea" 
+            class="form-textarea neumorphic-inset" 
             placeholder="Cerita dong..."
             rows="5"
             required
@@ -121,7 +121,7 @@
         </div>
 
         <!-- SUBMIT BUTTON -->
-        <button type="submit" class="submit-btn">
+        <button type="submit" class="submit-btn neumorphic-button">
           <span class="btn-text">Kirim Pesan</span>
           <span class="btn-arrow">→</span>
         </button>
