@@ -42,7 +42,7 @@
         <!-- NAVIGATION BUTTONS -->
         <div class="lesson-nav">
             <a href="/brake-zone" class="btn back">Kembali ke brake zone</a>
-            <a href="/pit-stop" class="btn next">Lanjut ke Pit Stop</a>
+            <a href="/simulasi" class="btn next">Lanjut ke Simulasi</a>
         </div>
     </div>
 </section>

@@ -16,11 +16,6 @@ if (!Auth::check()) {
 }
 $user = Auth::user();
 ?>
-<a href="/app" class="back-btn">
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M19 12H5M12 5l-7 7 7 7"/>
-  </svg>
-</a>
 <!-- SIDEBAR -->
 <div class="left-sidebar">
   <p class="brand-label">GridStart</p>
@@ -30,8 +25,17 @@ $user = Auth::user();
 <!-- MAIN -->
 <div class="main-content">
   <div class="profile-card">
-    <p class="badge">New Racer</p>
-    <h1>Profile</h1>
+    <div class="card-header">
+      <a href="/app" class="back-btn" aria-label="Back to dashboard">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M19 12H5M12 5l-7 7 7 7"/>
+        </svg>
+      </a>
+      <div>
+        <p class="badge">New Racer</p>
+        <h1>Profile</h1>
+      </div>
+    </div>
 
     <!-- Avatar -->
     <div class="avatar-wrapper">
@@ -72,9 +76,7 @@ $user = Auth::user();
       <button type="submit" class="btn-submit">Edit Profile</button>
     </form>
 
-    <p class="logout-link">
-      <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
-    </p>
+    <a href="{{ route('logout') }}" class="btn-logout" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
     <form id="logout-form" method="POST" action="{{ route('logout') }}" style="display:none;">
       @csrf
     </form>

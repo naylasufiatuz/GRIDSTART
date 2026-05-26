@@ -204,14 +204,6 @@
   </div>
 </section>
 
-<section class="contact-cta-section">
-  <div class="contact-cta-container">
-    <div class="contact-cta-content">
-      <h2>Ada Pertanyaan atau Masukan? </h2>
-      <p>Kami pengen dengar dari kamu! Share pengalaman, laporin bug, atau sekadar ngobrol tentang keselamatan berkendara.</p>
-      <a href="/contact" class="contact-cta-btn">Hubungi Kami</a>
-    </div>
-  </div>
-</section>
+
 
 @endsection
