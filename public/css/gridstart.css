@@ -16,9 +16,17 @@
   font-family: "Inter", "Segoe UI", sans-serif;
 }
 
+html {
+  min-height: 100%;
+}
+
 body {
-  background-color: var(--cream-bg);
+  min-height: 100vh;
   color: var(--taupe-dark);
+  background: linear-gradient(135deg, #d0c69d 0%, #bcc4c0 50%, #c2b49a 100%);
+  background-position: top center;
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 /* ================= NAVBAR ================= */
@@ -144,29 +152,13 @@ body {
   padding-left: 88px;
   padding-top: 74px;
   position: relative;
-  background:
-    linear-gradient(
-      115deg,
-      var(--cream-bg) 0%,
-      var(--cream-soft) 40%,
-      var(--sage) 75%,
-      var(--sky-muted) 100%
-    );
+  background: transparent;
   overflow: hidden;
 }
 
 /* efek cahaya halus */
 .hero::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(
-      circle at bottom center,
-      rgba(255,255,255,0.65),
-      transparent 60%
-    );
-  pointer-events: none;
+  display: none;
 }
 
 /* Content Hero */
@@ -219,13 +211,7 @@ body {
 .leaderboard-section {
   padding: 120px 60px 80px;
   min-height: 100vh;
-  background: linear-gradient(
-    120deg,
-    #f7f3ee 0%,
-    #efe8df 40%,
-    #dbe6e1 75%,
-    #c9d8d8 100%
-  );
+  background: transparent;
 }
 
 .leaderboard-container {
@@ -262,13 +248,7 @@ body {
 /* ================= TOP DRIVERS PREVIEW ================= */
 .top-drivers-section {
   padding: 80px 60px;
-  background: linear-gradient(
-    135deg,
-    #c9b99a 0%,
-    #b5c4bc 40%,
-    #a8bfb8 70%,
-    #c2b49a 100%
-  );
+  background: transparent;
 }
 
 .top-drivers-container {
@@ -725,13 +705,7 @@ body {
 /* SECTION */
 .roadmap-section {
   padding: 80px 60px;
-  background: linear-gradient(
-    120deg,
-    #f7f3ee 0%,
-    #efe8df 40%,
-    #dbe6e1 75%,
-    #c9d8d8 100%
-  );
+  background: transparent;
   min-height: 100vh;
 }
 
@@ -1620,9 +1594,10 @@ color:#777;
 }
 
 .btn.next{
-    background:#c9ada7;
-    color:white;
+    background: var(--navbar-dark);
+    color: white;
     border:none;
+    padding: 12px 32px;
 }
 
 .btn.back {
@@ -1631,7 +1606,7 @@ color:#777;
 }
 
 .btn.next:hover {
-    background:#b0a89e;
+    background: var(--navbar-dark);
     transform: translateY(-2px);
 }
 
@@ -1939,9 +1914,10 @@ transform:translateY(0);
 }
 
 .pit-stop-section .btn.next {
-    background: #c9ada7;
+    background: var(--navbar-dark);
     color: white;
     border: none;
+    padding: 12px 32px;
 }
 
 .pit-stop-section .btn.back {
@@ -1950,7 +1926,6 @@ transform:translateY(0);
 }
 
 .pit-stop-section .btn.next:hover {
-    background: #b0a89e;
     transform: translateY(-2px);
 }
 
@@ -2295,8 +2270,9 @@ transform:translateY(0);
 }
 
 .finish-btn.next {
-    background: #3f3a36;
+    background: var(--navbar-dark);
     color: white;
+    padding: 12px 32px;
 }
 
 .finish-btn.back {
@@ -2305,7 +2281,6 @@ transform:translateY(0);
 }
 
 .finish-btn.next:hover {
-    background: #5a5450;
     transform: translateY(-2px);
 }
 

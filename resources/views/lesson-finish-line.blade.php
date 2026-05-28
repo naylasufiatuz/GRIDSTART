@@ -13,8 +13,8 @@
 
             <!-- BUTTONS -->
             <div class="finish-buttons">
-                <a href="/brake-zone" class="finish-btn back">Kembali</a>
-                <a href="#" class="finish-btn next">Lihat Skor</a>
+                <a href="/pit-stop" class="finish-btn back">Kembali</a>
+                <a href="/leaderboard" class="finish-btn next">Lihat Skor</a>
             </div>
         </div>
     </div>
