@@ -10,6 +10,7 @@ function showSection(name) {
 
   if (name === 'users') loadUsers();
   if (name === 'scores') loadScores();
+  if (name === 'pesan') loadPesans();
 }
 
 // ── TOAST ──
@@ -200,4 +201,54 @@ headers: { 'Accept': 'application/json', 'X-CSRF-TOKEN': CSRF },
   const json = await res.json();
   toast(json.message, res.ok ? 'success' : 'error');
   if (res.ok) loadScores();
+}
+
+// ══════════════════
+// PESAN (MESSAGES)
+// ══════════════════
+async function loadPesans() {
+  const tbody = document.getElementById('pesan-tbody');
+  tbody.innerHTML = '<tr class="loading-row"><td colspan="8">Loading...</td></tr>';
+
+  const res  = await fetch(BASE + '/pesan', {
+    headers: { 'Accept': 'application/json' }
+  });
+  const json = await res.json();
+
+  if (!json.data.length) {
+    tbody.innerHTML = '<tr class="loading-row"><td colspan="8">Tidak ada data.</td></tr>';
+    return;
+  }
+
+  tbody.innerHTML = json.data.map(p => `
+    <tr>
+      <td><span class="badge">#${p.id}</span></td>
+      <td>${p.name}</td>
+      <td>${p.email}</td>
+      <td>${p.phone ?? '-'}</td>
+      <td style="max-width: 300px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" title="${p.message ?? ''}">${p.message ?? ''}</td>
+      <td>
+        <span class="badge" style="background-color: ${p.agree ? '#10b981' : '#ef4444'}; color: #fff; padding: 2px 6px; border-radius: 4px; font-size: 0.75rem;">
+          ${p.agree ? 'Ya' : 'Tidak'}
+        </span>
+      </td>
+      <td>${p.created_at ? p.created_at.substring(0,10) : '-'}</td>
+      <td>
+        <div class="action-btns">
+          <button class="btn-del"  onclick="deletePesan(${p.id})">Hapus</button>
+        </div>
+      </td>
+    </tr>
+  `).join('');
+}
+
+async function deletePesan(id) {
+  if (!confirm('Hapus pesan ini?')) return;
+  const res  = await fetch(`${BASE}/pesan/${id}`, {
+    method: 'DELETE',
+    headers: { 'Accept': 'application/json', 'X-CSRF-TOKEN': CSRF },
+  });
+  const json = await res.json();
+  toast(json.message, res.ok ? 'success' : 'error');
+  if (res.ok) loadPesans();
 }

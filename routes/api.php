@@ -17,6 +17,12 @@ Route::post('/admin/game-scores',        [AdminController::class, 'apiStoreGameS
 Route::put('/admin/game-scores/{id}',    [AdminController::class, 'apiUpdateGameScore']);
 Route::delete('/admin/game-scores/{id}', [AdminController::class, 'apiDestroyGameScore']);
 
+// Pesan (Messages)
+Route::get('/admin/pesan',         [AdminController::class, 'apiPesans']);
+Route::post('/admin/pesan',        [AdminController::class, 'apiStorePesan']);
+Route::put('/admin/pesan/{id}',    [AdminController::class, 'apiUpdatePesan']);
+Route::delete('/admin/pesan/{id}', [AdminController::class, 'apiDestroyPesan']);
+
 Route::prefix('admin')->group(function () {
     Route::get('/settings', [GameSettingController::class, 'index']);
     Route::put('/settings', [GameSettingController::class, 'update']);

@@ -6,6 +6,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\SocialAuthController;
 use App\Http\Controllers\LeaderboardController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ContactController;
 
 Route::get('/leaderboard', [LeaderboardController::class, 'index'])->name('leaderboard');
 
@@ -80,6 +81,7 @@ Route::get('/support', function () {
 Route::get('/contact', function () {
     return view('contact');
 });
+Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
 
 Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard')->middleware('auth');
 

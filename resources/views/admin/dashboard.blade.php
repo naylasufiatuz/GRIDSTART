@@ -28,6 +28,9 @@
     <button class="nav-item" onclick="showSection('scores')">
       <span class="icon">◐</span> Game Scores
     </button>
+    <button class="nav-item" onclick="showSection('pesan')">
+      <span class="icon">✉</span> Pesan
+    </button>
   </div>
 
   <div class="sidebar-footer">
@@ -50,13 +53,6 @@
           <h1>Admin Panel</h1>
         </div>
       </div>
-      <div class="topbar-user">
-        <span class="profile-icon">👤</span>
-        <div>
-          <p>Logged in as</p>
-          <strong>{{ session('admin_username') }}</strong>
-        </div>
-      </div>
     </div>
 
     <!-- OVERVIEW -->
@@ -68,7 +64,7 @@
         </div>
         <p class="date-label">{{ now()->format('l, d M Y') }}</p>
       </div>
-
+      <br>
       <div class="stats-grid">
         <div class="stat-card">
           <p class="stat-label">Total Users</p>
@@ -82,6 +78,10 @@
           <p class="stat-label">Top Score</p>
           <p class="stat-value">{{ $topScore }}</p>
         </div>
+        <div class="stat-card">
+          <p class="stat-label">Total Pesan</p>
+          <p class="stat-value">{{ $totalPesans }}</p>
+        </div>
       </div>
 
       <div class="activity-grid">
@@ -91,7 +91,6 @@
               <p class="small-label">Aktivitas Terbaru</p>
               <h3>Ringkasan Aktivitas</h3>
             </div>
-            <a class="view-all" href="#">Semua &gt;</a>
           </div>
           <div class="activity-body">
             <p>Konten aktivitas terbaru akan ditampilkan di sini setelah data tersedia.</p>
@@ -114,6 +113,10 @@
             <div class="detail-item">
               <span>Top Score</span>
               <strong>{{ $topScore }}</strong>
+            </div>
+            <div class="detail-item">
+              <span>Total Pesan</span>
+              <strong>{{ $totalPesans }}</strong>
             </div>
           </div>
         </div>
@@ -163,6 +166,29 @@
           </thead>
           <tbody id="scores-tbody">
             <tr class="loading-row"><td colspan="6">Loading...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- PESAN -->
+    <div class="section" id="section-pesan">
+      <div class="page-header">
+        <h1>Pesan</h1>
+        <p>Kelola pesan dari form kontak</p>
+      </div>
+      <div class="section-header">
+        <h2>Semua Pesan</h2>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th><th>Nama</th><th>Email</th><th>No. WhatsApp</th><th style="min-width: 250px;">Pesan</th><th>Hubungi via Email</th><th>Tanggal</th><th>Aksi</th>
+            </tr>
+          </thead>
+          <tbody id="pesan-tbody">
+            <tr class="loading-row"><td colspan="8">Loading...</td></tr>
           </tbody>
         </table>
       </div>
@@ -221,6 +247,8 @@
     </div>
   </div>
 </div>
+
+
 
 <!-- TOAST -->
 <div class="toast" id="toast"></div>

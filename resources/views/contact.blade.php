@@ -97,7 +97,6 @@
             id="agree" 
             name="agree" 
             class="form-checkbox"
-            required
           >
           <label for="agree" class="checkbox-label">
             Boleh aku dihubungi via email (opsional)
@@ -211,25 +210,59 @@
   const contactForm = document.getElementById('contactForm');
   const successMessage = document.getElementById('successMessage');
 
-  contactForm.addEventListener('submit', function(e) {
+  contactForm.addEventListener('submit', async function(e) {
     e.preventDefault();
     
-    // Simple validation
+    // Clear previous errors
+    document.querySelectorAll('.form-error').forEach(el => el.textContent = '');
+    
     const name = document.getElementById('name').value;
     const email = document.getElementById('email').value;
+    const phone = document.getElementById('phone').value;
     const message = document.getElementById('message').value;
+    const agree = document.getElementById('agree').checked ? 1 : 0;
     
-    if(name && email && message) {
-      // Here you would send the form data to your backend
-      // For now, just show success message
-      contactForm.style.display = 'none';
-      successMessage.style.display = 'block';
-      
-      setTimeout(() => {
-        contactForm.style.display = 'block';
-        successMessage.style.display = 'none';
+    try {
+      const response = await fetch('/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value
+        },
+        body: JSON.stringify({ name, email, phone, message, agree })
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        contactForm.style.display = 'none';
+        successMessage.style.display = 'block';
         contactForm.reset();
-      }, 3000);
+        
+        setTimeout(() => {
+          contactForm.style.display = 'block';
+          successMessage.style.display = 'none';
+        }, 5000);
+      } else {
+        if (result.errors) {
+          for (const [key, messages] of Object.entries(result.errors)) {
+            const errorEl = document.getElementById(`${key}Error`);
+            if (errorEl) {
+              errorEl.textContent = messages.join(' ');
+              errorEl.style.color = '#ef4444';
+              errorEl.style.fontSize = '0.85rem';
+              errorEl.style.marginTop = '0.25rem';
+              errorEl.style.display = 'block';
+            }
+          }
+        } else {
+          alert(result.message || 'Terjadi kesalahan. Silakan coba lagi.');
+        }
+      }
+    } catch (error) {
+      console.error(error);
+      alert('Terjadi kesalahan koneksi. Silakan coba lagi.');
     }
   });
 

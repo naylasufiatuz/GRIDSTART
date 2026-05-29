@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use App\Models\GameScore;
+use App\Models\Pesan;
 
 class AdminController extends Controller
 {
@@ -19,8 +20,9 @@ class AdminController extends Controller
         $totalUsers      = User::count();
         $totalGameScores = GameScore::count();
         $topScore        = GameScore::max('score') ?? 0;
+        $totalPesans     = Pesan::count();
 
-        return view('admin.dashboard', compact('totalUsers', 'totalGameScores', 'topScore'));
+        return view('admin.dashboard', compact('totalUsers', 'totalGameScores', 'topScore', 'totalPesans'));
     }
 
     // ── API USERS ──
@@ -120,5 +122,56 @@ public function apiUpdateUser(Request $request, $id)
     {
         GameScore::findOrFail($id)->delete();
         return response()->json(['message' => 'Score berhasil dihapus.']);
+    }
+
+    // ── API PESANS ──
+    public function apiPesans()
+    {
+        $pesans = Pesan::orderBy('created_at', 'desc')->get();
+        return response()->json(['data' => $pesans]);
+    }
+
+    public function apiStorePesan(Request $request)
+    {
+        $request->validate([
+            'name'    => 'required|string|max:255',
+            'email'   => 'required|email|max:255',
+            'phone'   => 'nullable|string|max:30',
+            'message' => 'required|string',
+            'agree'   => 'boolean',
+        ]);
+
+        $pesan = Pesan::create([
+            'name'    => $request->name,
+            'email'   => $request->email,
+            'phone'   => $request->phone,
+            'message' => $request->message,
+            'agree'   => (bool)$request->agree,
+        ]);
+
+        return response()->json(['message' => 'Pesan berhasil dibuat.', 'data' => $pesan], 201);
+    }
+
+    public function apiUpdatePesan(Request $request, $id)
+    {
+        $pesan = Pesan::findOrFail($id);
+
+        $request->validate([
+            'name'    => 'sometimes|required|string|max:255',
+            'email'   => 'sometimes|required|email|max:255',
+            'phone'   => 'nullable|string|max:30',
+            'message' => 'sometimes|required|string',
+            'agree'   => 'sometimes|boolean',
+        ]);
+
+        $pesan->update($request->only(['name', 'email', 'phone', 'message', 'agree']));
+
+        return response()->json(['message' => 'Pesan berhasil diupdate.', 'data' => $pesan]);
+    }
+
+    public function apiDestroyPesan($id)
+    {
+        Pesan::findOrFail($id)->delete();
+        return response()->json(['message' => 'Pesan berhasil dihapus.']);
     }
 }
