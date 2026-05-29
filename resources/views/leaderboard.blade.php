@@ -37,7 +37,7 @@
         {{-- P1 --}}
         <div class="podium-card p1">
           <div class="podium-pos">P1</div>
-          <div class="podium-crown"><svg class="icon-inline" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M5 15l1-7 3 5 3-5 3 5 3-5 1 7-4 2-4-2-4 2z" fill="currentColor"/></svg></div>
+          <div class="podium-crown"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l3-10 4 6 4-6 3 10H3z"/><path d="M7 14h10"/></svg></div>
           <div class="podium-avatar gold">{{ strtoupper(substr($byPoints[0]->user->username, 0, 2)) }}</div>
           <div class="podium-name">{{ $byPoints[0]->user->username }}</div>
           <div class="podium-score">{{ number_format($byPoints[0]->score) }}</div>
@@ -115,7 +115,7 @@
         </div>
         <div class="podium-card p1">
           <div class="podium-pos">P1</div>
-          <div class="podium-crown"><svg class="icon-inline" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M5 15l1-7 3 5 3-5 3 5 3-5 1 7-4 2-4-2-4 2z" fill="currentColor"/></svg></div>
+          <div class="podium-crown"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l3-10 4 6 4-6 3 10H3z"/><path d="M7 14h10"/></svg></div>
           <div class="podium-avatar gold">{{ strtoupper(substr($byTime[0]->user->username, 0, 2)) }}</div>
           <div class="podium-name">{{ $byTime[0]->user->username }}</div>
           <div class="podium-score">{{ $byTime[0]->best_time }}</div>

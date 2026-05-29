@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Dashboard — GridStart Admin</title>
   <meta name="csrf-token" content="{{ csrf_token() }}"/>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;600;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
 </head>
 <body>
@@ -41,78 +41,133 @@
 
 <!-- MAIN -->
 <main class="main">
-
-  <!-- OVERVIEW -->
-  <div class="section active" id="section-overview">
-    <div class="page-header">
-      <h1>Dashboard</h1>
-      <p>{{ now()->format('l, d M Y') }}</p>
-    </div>
-
-    <div class="stats">
-      <div class="stat-card">
-        <p class="stat-label">Total Users</p>
-        <p class="stat-value">{{ $totalUsers }}</p>
+  <div class="main-inner">
+    <div class="topbar">
+      <div class="topbar-left">
+        <span class="topbar-icon">▦</span>
+        <div>
+          <p class="topbar-label">Dashboard</p>
+          <h1>Admin Panel</h1>
+        </div>
       </div>
-      <div class="stat-card">
-        <p class="stat-label">Total Game Scores</p>
-        <p class="stat-value">{{ $totalGameScores }}</p>
-      </div>
-      <div class="stat-card">
-        <p class="stat-label">Top Score</p>
-        <p class="stat-value">{{ $topScore }}</p>
+      <div class="topbar-user">
+        <span class="profile-icon">👤</span>
+        <div>
+          <p>Logged in as</p>
+          <strong>{{ session('admin_username') }}</strong>
+        </div>
       </div>
     </div>
-  </div>
 
-  <!-- USERS -->
-  <div class="section" id="section-users">
-    <div class="page-header">
-      <h1>Users</h1>
-      <p>Manage registered users</p>
+    <!-- OVERVIEW -->
+    <div class="section active" id="section-overview">
+      <div class="dashboard-header">
+        <div>
+          <p class="small-label">Dashboard Admin</p>
+          <h2>Home / Dashboard</h2>
+        </div>
+        <p class="date-label">{{ now()->format('l, d M Y') }}</p>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <p class="stat-label">Total Users</p>
+          <p class="stat-value">{{ $totalUsers }}</p>
+        </div>
+        <div class="stat-card">
+          <p class="stat-label">Total Game Scores</p>
+          <p class="stat-value">{{ $totalGameScores }}</p>
+        </div>
+        <div class="stat-card">
+          <p class="stat-label">Top Score</p>
+          <p class="stat-value">{{ $topScore }}</p>
+        </div>
+      </div>
+
+      <div class="activity-grid">
+        <div class="activity-card">
+          <div class="activity-card-header">
+            <div>
+              <p class="small-label">Aktivitas Terbaru</p>
+              <h3>Ringkasan Aktivitas</h3>
+            </div>
+            <a class="view-all" href="#">Semua &gt;</a>
+          </div>
+          <div class="activity-body">
+            <p>Konten aktivitas terbaru akan ditampilkan di sini setelah data tersedia.</p>
+          </div>
+        </div>
+        <div class="detail-card">
+          <div class="detail-card-header">
+            <p class="small-label">Ringkasan</p>
+            <h3>Info Cepat</h3>
+          </div>
+          <div class="detail-list">
+            <div class="detail-item">
+              <span>Total Users</span>
+              <strong>{{ $totalUsers }}</strong>
+            </div>
+            <div class="detail-item">
+              <span>Total Game Scores</span>
+              <strong>{{ $totalGameScores }}</strong>
+            </div>
+            <div class="detail-item">
+              <span>Top Score</span>
+              <strong>{{ $topScore }}</strong>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="section-header">
-      <h2>All Users</h2>
-      <button class="btn-add" onclick="openUserModal()">+ Add User</button>
-    </div>
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr>
+
+    <!-- USERS -->
+    <div class="section" id="section-users">
+      <div class="page-header">
+        <h1>Users</h1>
+        <p>Manage registered users</p>
+      </div>
+      <div class="section-header">
+        <h2>All Users</h2>
+        <button class="btn-add" onclick="openUserModal()">+ Add User</button>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
 <th>ID</th><th>Username</th><th>Email</th><th>Joined</th><th>Action</th>
-          </tr>
-        </thead>
-        <tbody id="users-tbody">
-          <tr class="loading-row"><td colspan="6">Loading...</td></tr>
-        </tbody>
-      </table>
+            </tr>
+          </thead>
+          <tbody id="users-tbody">
+            <tr class="loading-row"><td colspan="6">Loading...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- GAME SCORES -->
+    <div class="section" id="section-scores">
+      <div class="page-header">
+        <h1>Game Scores</h1>
+        <p>Manage game score records</p>
+      </div>
+      <div class="section-header">
+        <h2>All Scores</h2>
+        <button class="btn-add" onclick="openScoreModal()">+ Add Score</button>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th><th>Username</th><th>Score</th><th>Best Time</th><th>Date</th><th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="scores-tbody">
+            <tr class="loading-row"><td colspan="6">Loading...</td></tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
-
-  <!-- GAME SCORES -->
-  <div class="section" id="section-scores">
-    <div class="page-header">
-      <h1>Game Scores</h1>
-      <p>Manage game score records</p>
-    </div>
-    <div class="section-header">
-      <h2>All Scores</h2>
-      <button class="btn-add" onclick="openScoreModal()">+ Add Score</button>
-    </div>
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr>
-            <th>ID</th><th>Username</th><th>Score</th><th>Best Time</th><th>Date</th><th>Action</th>
-          </tr>
-        </thead>
-        <tbody id="scores-tbody">
-          <tr class="loading-row"><td colspan="6">Loading...</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-
 </main>
 
 <!-- MODAL USER -->

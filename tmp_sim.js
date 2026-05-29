@@ -1,202 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Grid Start - Pro Simulation</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --glass-bg: rgba(255, 255, 255, 0.4);
-            --glass-border: rgba(255, 255, 255, 0.6);
-            --text-dark: #2d3436;
-            --accent-green: #00b894;
-            --accent-red: #ff7675;
-            --accent-yellow: #fdcb6e;
-        }
 
-        body { 
-            margin: 0; overflow: hidden; 
-            background-color: #b5eaea; 
-            font-family: 'Poppins', sans-serif; 
-            touch-action: none; 
-        }
-        canvas { display: block; position: absolute; top: 0; left: 0; z-index: 1; }
-        
-        /* =========================================
-           UI HUD (Kiri Atas) 
-           ========================================= */
-        #hud-panel {
-            position: absolute; top: 30px; left: 30px; z-index: 100;
-            background: var(--glass-bg);
-            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-            border: 1px solid var(--glass-border);
-            border-radius: 24px; padding: 20px 25px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-            color: var(--text-dark); min-width: 150px;
-        }
-        .hud-item {
-            font-size: 16px; font-weight: 600; margin-bottom: 8px;
-            display: flex; justify-content: space-between; align-items: center;
-        }
-        .hud-item:last-child { margin-bottom: 0; }
-        
-        /* Warna tulisan Jarak & Poin diubah jadi gelap agar kontras */
-        .hud-value { font-weight: 800; color: var(--text-dark); font-size: 18px; }
-        
-        /* Bar Bensin Modern */
-        .gas-bar-container { width: 100%; height: 12px; background: rgba(0,0,0,0.1); border-radius: 10px; overflow: hidden; margin-top: 5px; box-shadow: inset 0 2px 4px rgba(0,0,0,0.1); }
-        .gas-bar-fill { height: 100%; width: 100%; background: linear-gradient(90deg, #55efc4, #00b894); transition: width 0.3s, background 0.3s; }
-
-        /* Tombol Pause (Kanan Bawah - Speaker Dihapus) */
-        #action-panel { position: absolute; bottom: 30px; right: 30px; z-index: 100; display: flex; flex-direction: column; gap: 15px; }
-        .circle-btn {
-            width: 60px; height: 60px; border-radius: 50%;
-            background: var(--glass-bg); backdrop-filter: blur(12px); border: 1px solid var(--glass-border);
-            display: flex; justify-content: center; align-items: center;
-            font-size: 24px; color: var(--text-dark); cursor: pointer;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.1); transition: 0.2s;
-        }
-        .circle-btn:active { transform: scale(0.9); }
-
-        /* =========================================
-           D-PAD KONTROL (Tengah Bawah) 
-           ========================================= */
-        #d-pad {
-            position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%);
-            z-index: 100; display: grid; grid-template-columns: repeat(3, 70px); grid-template-rows: repeat(2, 70px);
-            gap: 10px; user-select: none;
-        }
-        .d-btn {
-            background: rgba(255, 255, 255, 0.5); backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.8); border-radius: 18px;
-            display: flex; justify-content: center; align-items: center;
-            font-size: 28px; color: #333; cursor: pointer;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: 0.1s;
-        }
-        .d-btn:active { background: rgba(255, 255, 255, 0.8); transform: scale(0.92); }
-        #btn-up { grid-column: 2; grid-row: 1; background: rgba(120, 224, 143, 0.6); color: white; } 
-        #btn-left { grid-column: 1; grid-row: 2; }
-        #btn-brake { grid-column: 2; grid-row: 2; background: rgba(255, 118, 117, 0.6); color: white; font-size: 16px; font-weight: bold; }
-        #btn-right { grid-column: 3; grid-row: 2; }
-
-        /* =========================================
-           CUSTOM TOAST NOTIFICATION (Pengganti Alert)
-           ========================================= */
-        #toast-container {
-            position: absolute; top: 20px; left: 50%; transform: translateX(-50%);
-            z-index: 2000; display: flex; flex-direction: column; gap: 10px; pointer-events: none;
-        }
-        .toast {
-            background: rgba(45, 52, 54, 0.95); color: white; padding: 12px 25px;
-            border-radius: 50px; font-weight: 600; font-size: 14px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-            opacity: 0; transform: translateY(-20px);
-            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-            text-align: center; backdrop-filter: blur(5px); border: 1px solid rgba(255,255,255,0.1);
-        }
-        .toast.show { opacity: 1; transform: translateY(0); }
-        .toast.success { border-bottom: 3px solid var(--accent-green); }
-        .toast.error { border-bottom: 3px solid var(--accent-red); }
-
-        /* =========================================
-           MODAL & OVERLAYS
-           ========================================= */
-        .overlay-bg {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(45, 52, 54, 0.6); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
-            display: none; justify-content: center; align-items: center; z-index: 1000;
-        }
-        .modal-card {
-            background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(255,255,255,0.85));
-            border: 1px solid white; border-radius: 30px; padding: 40px;
-            width: 85%; max-width: 550px; box-shadow: 0 20px 50px rgba(0,0,0,0.2); text-align: center;
-        }
-        .modal-card h2 { margin: 0 0 15px 0; font-size: 28px; color: var(--text-dark); letter-spacing: -0.5px; }
-        .modal-card p { font-size: 16px; color: #636e72; line-height: 1.6; margin-bottom: 25px; }
-        
-        .btn-primary {
-            background: var(--accent-green); color: white; border: none; border-radius: 14px;
-            padding: 15px 35px; font-size: 18px; font-weight: 600; cursor: pointer;
-            box-shadow: 0 10px 20px rgba(0, 184, 148, 0.3); transition: 0.2s; font-family: 'Poppins', sans-serif;
-        }
-        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 15px 25px rgba(0, 184, 148, 0.4); }
-
-        .quiz-opts { display: flex; flex-direction: column; gap: 12px; }
-        .quiz-btn {
-            background: white; border: 2px solid #dfe6e9; border-radius: 16px;
-            padding: 16px; font-size: 15px; font-weight: 600; color: var(--text-dark);
-            cursor: pointer; transition: 0.2s; text-align: left; font-family: 'Poppins', sans-serif;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
-        }
-        .quiz-btn:hover { border-color: var(--accent-yellow); background: #fffcf3; transform: translateX(5px); }
-        
-        #timer-bar-wrap { width: 100%; height: 8px; background: #eee; border-radius: 4px; margin-bottom: 20px; overflow: hidden; display: none; }
-        #timer-bar-fill { width: 100%; height: 100%; background: var(--accent-red); transition: width 0.1s linear; }
-
-        #start-overlay { display: flex; z-index: 1100; } 
-    </style>
-</head>
-<body>
-
-    <div id="toast-container"></div>
-
-    <div id="hud-panel">
-        <div class="hud-item">Jarak <span class="hud-value"><span id="distance-ui">0</span>m</span></div>
-        <div class="hud-item">Poin <span class="hud-value" id="score-ui">0</span></div>
-        <div style="margin-top: 15px; font-size: 14px; font-weight: 600;">Bensin</div>
-        <div class="gas-bar-container"><div class="gas-bar-fill" id="gas-fill"></div></div>
-    </div>
-
-    <div id="action-panel">
-        <div class="circle-btn" id="pause-btn">⏸</div>
-    </div>
-
-    <div id="d-pad">
-        <div class="d-btn" id="btn-up">↑</div>
-        <div class="d-btn" id="btn-left">←</div>
-        <div class="d-btn" id="btn-brake">REM</div>
-        <div class="d-btn" id="btn-right">→</div>
-    </div>
-
-    <div id="start-overlay" class="overlay-bg">
-        <div class="modal-card">
-            <h2>START GRID</h2>
-            <p><strong>Pengenalan Keselamatan Berkendara</strong><br><br>Persiapkan mental dan pahami prinsip <em>Safety First</em>. Hindari kelalaian, dan selalu utamakan keselamatan di atas kecepatan!</p>
-            <button id="btn-start-game" class="btn-primary">TANCAP GAS!</button>
-        </div>
-    </div>
-
-    <div id="quiz-overlay" class="overlay-bg">
-        <div class="modal-card">
-            <h2 id="quiz-title">Peringatan!</h2>
-            <p id="quiz-question">Pertanyaan akan muncul di sini.</p>
-            <div id="timer-bar-wrap"><div id="timer-bar-fill"></div></div>
-            <div class="quiz-opts">
-                <button class="quiz-btn" id="btn-opt-a">A</button>
-                <button class="quiz-btn" id="btn-opt-b">B</button>
-                <button class="quiz-btn" id="btn-opt-c">C</button>
-            </div>
-        </div>
-    </div>
-
-    <div id="finish-overlay" class="overlay-bg">
-        <div class="modal-card">
-            <h2 style="color: var(--accent-green);">FINISH LINE!</h2>
-            <p>Simulasi berkendara telah selesai dengan sukses.</p>
-            <div style="font-size: 18px; color: #636e72; margin: 20px 0;">Total Poin</div>
-            <div style="font-size: 48px; font-weight: 800; color: var(--accent-yellow); margin-bottom: 20px;" id="final-score">0</div>
-            <p id="saving-status" style="font-style: italic; font-size: 14px;">Menyimpan skor ke server...</p>
-            <button id="close-finish-btn" class="btn-primary" style="display: none; width: 100%; margin-top:15px;">Lihat Papan Peringkat</button>
-        </div>
-    </div>
-
-    <script type="importmap">
-        { "imports": { "three": "https://unpkg.com/three@0.160.0/build/three.module.js" } }
-    </script>
-
-    <script type="module">
         import * as THREE from 'three';
 
         // ==========================================
@@ -514,7 +316,6 @@
             clearInterval(pitTimer); timeLeft = 100; document.getElementById('timer-bar-fill').style.width = "100%";
             document.getElementById('timer-bar-wrap').style.display = 'block';
             document.getElementById('quiz-title').innerText = "PIT STOP";
-            document.getElementById('quiz-title').innerText = "PIT STOP";
             document.getElementById('quiz-question').innerText = pitStopQs[pitIndex].q;
             qBtns.forEach((btn, i) => { btn.innerText = pitStopQs[pitIndex].a[i].t; btn.setAttribute('data-correct', pitStopQs[pitIndex].a[i].c); });
             
@@ -528,11 +329,10 @@
             clearInterval(pitTimer);
             if(isCorrect) { 
                 gas += 34; if(gas>100) gas=100; 
-                showToast("Benar! +1 Bar Bensin.", "success"); 
+                showToast("Benar! +1 bar bensin.", "success"); 
             } else { 
-                showToast("Salah / Waktu Habis!", "error"); 
+                showToast("Salah / waktu habis!", "error"); 
             }
-            
             pitIndex++;
             if(pitIndex < pitStopQs.length) {
                 loadPitQ();
@@ -541,7 +341,7 @@
                 if(gas <= 0) { 
                     isGameOver = true; showToast("GAME OVER! Bensin Habis.", "error"); 
                 } else { 
-                    showToast("Pit Stop Selesai! Melanjutkan perjalanan.", "success"); 
+                    showToast("Pit stop selesai! Melanjutkan perjalanan.", "success"); 
                     playerCar.position.x = 0; isPaused = false; 
                 } 
             }
@@ -552,9 +352,9 @@
                 const isCorrect = e.target.getAttribute('data-correct') === 'true';
                 if (currentQuizMode === 'article') {
                     if(isCorrect) { 
-                        score += 10; showToast("Jawaban Tepat! +10 Poin.", "success"); 
+                        score += 10; showToast("Jawaban tepat! +10 poin.", "success"); 
                     } else { 
-                        score -= 10; showToast("Jawaban Salah! -10 Poin.", "error"); 
+                        score -= 10; showToast("Jawaban salah! -10 poin.", "error"); 
                     }
                     document.getElementById('score-ui').innerText = score;
                     qOverlay.style.display = 'none'; currentQuizMode = ''; isPaused = false;
@@ -681,6 +481,4 @@
             camera.updateProjectionMatrix(); 
         });
         
-    </script>
-</body>
-</html>
+    
