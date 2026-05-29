@@ -221,9 +221,9 @@
     .back-btn {
       width: 40px;
       height: 40px;
-      border-radius: 12px;
+      border-radius: 5px;
       background: #f8f5f1;
-      border: 1px solid rgba(63, 58, 54, 0.12);
+      border: 1px solid rgba(24, 24, 23, 0.497);
       display: inline-flex;
       align-items: center;
       justify-content: center;
