@@ -166,7 +166,7 @@
 
     {{-- P1 --}}
     <div class="td-card p1 reveal-item delay-2">
-        <div class="td-crown">♛</div>
+        <div class="podium-crown"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l3-10 4 6 4-6 3 10H3z"/><path d="M7 14h10"/></svg></div>
         <div class="td-pos">P1</div>
         <div class="td-avatar gold">{{ strtoupper(substr($topDrivers[0]->user->username, 0, 2)) }}</div>
         <div class="td-name">{{ $topDrivers[0]->user->username }}</div>
@@ -193,7 +193,7 @@
 
     @else
     <div class="td-empty">
-      <p>Belum ada driver yang terdaftar. Jadilah yang pertama! 🏁</p>
+      <p>Belum ada driver yang terdaftar. Jadilah yang pertama!</p>
     </div>
     @endif
 

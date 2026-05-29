@@ -32,7 +32,7 @@
             background: var(--glass-bg);
             backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
             border: 1px solid var(--glass-border);
-            border-radius: 24px; padding: 20px 25px;
+            border-radius: 5px; padding: 20px 25px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.05);
             color: var(--text-dark); min-width: 150px;
         }
@@ -46,7 +46,7 @@
         .hud-value { font-weight: 800; color: var(--text-dark); font-size: 18px; }
         
         /* Bar Bensin Modern */
-        .gas-bar-container { width: 100%; height: 12px; background: rgba(0,0,0,0.1); border-radius: 10px; overflow: hidden; margin-top: 5px; box-shadow: inset 0 2px 4px rgba(0,0,0,0.1); }
+        .gas-bar-container { width: 100%; height: 12px; background: rgba(0,0,0,0.1); border-radius: 5px; overflow: hidden; margin-top: 5px; box-shadow: inset 0 2px 4px rgba(0,0,0,0.1); }
         .gas-bar-fill { height: 100%; width: 100%; background: linear-gradient(90deg, #55efc4, #00b894); transition: width 0.3s, background 0.3s; }
 
         /* Tombol Pause (Kanan Bawah - Speaker Dihapus) */
@@ -70,7 +70,7 @@
         }
         .d-btn {
             background: rgba(255, 255, 255, 0.5); backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.8); border-radius: 18px;
+            border: 1px solid rgba(255,255,255,0.8); border-radius: 20px;
             display: flex; justify-content: center; align-items: center;
             font-size: 28px; color: #333; cursor: pointer;
             box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: 0.1s;
@@ -90,7 +90,7 @@
         }
         .toast {
             background: rgba(45, 52, 54, 0.95); color: white; padding: 12px 25px;
-            border-radius: 50px; font-weight: 600; font-size: 14px;
+            border-radius: 5px; font-weight: 600; font-size: 14px;
             box-shadow: 0 10px 25px rgba(0,0,0,0.2);
             opacity: 0; transform: translateY(-20px);
             transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
@@ -110,14 +110,14 @@
         }
         .modal-card {
             background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(255,255,255,0.85));
-            border: 1px solid white; border-radius: 30px; padding: 40px;
+            border: 1px solid white; border-radius: 5px; padding: 40px;
             width: 85%; max-width: 550px; box-shadow: 0 20px 50px rgba(0,0,0,0.2); text-align: center;
         }
         .modal-card h2 { margin: 0 0 15px 0; font-size: 28px; color: var(--text-dark); letter-spacing: -0.5px; }
         .modal-card p { font-size: 16px; color: #636e72; line-height: 1.6; margin-bottom: 25px; }
         
         .btn-primary {
-            background: var(--accent-green); color: white; border: none; border-radius: 14px;
+            background: var(--accent-green); color: white; border: none; border-radius: 5px;
             padding: 15px 35px; font-size: 18px; font-weight: 600; cursor: pointer;
             box-shadow: 0 10px 20px rgba(0, 184, 148, 0.3); transition: 0.2s; font-family: 'Poppins', sans-serif;
         }
@@ -125,7 +125,7 @@
 
         .quiz-opts { display: flex; flex-direction: column; gap: 12px; }
         .quiz-btn {
-            background: white; border: 2px solid #dfe6e9; border-radius: 16px;
+            background: white; border: 2px solid #dfe6e9; border-radius: 5px;
             padding: 16px; font-size: 15px; font-weight: 600; color: var(--text-dark);
             cursor: pointer; transition: 0.2s; text-align: left; font-family: 'Poppins', sans-serif;
             box-shadow: 0 4px 6px rgba(0,0,0,0.02);

@@ -30,7 +30,7 @@
     <!-- LEFT: FORM -->
     <div class="contact-form-wrapper neumorphic">
       <div class="form-header">
-        <h2>Pesen Kami</h2>
+        <h2>Pesan Buat Kami</h2>
         <p>Isi detail singkat, kami akan bantu jawab dengan jelas dan cepat.</p>
       </div>
 
