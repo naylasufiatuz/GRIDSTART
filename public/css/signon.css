@@ -324,7 +324,7 @@ input:focus {
   justify-content: center;
   gap: 8px;
   padding: 12px 16px;
-  border-radius: 10px;
+  border-radius: 5px;
   font-size: 13px;
   font-weight: 600;
   font-family: 'Inter', 'Segoe UI', sans-serif;
