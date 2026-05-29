@@ -2263,7 +2263,6 @@ transform:translateY(0);
     font-size: 13px;
     letter-spacing: 1px;
     transition: all 0.3s ease;
-    border-radius: 4px;
 }
 
 .finish-btn.next {
