@@ -2,15 +2,15 @@
 
 :root {
   --bg: #eee7db;
-  --navbar-dark: #2a2622;
+  --navbar-dark: #3f3a36;
   --sidebar: var(--navbar-dark);
   --sidebar-alt: #2f3338;
-  --surface: #000000;
+  --surface: #3f3a36;
   --surface2: #f4ede4;
   --border: rgba(77, 67, 55, 0.12);
-  --text: #000000;
+  --text: #3f3a36;
   --muted: #7d7365;
-  --accent: #3b3229;
+  --accent: #3f3a36;
   --accent2: #d4bfa7;
   --danger: #c94d4d;
   --success: #2f7b58;
