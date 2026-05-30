@@ -1,12 +1,26 @@
 <!-- FOOTER -->
 <footer class="footer">
+  
+  <!-- MARQUEE TAGLINE -->
+  <div class="footer-marquee">
+    <div class="marquee-content">
+      <span>Learn • Play • Drive Safe</span>
+      <span>Learn • Play • Drive Safe</span>
+      <span>Learn • Play • Drive Safe</span>
+      <span>Learn • Play • Drive Safe</span>
+      <span>Learn • Play • Drive Safe</span>
+      <span>Learn • Play • Drive Safe</span>
+      <span>Learn • Play • Drive Safe</span>
+      <span>Learn • Play • Drive Safe</span>
+    </div>
+  </div>
+
   <div class="footer-container">
     
     <!-- GRID 1: BRANDING -->
     <div class="footer-section">
       <div class="footer-logo">
         <span class="gs-logo">Grid<span>Start</span></span>
-        <p class="tagline">Learn • Play • Drive Safe</p>
       </div>
       <p class="footer-desc">Edukasi keselamatan berkendara dengan pendekatan motorsport. Dari START GRID sampai FINISH LINE.</p>
     </div>
