@@ -2765,17 +2765,12 @@ transform:translateY(0);
     text-decoration: none;
     font-size: 13px;
     letter-spacing: 1px;
-<<<<<<< Updated upstream
     transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     font-weight: 600;
     text-transform: uppercase;
-=======
-    transition: all 0.3s ease;
-    border-radius: 4px;
->>>>>>> Stashed changes
 }
 
 .pit-stop-section .btn.next {
