@@ -82,5 +82,30 @@ el.classList.add('show');
 window.addEventListener('scroll',showOnScroll);
 window.addEventListener('load',showOnScroll);
 </script>
+<!-- SweetAlert2 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+@if(session('success'))
+  <script>
+    Swal.fire({
+      icon: 'success',
+      title: 'Berhasil!',
+      text: "{{ session('success') }}",
+      confirmButtonColor: '#10b981'
+    });
+  </script>
+@endif
+
+@if(session('error'))
+  <script>
+    Swal.fire({
+      icon: 'error',
+      title: 'Terjadi Kesalahan',
+      text: "{{ session('error') }}",
+      confirmButtonColor: '#ef4444'
+    });
+  </script>
+@endif
+
 </body>
 </html>

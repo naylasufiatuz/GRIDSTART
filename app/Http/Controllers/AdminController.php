@@ -22,13 +22,29 @@ class AdminController extends Controller
         $topScore        = GameScore::max('score') ?? 0;
         $totalPesans     = Pesan::count();
 
-        return view('admin.dashboard', compact('totalUsers', 'totalGameScores', 'topScore', 'totalPesans'));
+        // Recent Activities
+        $recentUsers = User::latest()->take(5)->get();
+        $recentScores = GameScore::with('user:id_user,username')->latest()->take(5)->get();
+        $recentPesans = Pesan::latest()->take(5)->get();
+
+        return view('admin.dashboard', compact(
+            'totalUsers', 'totalGameScores', 'topScore', 'totalPesans',
+            'recentUsers', 'recentScores', 'recentPesans'
+        ));
     }
 
     // ── API USERS ──
 public function apiUsers()
 {
-    $users = User::select('id_user', 'username', 'email', 'created_at')->get();
+    $users = User::with('gameScore')->get()->map(function($user) {
+        return [
+            'id_user' => $user->id_user,
+            'username' => $user->username,
+            'email' => $user->email,
+            'point' => $user->gameScore->score ?? 0,
+            'created_at' => $user->created_at,
+        ];
+    });
     return response()->json(['data' => $users]);
 }
 
@@ -46,6 +62,10 @@ public function apiUsers()
         'password' => Hash::make($request->password),
     ]);
 
+    if ($request->has('point')) {
+        $user->gameScore()->create(['score' => $request->point]);
+    }
+
     return response()->json(['message' => 'User berhasil dibuat.', 'data' => $user], 201);
 }
 
@@ -62,6 +82,10 @@ public function apiUpdateUser(Request $request, $id)
 
     if ($request->filled('password')) {
         $user->update(['password' => Hash::make($request->password)]);
+    }
+
+    if ($request->has('point')) {
+        $user->gameScore()->updateOrCreate([], ['score' => $request->point]);
     }
 
     return response()->json(['message' => 'User berhasil diupdate.', 'data' => $user]);

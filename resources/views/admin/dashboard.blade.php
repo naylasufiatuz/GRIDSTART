@@ -93,7 +93,27 @@
             </div>
           </div>
           <div class="activity-body">
-            <p>Konten aktivitas terbaru akan ditampilkan di sini setelah data tersedia.</p>
+            @if($recentUsers->isEmpty() && $recentScores->isEmpty() && $recentPesans->isEmpty())
+              <p>Belum ada aktivitas terbaru.</p>
+            @else
+              <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 12px;">
+                @foreach($recentUsers as $u)
+                  <li style="padding: 10px; background: var(--bg-hover); border-radius: 6px; border-left: 4px solid #3b82f6;">
+                    <strong style="color: #3b82f6;">User Baru</strong>: {{ $u->username }} mendaftar ({{ $u->created_at->diffForHumans() }})
+                  </li>
+                @endforeach
+                @foreach($recentScores as $s)
+                  <li style="padding: 10px; background: var(--bg-hover); border-radius: 6px; border-left: 4px solid #10b981;">
+                    <strong style="color: #10b981;">Skor Baru</strong>: {{ $s->user->username ?? 'Unknown' }} mendapat skor {{ $s->score }} ({{ $s->created_at->diffForHumans() }})
+                  </li>
+                @endforeach
+                @foreach($recentPesans as $p)
+                  <li style="padding: 10px; background: var(--bg-hover); border-radius: 6px; border-left: 4px solid #f59e0b;">
+                    <strong style="color: #f59e0b;">Pesan Baru</strong>: Dari {{ $p->name }} ({{ $p->created_at->diffForHumans() }})
+                  </li>
+                @endforeach
+              </ul>
+            @endif
           </div>
         </div>
         <div class="detail-card">
@@ -137,7 +157,7 @@
         <table>
           <thead>
             <tr>
-<th>ID</th><th>Username</th><th>Email</th><th>Joined</th><th>Action</th>
+ <th>ID</th><th>Username</th><th>Email</th><th>Point</th><th>Joined</th><th>Action</th>
             </tr>
           </thead>
           <tbody id="users-tbody">

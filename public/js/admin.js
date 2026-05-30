@@ -30,13 +30,13 @@ function closeModal(id) { document.getElementById(id).classList.remove('open'); 
 // ══════════════════
 async function loadUsers() {
   const tbody = document.getElementById('users-tbody');
-  tbody.innerHTML = '<tr class="loading-row"><td colspan="6">Loading...</td></tr>';
+  tbody.innerHTML = '<tr class="loading-row"><td colspan="7">Loading...</td></tr>';
 
-const res  = await fetch(BASE + '/users');
+  const res  = await fetch(BASE + '/users');
   const json = await res.json();
 
   if (!json.data.length) {
-    tbody.innerHTML = '<tr class="loading-row"><td colspan="6">Tidak ada data.</td></tr>';
+    tbody.innerHTML = '<tr class="loading-row"><td colspan="7">Tidak ada data.</td></tr>';
     return;
   }
 
@@ -45,10 +45,11 @@ const res  = await fetch(BASE + '/users');
       <td><span class="badge">#${u.id_user}</span></td>
       <td>${u.username}</td>
       <td>${u.email}</td>
+      <td><strong style="color: var(--accent);">${u.point} pts</strong></td>
       <td>${u.created_at ? u.created_at.substring(0,10) : '-'}</td>
       <td>
         <div class="action-btns">
-          <button class="btn-edit" onclick="editUser(${u.id_user},'${u.username}','${u.email}',${u.point})">Edit</button>
+          <button class="btn-edit" onclick="editUser(${u.id_user},'${u.username}','${u.email}',${u.point || 0})">Edit</button>
           <button class="btn-del"  onclick="deleteUser(${u.id_user})">Hapus</button>
         </div>
       </td>

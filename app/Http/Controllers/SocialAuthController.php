@@ -15,7 +15,7 @@ class SocialAuthController extends Controller
             abort(404);
         }
 
-        $driver = Socialite::driver($provider);
+        $driver = Socialite::driver($provider)->stateless();
         if (config('app.env') === 'local') {
             $driver->setHttpClient(new \GuzzleHttp\Client(['verify' => false]));
         }
@@ -29,7 +29,7 @@ class SocialAuthController extends Controller
         }
 
         try {
-            $driver = Socialite::driver($provider);
+            $driver = Socialite::driver($provider)->stateless();
             if (config('app.env') === 'local') {
                 $driver->setHttpClient(new \GuzzleHttp\Client(['verify' => false]));
             }
@@ -67,8 +67,9 @@ class SocialAuthController extends Controller
             }
 
             Auth::login($user);
+            request()->session()->regenerate();
 
-            return redirect('/app');
+            return redirect('/app')->with('success', 'Login dengan Google berhasil!');
 
         } catch (\Exception $e) {
             return redirect('/login')->with('error', $e->getMessage());

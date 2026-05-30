@@ -8,6 +8,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
     <link rel="stylesheet" href="{{ asset('css/login.css') }}"/>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
 
@@ -49,12 +50,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <p class="badge">User Login</p>
     <h1>Mulai Belajar</h1>
 
-    @if(session('error'))
+@if(session('error'))
   <div class="alert alert-error">{{ session('error') }}</div>
+  <script>
+    Swal.fire({
+      icon: 'error',
+      title: 'Oops...',
+      text: "{{ session('error') }}",
+      confirmButtonColor: '#ff3b3b'
+    });
+  </script>
 @endif
 
 @if(session('success'))
   <div class="alert alert-success">{{ session('success') }}</div>
+  <script>
+    Swal.fire({
+      icon: 'success',
+      title: 'Berhasil',
+      text: "{{ session('success') }}",
+      confirmButtonColor: '#10b981'
+    });
+  </script>
 @endif
 
     <form method="POST" action="{{ route('login.post') }}">

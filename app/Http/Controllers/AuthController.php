@@ -50,22 +50,31 @@ class AuthController extends Controller
             'password' => 'required|string',
         ]);
 
-        // Cek admin
-        $adminUser = User::where('username', 'admin')->first();
+        $user = User::where('username', $request->username)->first();
 
-        if ($adminUser && $request->username === 'admin' && Hash::check($request->password, $adminUser->password)) {
-            Auth::login($adminUser);
-            $request->session()->regenerate();
-            return redirect()->route('admin.dashboard');
+        if (!$user) {
+            return back()->with('error', 'Username belum terdaftar.');
+        }
+
+        // Cek admin
+        if ($user->username === 'admin') {
+            if (Hash::check($request->password, $user->password)) {
+                Auth::login($user);
+                $request->session()->regenerate();
+                return redirect()->route('admin.dashboard');
+            } else {
+                return back()->with('error', 'Password tidak cocok.');
+            }
         }
 
         // Login user biasa
-        if (Auth::attempt(['username' => $request->username, 'password' => $request->password])) {
+        if (Hash::check($request->password, $user->password)) {
+            Auth::login($user);
             $request->session()->regenerate();
             return redirect()->intended(route('app'))->with('success', 'Login berhasil!');
         }
 
-        return back()->withErrors(['username' => 'Username atau password salah.']);
+        return back()->with('error', 'Password tidak cocok.');
     }
 
     // ── LOGOUT ──

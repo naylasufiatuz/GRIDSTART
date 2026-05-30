@@ -2,6 +2,9 @@
 
 @section('content')
 
+<!-- Load SweetAlert2 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <!-- CONTACT HERO -->
 <section class="contact-hero">
   <div class="contact-hero-content fade-up">
@@ -240,6 +243,13 @@
         successMessage.style.display = 'block';
         contactForm.reset();
         
+        Swal.fire({
+          icon: 'success',
+          title: 'Terkirim!',
+          text: result.message || 'Pesan Anda berhasil terkirim! Terima kasih!',
+          confirmButtonColor: '#10b981'
+        });
+
         setTimeout(() => {
           contactForm.style.display = 'block';
           successMessage.style.display = 'none';

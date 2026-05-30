@@ -38,7 +38,7 @@ class User extends Authenticatable
 
     public function gameScore()
     {
-        return $this->hasOne(GameScore::class);
+        return $this->hasOne(GameScore::class, 'user_id', 'id_user');
     }
 }
 
