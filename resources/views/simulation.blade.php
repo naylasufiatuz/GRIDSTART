@@ -34,7 +34,7 @@
         <div class="modal-card">
             <h2>START GRID</h2>
             <p><strong>Pengenalan Keselamatan Berkendara</strong><br><br>Persiapkan mental dan pahami prinsip <em>Safety First</em>. Hindari kelalaian, dan selalu utamakan keselamatan di atas kecepatan!</p>
-            <button id="btn-start-game" class="btn-primary">TANCAP GAS!</button>
+            <button id="btn-start-game" class="btn-primary">UDAH SIAP? AYO GAS!</button>
         </div>
     </div>
 

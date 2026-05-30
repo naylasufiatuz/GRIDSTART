@@ -5,8 +5,7 @@
       height: 100vh;
       display: flex;
       overflow: hidden;
-      background: linear-gradient(to right, #f5ede6 50%, #d9e8e4 50%);
-    }
+background: linear-gradient(98deg, #F2ECE5 57.47%, #D1DDD3 72.25%, #D1DDD3 87.02%, #DAE5EA 93.53%);    }
 
     /* ── LEFT SIDEBAR ── */
     .left-sidebar {

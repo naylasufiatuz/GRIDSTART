@@ -23,8 +23,7 @@ html {
 body {
   min-height: 100vh;
   color: var(--taupe-dark);
-  background: linear-gradient(135deg, #d0c69d 0%, #bcc4c0 50%, #c2b49a 100%);
-  background-position: top center;
+background: linear-gradient(98deg, #F2ECE5 57.47%, #D1DDD3 72.25%, #D1DDD3 87.02%, #DAE5EA 93.53%);  background-position: top center;
   background-size: cover;
   background-repeat: no-repeat;
 }
@@ -1246,7 +1245,7 @@ body {
 .safety-card {
     padding: 30px;
     background: white;
-    border-radius: 12px;
+    border-radius: 5px;
     border-left: 5px solid #c9ada7;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
     transition: all 0.3s ease;
@@ -1491,7 +1490,7 @@ color:#5c5550;
 .info-box{
 background:white;
 padding:35px;
-border-radius:22px;
+border-radius:5px;
 box-shadow:0 12px 30px rgba(0,0,0,0.08);
 }
 
@@ -1549,7 +1548,7 @@ background:#e34b3d;
 .side-card{
 background:white;
 height:130px;
-border-radius:18px;
+border-radius:5px;
 display:flex;
 align-items:center;
 justify-content:center;
@@ -1634,7 +1633,6 @@ color:#777;
     font-size:13px;
     letter-spacing:1px;
     transition: all 0.3s ease;
-    border-radius: 8px;
 }
 
 .btn.next{
@@ -1749,7 +1747,7 @@ transform:translateY(0);
 .step-card {
     background: white;
     padding: 25px;
-    border-radius: 12px;
+    border-radius: 5px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
@@ -1795,7 +1793,7 @@ transform:translateY(0);
 .example-box {
     background: white;
     height: 250px;
-    border-radius: 12px;
+    border-radius: 5px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
     transition: transform 0.3s ease;
 }
@@ -1903,7 +1901,7 @@ transform:translateY(0);
     width: 100%;
     height: 200px;
     background: white;
-    border-radius: 12px;
+    border-radius: 5px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
@@ -1954,7 +1952,6 @@ transform:translateY(0);
     font-size: 13px;
     letter-spacing: 1px;
     transition: all 0.3s ease;
-    border-radius: 4px;
 }
 
 .pit-stop-section .btn.next {
@@ -2676,12 +2673,6 @@ transform:translateY(0);
     padding-left: 88px;
     padding-top: 74px;
     position: relative;
-    background: linear-gradient(
-        180deg,
-        var(--cream-bg) 0%,
-        #f0ebe6 50%,
-        #ece7e0 100%
-    );
     overflow: hidden;
 }
 
@@ -2689,11 +2680,7 @@ transform:translateY(0);
     content: "";
     position: absolute;
     inset: 0;
-    background: radial-gradient(
-        circle at bottom center,
-        rgba(255, 255, 255, 0.65),
-        transparent 60%
-    );
+
     pointer-events: none;
 }
 
@@ -2741,12 +2728,6 @@ transform:translateY(0);
 /* CONTACT SECTION */
 .contact-section {
     padding: 80px 60px;
-    background: linear-gradient(
-        180deg,
-        #ece7e0 0%,
-        #e8e3da 50%,
-        #e4dfd6 100%
-    );
     min-height: 100vh;
 }
 
@@ -2754,7 +2735,7 @@ transform:translateY(0);
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 80px;
-    max-width: 1400px;
+
     margin: 0 auto;
 }
 
@@ -3167,12 +3148,6 @@ select.form-input {
 /* ================= FAQ SECTION ================= */
 .faq-section {
     padding: 100px 60px;
-    background: linear-gradient(
-        180deg,
-        #e4dfd6 0%,
-        #dfdad0 50%,
-        #dbd5ca 100%
-    );
 }
 
 .faq-container {
