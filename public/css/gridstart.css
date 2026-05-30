@@ -2599,12 +2599,7 @@ transform:translateY(0);
     margin-bottom: 16px;
 }
 
-.rl-eyebrow-line {
-    width: 28px;
-    height: 1.5px;
-    background: #E10600;
-    flex-shrink: 0;
-}
+
 
 /* CAROUSEL WRAPPER */
 .pit-stop-carousel-wrapper {
