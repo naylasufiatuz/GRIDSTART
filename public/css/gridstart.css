@@ -179,27 +179,24 @@ background: linear-gradient(98deg, #F2ECE5 57.47%, #D1DDD3 72.25%, #D1DDD3 87.02
   opacity: 1;
   transform: translateY(0) scale(1);
 }
-
 /* CTA — border & warna accent race (tema GridStart) */
 .navbar-cta {
   flex-shrink: 0;
   padding: 10px 22px;
-  border: 1px solid rgba(203, 184, 157, 0.6);
-  border-radius: 2px;
+  border: 1.5px solid rgba(255, 255, 255, 0.8);
   background: transparent;
   font-family: 'Montserrat', sans-serif;
   font-size: 12px;
-  font-weight: 700;
+  font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   text-decoration: none;
-  color: var(--accent-race);
+  color: #fff;
   transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
 }
 
 .navbar-cta:hover {
-  background: var(--accent-race);
-  border-color: var(--accent-race);
+  background: #fff;
   color: var(--navbar-dark);
 }
 
@@ -982,7 +979,7 @@ background: linear-gradient(98deg, #F2ECE5 57.47%, #D1DDD3 72.25%, #D1DDD3 87.02
   color: var(--taupe-dark);
   text-decoration: none;
   font-size: 13px;
-  font-weight: 700;
+  font-weight: 600;
   letter-spacing: 2px;
   text-transform: uppercase;
   position: relative;
@@ -2149,33 +2146,41 @@ color:#777;
 }
 
 .btn{
-    padding:12px 26px;
+    padding:12px 32px;
     border:1.5px solid #3f3a36;
     text-decoration:none;
     font-size:13px;
     letter-spacing:1px;
-    transition: all 0.3s ease;
+    transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    text-transform: uppercase;
 }
 
 .btn.next{
-    background: var(--taupe-dark);
+    background: #3f3a36;
     color: white;
-    border:none;
-    padding: 12px 32px;
+    border: 1.5px solid #3f3a36;
 }
 
 .btn.back {
+    background: transparent;
     color: #3f3a36;
+    border: 1.5px solid #3f3a36;
 }
 
 .btn.next:hover {
-    background: var(--navbar-dark);
-    transform: translateY(-2px);
+    background: white;
+    color: #3f3a36;
+    border-color: #3f3a36;
 }
 
 .btn.back:hover {
-    background: #f5f2ee;
-    transform: translateY(-2px);
+    background: #3f3a36;
+    color: white;
+    border-color: #3f3a36;
 }
 
 /* ANIMATION */
@@ -2472,28 +2477,36 @@ transform:translateY(0);
     text-decoration: none;
     font-size: 13px;
     letter-spacing: 1px;
-    transition: all 0.3s ease;
+    transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    text-transform: uppercase;
 }
 
 .pit-stop-section .btn.next {
-    background: var(--navbar-dark);
+    background: #3f3a36;
     color: white;
-    border: none;
-    padding: 12px 32px;
+    border: 1.5px solid #3f3a36;
 }
 
 .pit-stop-section .btn.back {
-    background: white;
+    background: transparent;
     color: #3f3a36;
+    border: 1.5px solid #3f3a36;
 }
 
 .pit-stop-section .btn.next:hover {
-    transform: translateY(-2px);
+    background: white;
+    color: #3f3a36;
+    border-color: #3f3a36;
 }
 
 .pit-stop-section .btn.back:hover {
-    background: #f0f0f0;
-    transform: translateY(-2px);
+    background: #3f3a36;
+    color: white;
+    border-color: #3f3a36;
 }
 
 /* RESPONSIVE FOR PIT STOP */
@@ -2827,27 +2840,36 @@ transform:translateY(0);
     text-decoration: none;
     font-size: 13px;
     letter-spacing: 1px;
-    transition: all 0.3s ease;
+    transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    text-transform: uppercase;
 }
 
 .finish-btn.next {
-    background: var(--navbar-dark);
+    background: #3f3a36;
     color: white;
-    padding: 12px 32px;
+    border: 1.5px solid #3f3a36;
 }
 
 .finish-btn.back {
-    background: white;
+    background: transparent;
     color: #3f3a36;
+    border: 1.5px solid #3f3a36;
 }
 
 .finish-btn.next:hover {
-    transform: translateY(-2px);
+    background: white;
+    color: #3f3a36;
+    border-color: #3f3a36;
 }
 
 .finish-btn.back:hover {
-    background: #f0f0f0;
-    transform: translateY(-2px);
+    background: #3f3a36;
+    color: white;
+    border-color: #3f3a36;
 }
 
 /* RESPONSIVE FOR FINISH LINE */
