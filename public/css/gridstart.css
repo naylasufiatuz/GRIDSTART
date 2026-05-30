@@ -89,14 +89,14 @@ body {
   left: 50%;
   transform: translateX(-50%);
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  gap: 4px;
+  gap: 8px;
   text-decoration: none;
 }
 
 .logo-img {
-  height: 35px;
+  height: 28px;
   width: auto;
   object-fit: contain;
   transition: transform 0.3s ease;
@@ -109,9 +109,9 @@ body {
 
 .logo-name {
   font-family: 'Montserrat', sans-serif;
-  font-size: 9px;
+  font-size: 15px;
   font-weight: 700;
-  letter-spacing: 4px;
+  letter-spacing: 2px;
   text-transform: uppercase;
   color: #f7f3ee;
   line-height: 1;
@@ -148,11 +148,14 @@ body {
   height: 100vh;
   display: flex;
   align-items: center;
-  padding-left: 88px;
-  padding-top: 74px;
+  justify-content: center;
+  text-align: center;
   position: relative;
-  background: transparent;
+  background: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)), url('/images/hero_bg.png');
+  background-size: cover;
+  background-position: center;
   overflow: hidden;
+  color: #fff;
 }
 
 /* efek cahaya halus */
@@ -162,30 +165,38 @@ body {
 
 /* Content Hero */
 .hero-content {
-  max-width: 680px;
+  max-width: 800px;
   z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  padding: 0 20px;
 }
 
 .hero-content small {
   font-size: 15px;
   letter-spacing: 3px;
-  color: var(--taupe-soft);
+  color: rgba(255, 255, 255, 0.7);
   display: block;
   margin-bottom: 18px;
 }
 
 .hero-content h1 {
-  font-size: 72px;
-  line-height: 1;
-  font-weight: 800;
-  margin-bottom: 22px;
+  font-size: 80px;
+  line-height: 1.1;
+  font-weight: 700;
+  margin-bottom: 24px;
+  color: #fff;
+  font-family: 'Montserrat', sans-serif;
 }
 
 .hero-content p {
   font-size: 18px;
-  line-height: 1.7;
-  max-width: 560px;
-  color: var(--taupe-soft);
+  line-height: 1.6;
+  max-width: 650px;
+  color: rgba(255, 255, 255, 0.85);
   margin-bottom: 42px;
 }
 
@@ -195,15 +206,51 @@ body {
   padding: 14px 40px;
   text-decoration: none;
   font-size: 13px;
+  font-weight: 600;
   letter-spacing: 2px;
-  border: 1.5px solid var(--taupe-dark);
-  color: var(--taupe-dark);
-  transition: all 0.35s ease;
+  border: 1.5px solid rgba(255, 255, 255, 0.8);
+  color: #fff;
+  background: transparent;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
 }
 
 .hero-content a:hover {
-  background-color: var(--taupe-dark);
-  color: var(--cream-bg);
+  background-color: #fff;
+  color: #000;
+  border-color: #fff;
+}
+
+.hero-top-left {
+  position: absolute;
+  top: 100px;
+  left: 48px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  color: rgba(255, 255, 255, 0.7);
+  text-transform: uppercase;
+}
+
+.hero-bottom-left {
+  position: absolute;
+  bottom: 40px;
+  left: 48px;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.hero-bottom-right {
+  position: absolute;
+  bottom: 40px;
+  right: 48px;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 1.5px;
+  color: rgba(255, 255, 255, 0.6);
+  text-transform: uppercase;
 }
 
 /* ================= LEADERBOARD ================= */

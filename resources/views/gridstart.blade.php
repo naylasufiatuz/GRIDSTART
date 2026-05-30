@@ -3,15 +3,19 @@
 @section('content')
 
 <section class="hero">
+  <div class="hero-top-left">SAFETY FIRST - F1 MINDSET</div>
+  
   <div class="hero-content fade-up">
-    <small>Learn · Play · Drive Safe</small>
     <h1>Grid Start</h1>
     <p>
-      Edukasi keselamatan berkendara dengan pendekatan motorsport.
+      Edukasi keselamatan berkendara dengan pendekatan motorsport.<br>
       Belajar dari START GRID sampai FINISH LINE.
     </p>
     <a href="#roadmap">Jelajahi Roadmap</a>
   </div>
+
+  <div class="hero-bottom-left">6 Learning Stages</div>
+  <div class="hero-bottom-right">Drive Safe - Learn - Play - Race</div>
 </section>
 
 <section class="roadmap-section">
