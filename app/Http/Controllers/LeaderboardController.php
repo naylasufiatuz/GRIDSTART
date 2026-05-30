@@ -13,22 +13,53 @@ class LeaderboardController extends Controller
      */
     public function index()
     {
-        // 1. Ambil Top 10 berdasarkan Skor Tertinggi
+        // Ambil SEMUA skor berdasarkan poin tertinggi
         $byPoints = GameScore::with('user')
                         ->orderBy('score', 'desc')
-                        ->orderBy('created_at', 'asc') // Jika skor sama, yang duluan main di atas
-                        ->take(10)
+                        ->orderBy('created_at', 'asc')
                         ->get();
 
-        // 2. Ambil Top 10 berdasarkan Waktu Tercepat (Fastest Lap)
+        // Ambil SEMUA skor berdasarkan waktu tercepat
         $byTime = GameScore::with('user')
                         ->whereNotNull('best_time')
-                        ->orderBy('best_time', 'asc') // Mengurutkan string waktu (MM:SS.ms)
-                        ->take(10)
+                        ->orderBy('best_time', 'asc')
                         ->get();
 
-        // Lempar variabel ke view leaderboard
-        return view('leaderboard', compact('byPoints', 'byTime'));
+        // Data user yang sedang login
+        $userBestPoint = null;
+        $userPointRank = null;
+        $userBestTime  = null;
+        $userTimeRank  = null;
+
+        if (Auth::check()) {
+            $uid = Auth::user()->id_user;
+
+            // Skor poin terbaik user
+            $userBestPoint = GameScore::where('user_id', $uid)
+                                ->orderBy('score', 'desc')
+                                ->first();
+
+            if ($userBestPoint) {
+                $userPointRank = GameScore::where('score', '>', $userBestPoint->score)->count() + 1;
+            }
+
+            // Waktu terbaik user
+            $userBestTime = GameScore::where('user_id', $uid)
+                                ->whereNotNull('best_time')
+                                ->orderBy('best_time', 'asc')
+                                ->first();
+
+            if ($userBestTime) {
+                $userTimeRank = GameScore::whereNotNull('best_time')
+                                ->where('best_time', '<', $userBestTime->best_time)->count() + 1;
+            }
+        }
+
+        return view('leaderboard', compact(
+            'byPoints', 'byTime',
+            'userBestPoint', 'userPointRank',
+            'userBestTime', 'userTimeRank'
+        ));
     }
 
     /**

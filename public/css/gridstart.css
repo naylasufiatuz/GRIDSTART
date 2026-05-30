@@ -3919,3 +3919,136 @@ a.roadmap-item:hover {
   text-decoration: none;
   color: inherit;
 }
+
+/* ── My Standing Strip ── */
+.my-standing {
+  margin-bottom: 24px;
+}
+.my-standing-inner {
+  background: #fff;
+  border: 1px solid #ebe7e1;
+  border-left: 3px solid #cbb89d;
+  border-radius: 4px;
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+.my-standing-pos {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 56px;
+}
+.pos-number {
+  font-size: 26px;
+  font-weight: 800;
+  color: var(--taupe-dark);
+  line-height: 1;
+}
+.pos-cap {
+  font-size: 10px;
+  color: var(--taupe-soft);
+  letter-spacing: 0.5px;
+  margin-top: 2px;
+}
+.my-standing-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.my-standing-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--taupe-dark);
+  margin: 0;
+}
+.my-standing-detail {
+  font-size: 12px;
+  color: var(--taupe-soft);
+  margin: 2px 0 0;
+}
+.my-standing-empty {
+  justify-content: center;
+  border-left-color: #ddd;
+}
+.my-standing-empty p {
+  margin: 0;
+  font-size: 13px;
+  color: var(--taupe-soft);
+}
+.my-standing-empty a {
+  color: var(--taupe-dark);
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+/* ── Expand / Collapse Button ── */
+.expand-wrap {
+  text-align: center;
+  margin: 20px 0 8px;
+}
+.expand-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 22px;
+  border: 1.5px solid var(--taupe-dark);
+  background: transparent;
+  color: var(--taupe-dark);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.2s, color 0.2s;
+}
+.expand-btn:hover {
+  background: var(--taupe-dark);
+  color: #fff;
+}
+.expand-arrow {
+  width: 15px;
+  height: 15px;
+  transition: transform 0.25s ease;
+}
+.expand-note {
+  display: block;
+  font-size: 11px;
+  color: var(--taupe-soft);
+  margin-top: 6px;
+}
+
+/* ── Expandable Table Container ── */
+.expandable-table {
+  margin-top: 20px;
+}
+
+/* ── Highlighted Row (User) ── */
+.row-me td {
+  background: rgba(203,184,157,0.10);
+}
+.row-me td:first-child {
+  box-shadow: inset 3px 0 0 #cbb89d;
+}
+
+/* ── Empty table cell ── */
+.empty-td {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--taupe-soft);
+  font-style: italic;
+}
+
+/* ── Responsive ── */
+@media (max-width: 600px) {
+  .my-standing-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .expand-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
