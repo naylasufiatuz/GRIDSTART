@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- font -->
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800;900&display=swap" rel="stylesheet">
 
     <!-- css -->
     <link rel="stylesheet" href="{{ asset('css/gridstart.css') }}">
@@ -14,26 +14,36 @@
 
 <body>
 
-<!-- NAVBAR -->
-<nav class="navbar">
-  <ul class="nav-menu">
-    <li><a href="/">Roadmap</a></li>
-    <li><a href="/simulasi">Simulasi</a></li>
-    <li><a href="/leaderboard">Leaderboard</a></li>
-    <li><a href="/contact">Contact</a></li>
-  </ul>
+<!-- NAVBAR: kiri = menu | tengah = logo | kanan = CTA (seperti referensi) -->
+<nav class="navbar" aria-label="Main navigation">
+  <div class="navbar-inner">
+    <div class="navbar-zone navbar-zone--links">
+      <ul class="nav-menu">
+        <li><a href="/">Roadmap</a></li>
+        <li><a href="/simulasi">Simulasi</a></li>
+        <li><a href="/leaderboard">Leaderboard</a></li>
+        <li><a href="/contact">Contact</a></li>
+      </ul>
+    </div>
 
-  <a href="/" class="logo-center">
-    <img src="{{ asset('images/GridStart_logo.png') }}" alt="GridStart" class="logo-img"/>
-    <span class="logo-name">GRID<em>START</em></span>
-  </a>
+    <a href="/" class="navbar-brand" aria-label="GridStart — Home">
+      <span class="navbar-brand__swap">
+        <img src="{{ asset('images/GridStart_logo.png') }}" alt="" class="navbar-brand__mark" width="40" height="40" />
+        <span class="navbar-brand__wordmark" aria-hidden="true">
+          <span class="navbar-brand__grid">Grid</span><span class="navbar-brand__start">Start</span>
+        </span>
+      </span>
+    </a>
 
-  @guest
-    <a href="/login" class="cta-btn">Mulai Belajar</a>
-  @endguest
-  @auth
-    <a href="/profile" class="cta-btn">Profile</a>
-  @endauth
+    <div class="navbar-zone navbar-zone--actions">
+      @guest
+        <a href="/login" class="navbar-cta">Mulai Belajar</a>
+      @endguest
+      @auth
+        <a href="/profile" class="navbar-cta">Profile</a>
+      @endauth
+    </div>
+  </div>
 </nav>
 
 <!-- CONTENT MASUK SINI -->

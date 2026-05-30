@@ -7,6 +7,8 @@
   --sky-muted: #dbe7ee;
   --accent-race: #cbb89d;
   --navbar-dark: #2a2622;
+  --nav-text: rgba(247, 243, 238, 0.65);
+  --nav-text-hover: #f7f3ee;
 }
 
 * {
@@ -33,111 +35,169 @@ background: linear-gradient(98deg, #F2ECE5 57.47%, #D1DDD3 72.25%, #D1DDD3 87.02
 .navbar {
   position: fixed;
   top: 0;
-  width: 100%;
-  height: 72px;
-  background: rgba(26, 23, 20, 0.92);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  height: 76px;
+  padding: 0 50px;
+  background: rgba(26, 23, 20, 0.82);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(203, 184, 157, 0.12);
+  font-family: 'Montserrat', sans-serif;
+}
+
+.navbar::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: rgba(203, 184, 157, 0.2);
+  pointer-events: none;
+}
+
+.navbar-inner {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 48px;
-  z-index: 1000;
-  border-bottom: 1px solid rgba(203, 184, 157, 0.12);
-}
-
-/* MENU */
-.nav-menu {
-  display: flex;
-  gap: 32px;
-  list-style: none;
-}
-
-.nav-menu li a {
-  color: rgba(247, 243, 238, 0.65);
-  text-decoration: none;
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  transition: color 0.2s ease;
-  position: relative;
-}
-
-.nav-menu li a::after {
-  content: '';
-  position: absolute;
-  bottom: -4px;
-  left: 0;
-  width: 0;
-  height: 1px;
-  background: var(--accent-race);
-  transition: width 0.3s ease;
-}
-
-.nav-menu li a:hover {
-  color: #fff;
-}
-
-.nav-menu li a:hover::after {
+  height: 100%;
   width: 100%;
 }
 
-/* LOGO CENTER */
-.logo-center {
+.navbar-zone--links {
+  display: flex;
+  align-items: center;
+  flex: 0 1 auto;
+}
+
+.navbar-zone--actions {
+  display: flex;
+  align-items: center;
+  flex: 0 0 auto;
+}
+
+.nav-menu {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-menu li a {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--nav-text);
+  transition: color 0.2s ease;
+  white-space: nowrap;
+}
+
+.nav-menu li a:hover {
+  color: var(--nav-text-hover);
+}
+
+/* Logo — tengah, hover: ikon → wordmark */
+.navbar-brand {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
-  flex-direction: row;
   align-items: center;
-  gap: 8px;
+  justify-content: center;
+  padding: 0;
   text-decoration: none;
+  z-index: 2;
 }
 
-.logo-img {
-  height: 28px;
-  width: auto;
+.navbar-brand__swap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 30px;
+  min-width: 108px;
+}
+
+.navbar-brand__mark {
+  display: block;
+  height: 40px;
+  width: 180px;
   object-fit: contain;
-  transition: transform 0.3s ease;
-  filter: drop-shadow(0 0 8px rgba(203,184,157,0.3));
+  filter: drop-shadow(0 0 10px rgba(203, 184, 157, 0.35));
+  transition: opacity 0.28s ease, transform 0.28s ease;
 }
 
-.logo-center:hover .logo-img {
-  transform: rotate(-5deg) scale(1.08);
+.navbar-brand__wordmark {
+  position: absolute;
+  inset: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  opacity: 0;
+  transform: translateY(6px) scale(0.96);
+  transition: opacity 0.28s ease, transform 0.28s ease;
+  pointer-events: none;
+  white-space: nowrap;
 }
 
-.logo-name {
+.navbar-brand__grid,
+.navbar-brand__start {
   font-family: 'Montserrat', sans-serif;
-  font-size: 15px;
-  font-weight: 700;
-  letter-spacing: 2px;
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: #f7f3ee;
   line-height: 1;
 }
 
-.logo-name em {
-  font-style: normal;
-  color: var(--accent-race);
-  font-weight: 800;
+.navbar-brand__grid {
+  color: #f7f3ee;
 }
 
-/* CTA BUTTON */
-.cta-btn {
-  padding: 8px 20px;
+.navbar-brand__start {
+  color: var(--accent-race);
+  font-weight: 900;
+}
+
+.navbar-brand:hover .navbar-brand__mark,
+.navbar-brand:focus-visible .navbar-brand__mark {
+  opacity: 0;
+  transform: scale(0.82) rotate(-6deg);
+}
+
+.navbar-brand:hover .navbar-brand__wordmark,
+.navbar-brand:focus-visible .navbar-brand__wordmark {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* CTA — border & warna accent race (tema GridStart) */
+.navbar-cta {
+  flex-shrink: 0;
+  padding: 10px 22px;
   border: 1px solid rgba(203, 184, 157, 0.6);
-  color: var(--accent-race);
-  text-decoration: none;
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  transition: all 0.25s ease;
+  border-radius: 2px;
   background: transparent;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--accent-race);
+  transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
 }
 
-.cta-btn:hover {
+.navbar-cta:hover {
   background: var(--accent-race);
   border-color: var(--accent-race);
   color: var(--navbar-dark);
@@ -1167,11 +1227,32 @@ background: linear-gradient(98deg, #F2ECE5 57.47%, #D1DDD3 72.25%, #D1DDD3 87.02
 @media (max-width: 768px) {
 
   .navbar {
+    height: 68px;
     padding: 0 24px;
   }
 
-  .nav-menu {
-    display: none; /* nanti bisa kamu ganti hamburger menu */
+  .navbar-zone--links .nav-menu {
+    display: none;
+  }
+
+  .navbar-brand__swap {
+    height: 30px;
+    min-width: 92px;
+  }
+
+  .navbar-brand__mark {
+    height: 28px;
+  }
+
+  .navbar-brand__grid,
+  .navbar-brand__start {
+    font-size: 13px;
+    letter-spacing: 0.12em;
+  }
+
+  .navbar-cta {
+    padding: 8px 16px;
+    font-size: 11px;
   }
 
   .hero {
@@ -2077,14 +2158,13 @@ color:#777;
 }
 
 .btn.next{
-    background: var(--navbar-dark);
+    background: var(--taupe-dark);
     color: white;
     border:none;
     padding: 12px 32px;
 }
 
 .btn.back {
-    background: white;
     color: #3f3a36;
 }
 
