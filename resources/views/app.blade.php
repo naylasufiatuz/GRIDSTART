@@ -10,6 +10,7 @@
 
     <!-- css -->
     <link rel="stylesheet" href="{{ asset('css/gridstart.css') }}">
+    @yield('styles')
 </head>
 
 <body>
@@ -116,6 +117,8 @@ window.addEventListener('load',showOnScroll);
     });
   </script>
 @endif
+
+@yield('scripts')
 
 </body>
 </html>
