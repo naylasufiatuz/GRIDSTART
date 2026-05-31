@@ -25,20 +25,20 @@
 
         <div class="info-box">
 
-            <h3>⚠️ Kenapa Rambu & Marka Sering Diabaikan?</h3>
+            <h3>Kenapa Rambu & Marka Sering Diabaikan?</h3>
             <p>
                 Bukan karena tidak tahu — tapi karena <strong>merasa situasinya aman</strong>.
                 Ini yang disebut <em>risk compensation</em>: semakin percaya diri, semakin lengah.
                 Padahal rambu dirancang justru untuk kondisi yang belum kamu antisipasi.
             </p>
 
-            <h3 style="margin-top: 20px;">🚦 Baca Situasi Seperti Pembalap F1</h3>
+            <h3 style="margin-top: 20px;">Baca Situasi Seperti Pembalap F1</h3>
             <p>Berikut situasi nyata di jalan dan cara baca yang benar:</p>
 
             <div class="flag-cards" style="flex-direction: column; gap: 14px; margin-top: 16px;">
 
-                <div class="flag yellow-flag" style="border-radius: 12px; padding: 16px 20px;">
-                    <h4>🟡 Lampu Kuning Berkedip di Persimpangan</h4>
+                <div class="flag yellow-flag" style="border-radius: 5px; padding: 16px 20px;">
+                    <h4>Lampu Kuning Berkedip di Persimpangan</h4>
                     <p style="margin-top: 6px; line-height: 1.6;">
                         <strong>Artinya:</strong> Tidak ada yang mengatur prioritas — semua harus ekstra hati-hati.<br>
                         <strong>Yang salah:</strong> Tancap gas karena "tidak ada yang merah".<br>
@@ -46,8 +46,8 @@
                     </p>
                 </div>
 
-                <div class="flag" style="border: 2px solid #a0c4a0; border-radius: 12px; padding: 16px 20px;">
-                    <h4>🟢 Marka Garis Putus-Putus vs Garis Penuh</h4>
+                <div class="flag" style="border: 2px solid #a0c4a0; border-radius: 5px; padding: 16px 20px;">
+                    <h4>Marka Garis Putus-Putus vs Garis Penuh</h4>
                     <p style="margin-top: 6px; line-height: 1.6;">
                         <strong>Garis putus-putus:</strong> Boleh pindah jalur jika aman.<br>
                         <strong>Garis penuh:</strong> Dilarang keras menyalip atau pindah jalur.<br>
@@ -55,8 +55,8 @@
                     </p>
                 </div>
 
-                <div class="flag red-flag" style="border-radius: 12px; padding: 16px 20px;">
-                    <h4>🔴 Lampu Merah — Bukan Pilihan</h4>
+                <div class="flag red-flag" style="border-radius: 5px; padding: 16px 20px;">
+                    <h4>Lampu Merah — Bukan Pilihan</h4>
                     <p style="margin-top: 6px; line-height: 1.6;">
                         <strong>Yang salah:</strong> Terobos saat "kelihatannya sepi".<br>
                         <strong>Yang benar:</strong> Berhenti total sebelum garis, tunggu hijau.<br>
@@ -74,7 +74,7 @@
     <!-- RIGHT SIDE -->
     <div class="yellow-right reveal-up">
 
-        <div class="side-card" style="height: auto; padding: 24px; flex-direction: column; align-items: flex-start; gap: 12px; border-left: 4px solid #e6b34a; border-radius: 16px;">
+        <div class="side-card" style="height: auto; padding: 24px; flex-direction: column; align-items: flex-start; gap: 12px; border-left: 4px solid #e6b34a; border-radius: 5px;">
             <p style="letter-spacing: 2px; font-size: 10px; color: #999; margin: 0;">STAGE 2 · YELLOW FLAG</p>
             <h4 style="font-size: 15px; font-weight: 700; color: #3f3a36; margin: 0;">Insiden Nyata: Abai Rambu</h4>
             <p style="font-size: 13px; line-height: 1.65; color: #5c5550; margin: 0;">
@@ -85,7 +85,7 @@
             <p style="font-size: 11px; color: #999; margin: 0;">Sumber: Korlantas Polri, 2023</p>
         </div>
 
-        <div class="side-card" style="height: auto; padding: 24px; flex-direction: column; align-items: flex-start; gap: 12px; border-left: 4px solid #e34b3d; border-radius: 16px;">
+        <div class="side-card" style="height: auto; padding: 24px; flex-direction: column; align-items: flex-start; gap: 12px; border-left: 4px solid #e34b3d; border-radius: 5px;">
             <p style="letter-spacing: 2px; font-size: 10px; color: #999; margin: 0;">STAGE 2 · YELLOW FLAG</p>
             <h4 style="font-size: 15px; font-weight: 700; color: #3f3a36; margin: 0;">F1 vs Jalan Raya</h4>
             <p style="font-size: 13px; line-height: 1.65; color: #5c5550; margin: 0;">

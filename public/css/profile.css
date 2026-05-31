@@ -1,7 +1,7 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      font-family: 'DM Sans', sans-serif;
+  font-family: 'Montserrat', sans-serif;
       height: 100vh;
       display: flex;
       overflow: hidden;
@@ -128,7 +128,7 @@ background: linear-gradient(98deg, #F2ECE5 57.47%, #D1DDD3 72.25%, #D1DDD3 87.02
       border: 1.5px solid #e0dbd3;
       border-radius: 5px;
       font-size: 13.5px;
-      font-family: 'DM Sans', sans-serif;
+  font-family: 'Montserrat', sans-serif;
       color: #333;
       background: #fafaf9;
       outline: none;
@@ -150,7 +150,7 @@ background: linear-gradient(98deg, #F2ECE5 57.47%, #D1DDD3 72.25%, #D1DDD3 87.02
       font-size: 13.5px;
       font-weight: 600;
       letter-spacing: 0.1em;
-      font-family: 'DM Sans', sans-serif;
+  font-family: 'Montserrat', sans-serif;
       cursor: pointer;
       transition: all 0.3s ease;
     }
@@ -172,7 +172,7 @@ background: linear-gradient(98deg, #F2ECE5 57.47%, #D1DDD3 72.25%, #D1DDD3 87.02
       font-size: 13.5px;
       font-weight: 600;
       letter-spacing: 0.1em;
-      font-family: 'DM Sans', sans-serif;
+  font-family: 'Montserrat', sans-serif;
       cursor: pointer;
       transition: all 0.3s ease;
       text-decoration: none;

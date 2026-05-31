@@ -15,7 +15,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Inter", "Segoe UI", sans-serif;
+  font-family: 'Montserrat', sans-serif;
 }
 
 html {
@@ -28,7 +28,6 @@ body {
 background: linear-gradient(98deg, #F2ECE5 57.47%, #D1DDD3 72.25%, #D1DDD3 87.02%, #DAE5EA 93.53%);  background-position: top center;
   background-size: cover;
   background-repeat: no-repeat;
-  font-family: "Inter", "Segoe UI", sans-serif;
 }
 
 /* ================= NAVBAR ================= */
@@ -44,7 +43,6 @@ background: linear-gradient(98deg, #F2ECE5 57.47%, #D1DDD3 72.25%, #D1DDD3 87.02
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border-bottom: 1px solid rgba(203, 184, 157, 0.12);
-  font-family: 'Montserrat', sans-serif;
 }
 
 .navbar::before {
@@ -89,7 +87,6 @@ background: linear-gradient(98deg, #F2ECE5 57.47%, #D1DDD3 72.25%, #D1DDD3 87.02
 }
 
 .nav-menu li a {
-  font-family: 'Montserrat', sans-serif;
   font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.1em;
@@ -255,7 +252,7 @@ background: linear-gradient(98deg, #F2ECE5 57.47%, #D1DDD3 72.25%, #D1DDD3 87.02
 }
 
 .hero-circular-badge svg text {
-  font-family: 'Inter', monospace;
+  font-family: 'Montserrat', sans-serif;
   font-size: 7.2px;
   font-weight: 800;
   letter-spacing: 5.8px;
@@ -898,21 +895,21 @@ background: linear-gradient(98deg, #F2ECE5 57.47%, #D1DDD3 72.25%, #D1DDD3 87.02
   color: var(--taupe-dark);
   margin-bottom: 6px;
   font-weight: 700;
-  font-family: monospace;
+  font-family: 'Montserrat', sans-serif;
 }
 
 .td-telemetry-bar-bg {
   width: 100%;
   height: 5px;
   background: rgba(16, 16, 16, 0.04);
-  border-radius: 10px;
+  border-radius: 5px;
   overflow: hidden;
   position: relative;
 }
 
 .td-telemetry-bar-fill {
   height: 100%;
-  border-radius: 10px;
+  border-radius: 5px;
   background: linear-gradient(90deg, var(--taupe-soft), var(--taupe-dark));
   box-shadow: 0 0 6px rgba(16, 16, 16, 0.1);
   width: 0; /* Dynamic inline style handles the target percentage */
@@ -941,7 +938,7 @@ background: linear-gradient(98deg, #F2ECE5 57.47%, #D1DDD3 72.25%, #D1DDD3 87.02
   font-size: 8px;
   letter-spacing: 1px;
   color: var(--taupe-soft);
-  font-family: monospace;
+  font-family: 'Montserrat', sans-serif;
 }
 
 /* BEST TIME */
@@ -951,7 +948,7 @@ background: linear-gradient(98deg, #F2ECE5 57.47%, #D1DDD3 72.25%, #D1DDD3 87.02
   margin-top: 8px;
   position: relative;
   z-index: 2;
-  font-family: monospace;
+  font-family: 'Montserrat', sans-serif;
 }
 
 /* EMPTY STATE */
@@ -1054,7 +1051,7 @@ background: linear-gradient(98deg, #F2ECE5 57.47%, #D1DDD3 72.25%, #D1DDD3 87.02
   cursor: pointer;
   background: transparent;
   color: var(--taupe-dark);
-  font-family: 'Inter', 'Segoe UI', sans-serif;
+  font-family: 'Montserrat', sans-serif;
   letter-spacing: 0.05em;
   transition: all 0.2s;
 }
@@ -1349,10 +1346,10 @@ background: linear-gradient(98deg, #F2ECE5 57.47%, #D1DDD3 72.25%, #D1DDD3 87.02
   font-size: 13px;
   font-weight: 600;
   color: var(--taupe-dark);
-  letter-spacing: 0.05em;
+  letter-spacing: 2px;
   cursor: pointer;
   transition: all 0.2s ease;
-  font-family: 'Inter', 'Segoe UI', sans-serif;
+  font-family: 'Montserrat', sans-serif;
 }
 
 .btn-other-videos:hover {
@@ -1375,7 +1372,7 @@ background: linear-gradient(98deg, #F2ECE5 57.47%, #D1DDD3 72.25%, #D1DDD3 87.02
 
 .modal-content {
   background: #fff;
-  border-radius: 20px;
+  border-radius: 5px;
   padding: 32px;
   width: 100%;
   max-width: 700px;
@@ -1402,7 +1399,7 @@ background: linear-gradient(98deg, #F2ECE5 57.47%, #D1DDD3 72.25%, #D1DDD3 87.02
   cursor: pointer;
   color: var(--taupe-soft);
   padding: 4px;
-  border-radius: 6px;
+  border-radius: 5px;
   display: flex;
   align-items: center;
   transition: color 0.2s;
@@ -1421,7 +1418,7 @@ background: linear-gradient(98deg, #F2ECE5 57.47%, #D1DDD3 72.25%, #D1DDD3 87.02
 .modal-video-thumb {
   position: relative;
   display: block;
-  border-radius: 12px;
+  border-radius: 5px;
   overflow: hidden;
   aspect-ratio: 16 / 9;
   cursor: pointer;
@@ -1645,7 +1642,7 @@ background: linear-gradient(98deg, #F2ECE5 57.47%, #D1DDD3 72.25%, #D1DDD3 87.02
 .lesson-card {
   width: 420px;
   height: 260px;
-  border-radius: 20px;
+  border-radius: 5px;
   background: #ffffffaa;
   backdrop-filter: blur(10px);
   display: flex;
@@ -1812,7 +1809,7 @@ background: linear-gradient(98deg, #F2ECE5 57.47%, #D1DDD3 72.25%, #D1DDD3 87.02
     background-color: #c9ada7;
     color: white;
     text-decoration: none;
-    border-radius: 8px;
+    border-radius: 5px;
     font-weight: 600;
     font-size: 1rem;
     border: none;
@@ -1893,7 +1890,7 @@ background: linear-gradient(98deg, #F2ECE5 57.47%, #D1DDD3 72.25%, #D1DDD3 87.02
 /* ILUSTRASI SVG */
 .brake-visual-box {
     background: white;
-    border-radius: 16px;
+    border-radius: 5px;
     padding: 32px 36px;
     box-shadow: 0 4px 20px rgba(0,0,0,0.07);
     margin-bottom: 40px;
@@ -1931,7 +1928,7 @@ background: linear-gradient(98deg, #F2ECE5 57.47%, #D1DDD3 72.25%, #D1DDD3 87.02
 .brake-mistake-card {
     background: white;
     padding: 25px;
-    border-radius: 12px;
+    border-radius: 5px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.08);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
@@ -1977,7 +1974,7 @@ background: linear-gradient(98deg, #F2ECE5 57.47%, #D1DDD3 72.25%, #D1DDD3 87.02
 
 .brake-info-card {
     background: white;
-    border-radius: 14px;
+    border-radius: 5px;
     padding: 28px;
     box-shadow: 0 4px 16px rgba(0,0,0,0.07);
     display: flex;
@@ -2031,7 +2028,7 @@ background: linear-gradient(98deg, #F2ECE5 57.47%, #D1DDD3 72.25%, #D1DDD3 87.02
 
 .distance-bar {
     height: 8px;
-    border-radius: 4px;
+    border-radius: 5px;
 }
 
 .distance-bar.green  { width: 30%; background: #4caf50; }
@@ -2060,7 +2057,6 @@ background: linear-gradient(98deg, #F2ECE5 57.47%, #D1DDD3 72.25%, #D1DDD3 87.02
     padding: 11px 22px;
     background: #2c3e50;
     color: white;
-    border-radius: 8px;
     font-size: 12px;
     letter-spacing: 1.5px;
     font-weight: 600;
@@ -2172,7 +2168,7 @@ margin-top:20px;
 .flag{
 flex:1;
 padding:18px;
-border-radius:14px;
+border-radius:5px;
 border:2px solid;
 background:white;
 }
@@ -2414,7 +2410,7 @@ transform:translateY(0);
 .rl-step-card {
     background: white;
     padding: 25px;
-    border-radius: 12px;
+    border-radius: 5px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.08);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
@@ -2463,7 +2459,7 @@ transform:translateY(0);
 
 .rl-example-card {
     background: white;
-    border-radius: 14px;
+    border-radius: 5px;
     padding: 28px;
     box-shadow: 0 4px 16px rgba(0,0,0,0.07);
     display: flex;
@@ -2508,7 +2504,6 @@ transform:translateY(0);
     padding: 11px 22px;
     background: #2c3e50;
     color: white;
-    border-radius: 8px;
     font-size: 12px;
     letter-spacing: 1.5px;
     font-weight: 600;
@@ -2623,7 +2618,7 @@ transform:translateY(0);
     width: 100%;
     height: auto;
     background: white;
-    border-radius: 12px;
+    border-radius: 5px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.08);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
@@ -2680,7 +2675,7 @@ transform:translateY(0);
     color: #999;
     border: 1px solid #e0e0e0;
     padding: 4px 10px;
-    border-radius: 20px;
+    border-radius: 5px;
     width: fit-content;
     margin-top: auto;
 }
@@ -2696,7 +2691,7 @@ transform:translateY(0);
 
 .ps-info-card {
     background: white;
-    border-radius: 14px;
+    border-radius: 5px;
     padding: 28px;
     box-shadow: 0 4px 16px rgba(0,0,0,0.07);
     display: flex;
@@ -2735,7 +2730,6 @@ transform:translateY(0);
     padding: 11px 22px;
     background: #2c3e50;
     color: white;
-    border-radius: 8px;
     font-size: 12px;
     letter-spacing: 1.5px;
     font-weight: 600;
@@ -2939,7 +2933,7 @@ transform:translateY(0);
     align-items: center;
     gap: 0;
     background: white;
-    border-radius: 14px;
+    border-radius: 5px;
     padding: 28px 40px;
     box-shadow: 0 4px 20px rgba(0,0,0,0.06);
     width: fit-content;
@@ -2957,7 +2951,7 @@ transform:translateY(0);
     font-size: 36px;
     font-weight: 800;
     color: #3f3a36;
-    font-family: 'Montserrat', sans-serif;
+  font-family: 'Montserrat', sans-serif;
     line-height: 1;
 }
 
@@ -3306,7 +3300,7 @@ transform:translateY(0);
     background: var(--taupe-dark);
     color: white;
     text-decoration: none;
-    border-radius: 8px;
+    border-radius: 5px;
     font-weight: 600;
     font-size: 14px;
     letter-spacing: 1px;
@@ -3752,7 +3746,7 @@ transform:translateY(0);
     border: none;
     font-size: 14px;
     color: var(--taupe-dark);
-    font-family: inherit;
+    font-family: 'Montserrat', sans-serif;
     transition: all 0.3s ease;
     background: var(--cream-soft);
     box-shadow: inset 4px 4px 8px #d9d2c8, inset -4px -4px 8px #ffffff;
@@ -3849,7 +3843,7 @@ select.form-input {
     padding: 20px;
     background: #e8f5e9;
     border: 1.5px solid #4caf50;
-    border-radius: 10px;
+    border-radius: 5px;
     color: #2e7d32;
     font-weight: 600;
     text-align: center;
@@ -3874,7 +3868,7 @@ select.form-input {
     background: var(--cream-soft);
     color: var(--taupe-dark);
     border: none;
-    border-radius: 12px;
+    border-radius: px;
     font-size: 15px;
     font-weight: 600;
     letter-spacing: 1px;
@@ -3937,7 +3931,7 @@ select.form-input {
     padding: 14px 20px;
     border-radius: 5px;
     color: var(--taupe-dark);
-    font-family: inherit;
+  font-family: 'Montserrat', sans-serif;
     font-size: 14px;
     background: var(--cream-soft);
     box-shadow: inset 4px 4px 8px #d9d2c8, inset -4px -4px 8px #ffffff;
@@ -4007,7 +4001,7 @@ select.form-input {
 .social-section {
     background: white;
     padding: 20px;
-    border-radius: 20px;
+    border-radius: 5px;
     box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
 }
 
@@ -4031,7 +4025,7 @@ select.form-input {
     width: 100%;
     aspect-ratio: 1;
     border: 1.5px solid #e0ddd8;
-    border-radius: 12px;
+    border-radius: 5px;
     color: var(--taupe-dark);
     transition: all 0.3s ease;
     background: white;
@@ -4059,7 +4053,7 @@ select.form-input {
         #ede6dc 100%
     );
     padding: 40px;
-    border-radius: 20px;
+    border-radius: 5px;
     text-align: center;
     border: 1.5px solid #e0ddd8;
 }
@@ -4153,7 +4147,7 @@ select.form-input {
     font-weight: 600;
     color: var(--taupe-dark);
     text-align: left;
-    font-family: inherit;
+  font-family: 'Montserrat', sans-serif;
 }
 
 .faq-question:hover {
@@ -4305,7 +4299,7 @@ a.roadmap-item:hover {
   background: #fff;
   border: 1px solid #ebe7e1;
   border-left: 3px solid #cbb89d;
-  border-radius: 4px;
+  border-radius: 5px;
   padding: 14px 20px;
   display: flex;
   align-items: center;
@@ -4377,7 +4371,7 @@ a.roadmap-item:hover {
   font-weight: 600;
   letter-spacing: 0.5px;
   cursor: pointer;
-  font-family: inherit;
+  font-family: 'Montserrat', sans-serif;
   transition: background 0.2s, color 0.2s;
 }
 .expand-btn:hover {

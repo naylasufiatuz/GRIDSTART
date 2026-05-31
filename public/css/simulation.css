@@ -10,7 +10,7 @@
         body { 
             margin: 0; overflow: hidden; 
             background-color: #b5eaea; 
-            font-family: 'Poppins', sans-serif; 
+            font-family: 'Montserrat', sans-serif;
             touch-action: none; 
         }
         canvas { display: block; position: absolute; top: 0; left: 0; z-index: 1; }
@@ -111,7 +111,8 @@
         .btn-primary {
             background: var(--accent-green); color: white; border: none; border-radius: 5px;
             padding: 15px 35px; font-size: 18px; font-weight: 600; cursor: pointer;
-            box-shadow: 0 10px 20px rgba(0, 184, 148, 0.3); transition: 0.2s; font-family: 'Poppins', sans-serif;
+            box-shadow: 0 10px 20px rgba(0, 184, 148, 0.3); transition: 0.2s;   font-family: 'Montserrat', sans-serif;
+
         }
         .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 15px 25px rgba(0, 184, 148, 0.4); }
 
@@ -119,7 +120,8 @@
         .quiz-btn {
             background: white; border: 2px solid #dfe6e9; border-radius: 5px;
             padding: 16px; font-size: 15px; font-weight: 600; color: var(--text-dark);
-            cursor: pointer; transition: 0.2s; text-align: left; font-family: 'Poppins', sans-serif;
+            cursor: pointer; transition: 0.2s; text-align: left;   font-family: 'Montserrat', sans-serif;
+
             box-shadow: 0 4px 6px rgba(0,0,0,0.02);
         }
         .quiz-btn:hover { border-color: var(--accent-yellow); background: #fffcf3; transform: translateX(5px); }
