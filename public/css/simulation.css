@@ -1,564 +1,778 @@
-        :root {
-            /* Web Brand Signature Design Tokens */
-            --brand-cream: #f7f3ee;
-            --brand-cream-soft: #ede6dc;
-            --brand-taupe-dark: #3f3a36;
-            --brand-taupe-soft: #6b625c;
-            --brand-sage: #cbd7c2;
-            --brand-sage-dark: #8fa382;
-            --brand-accent-race: #cbb89d; /* Signature F1 Gold Accent */
-            --brand-navbar-dark: #2a2622;
-            --brand-brick-red: #cc5a43; /* Vintage Racing Warm Red */
+/* ==========================================================================
+   GRIDSTART WARM VINTAGE MOTORSPORT HUD - SIMULATION CSS
+   Cohesive warm cream, sage-green, gold, and dark taupe aesthetic.
+   No sci-fi neon glow, styled to look classic, tactile, and hand-built.
+   ========================================================================== */
 
-            /* UI Color Mappings (Overlaid on Web Brand Colors) */
-            --hud-bg-dark: rgba(38, 34, 30, 0.96); /* Immersive dark warm taupe glass */
-            --hud-border-glow: rgba(203, 184, 157, 0.25);
-            --hud-text-light: #f7f3ee;
-            --hud-text-muted: #cbb89d;
-            
-            --hud-neon-cyan: #cbb89d;    /* Cyan mapped to brand gold */
-            --hud-neon-yellow: #ede6dc;  /* Yellow mapped to brand cream */
-            --hud-neon-green: #8fa382;   /* Green mapped to high-contrast brand sage */
-            --hud-neon-red: #cc5a43;     /* Red mapped to brick red */
-            --hud-neon-gold: #cbb89d;    /* Gold mapped to brand gold */
+:root {
+  /* Brand Vintage Motorsport Palette */
+  --brand-cream: #f7f3ee;
+  --brand-cream-soft: #ede6dc;
+  --brand-taupe-dark: #3f3a36;
+  --brand-taupe-soft: #6b625c;
+  --brand-sage: #cbd7c2;
+  --brand-sage-dark: #8fa382;
+  --brand-accent-race: #cbb89d; /* Signature F1 Gold */
+  --brand-navbar-dark: #2a2622;
+  --brand-brick-red: #cc5a43;   /* Vintage Racing Red */
+  
+  --hud-bg-dark: rgba(42, 38, 34, 0.96); /* Deep warm dark taupe glass */
+  --hud-border-gold: #cbb89d;
+  --hud-text-light: #f7f3ee;
+  
+  --font-hud: 'Orbitron', sans-serif;
+  --font-body: 'Outfit', sans-serif;
+  --border-radius-sm: 5px;
+}
 
-            --accent-green: #8fa382;
-            --accent-red: #cc5a43;
-            --accent-yellow: #cbb89d;
-        }
+body { 
+  margin: 0; 
+  overflow: hidden; 
+  background-color: var(--brand-cream-soft); 
+  font-family: var(--font-body), sans-serif;
+  touch-action: none; 
+  color: var(--brand-taupe-dark);
+}
 
-        body { 
-            margin: 0; overflow: hidden; 
-            background-color: var(--brand-cream-soft); 
-            font-family: 'Montserrat', sans-serif;
-            touch-action: none; 
-            color: var(--brand-taupe-dark);
-        }
-        canvas { display: block; position: absolute; top: 0; left: 0; z-index: 1; }
-        
-        /* =========================================
-           UI HUD TELEMETRY PANEL (Redesigned & Creative)
-           ========================================= */
-        #hud-panel {
-            position: absolute; top: 25px; left: 25px; z-index: 100;
-            background: var(--hud-bg-dark);
-            backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
-            border: 2px solid var(--brand-accent-race);
-            border-radius: 4px; /* Crisp retro console box */
-            padding: 16px 20px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
-            color: var(--hud-text-light); min-width: 220px;
-            font-family: 'Outfit', sans-serif;
-        }
-        .hud-console-header {
-            display: flex; justify-content: space-between; align-items: center;
-            border-bottom: 1px solid rgba(203, 184, 157, 0.15);
-            padding-bottom: 8px; margin-bottom: 12px;
-        }
-        .hud-console-title {
-            font-size: 11px; font-weight: 800; letter-spacing: 2px;
-            color: var(--brand-accent-race);
-        }
-        .hud-metrics {
-            display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 12px;
-        }
-        .hud-metric {
-            display: flex; flex-direction: column;
-        }
-        .hud-label {
-            font-size: 9px; font-weight: 700; letter-spacing: 1px;
-            color: var(--brand-cream-soft); opacity: 0.6;
-            margin-bottom: 2px;
-        }
-        .hud-val {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 18px; font-weight: 800;
-            color: var(--hud-text-light);
-        }
-        .hud-unit { font-size: 11px; font-weight: 500; opacity: 0.7; }
+canvas { 
+  display: block; 
+  position: absolute; 
+  top: 0; 
+  left: 0; 
+  z-index: 1; 
+}
 
-        /* Modernized Fuel HUD Area */
-        .hud-fuel-panel {
-            display: flex; flex-direction: column;
-        }
-        .hud-fuel-label-row {
-            display: flex; justify-content: space-between; align-items: center;
-            margin-bottom: 4px;
-        }
-        .hud-fuel-pct {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 12px; font-weight: 700;
-            color: var(--brand-accent-race);
-        }
-        .gas-bar-container { 
-            width: 100%; height: 8px; 
-            background: rgba(0,0,0,0.3); 
-            border-radius: 2px; overflow: hidden; 
-            border: 1px solid rgba(255,255,255,0.05); 
-        }
-        .gas-bar-fill { 
-            height: 100%; width: 100%; 
-            background: linear-gradient(90deg, var(--brand-sage), var(--hud-neon-green)) !important; 
-            transition: width 0.3s, background 0.3s; 
-            border-radius: 0;
-        }
-        
-        /* =========================================
-           ACTION PANEL & D-PAD (Crisp max-5px Radius)
-           ========================================= */
-        #action-panel { position: absolute; bottom: 25px; right: 25px; z-index: 100; display: flex; flex-direction: column; gap: 15px; }
-        .circle-btn {
-            width: 54px; height: 54px; border-radius: 4px; /* Crisp mechanical key */
-            background: var(--hud-bg-dark); 
-            backdrop-filter: blur(12px); border: 1px solid var(--brand-accent-race);
-            display: flex; justify-content: center; align-items: center;
-            font-size: 20px; color: var(--hud-text-light); cursor: pointer;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.25); transition: 0.2s;
-        }
-        .circle-btn:active { transform: scale(0.92); }
+/* ==========================================================================
+   1. UI HUD TELEMETRY PANEL
+   ========================================================================== */
+#hud-panel {
+  position: absolute; 
+  top: 25px; 
+  left: 25px; 
+  z-index: 100;
+  background: var(--hud-bg-dark);
+  backdrop-filter: blur(14px); 
+  -webkit-backdrop-filter: blur(14px);
+  border: 2px solid var(--brand-accent-race);
+  border-radius: var(--border-radius-sm);
+  padding: 16px 20px;
+  box-shadow: 0 10px 25px rgba(63, 58, 54, 0.25);
+  color: var(--hud-text-light); 
+  min-width: 220px;
+}
 
-        #d-pad {
-            position: absolute; bottom: 35px; left: 50%; transform: translateX(-50%);
-            z-index: 100; display: grid; grid-template-columns: repeat(3, 68px); grid-template-rows: repeat(2, 60px);
-            gap: 10px; user-select: none;
-        }
-        .d-btn {
-            background: var(--brand-cream); backdrop-filter: blur(10px);
-            border: 1.5px solid var(--brand-cream-soft); 
-            border-radius: 4px; /* Blocky mechanical keys matching the max-5px limit */
-            display: flex; justify-content: center; align-items: center;
-            font-size: 24px; color: var(--brand-taupe-dark); cursor: pointer;
-            box-shadow: 0 5px 12px rgba(0,0,0,0.08); transition: 0.1s;
-            font-family: 'Outfit', sans-serif; font-weight: 700;
-        }
-        .d-btn:active { background: var(--brand-cream-soft); transform: scale(0.92); }
-        #btn-up { 
-            grid-column: 2; grid-row: 1; 
-            background: rgba(143, 163, 130, 0.2); 
-            border-color: var(--brand-sage); 
-            color: var(--brand-sage-dark); 
-        } 
-        #btn-left { grid-column: 1; grid-row: 2; }
-        #btn-brake { 
-            grid-column: 2; grid-row: 2; 
-            background: rgba(204, 90, 67, 0.25); 
-            border-color: var(--brand-brick-red); 
-            color: var(--brand-brick-red); 
-            font-size: 13px; font-weight: 800; letter-spacing: 1px;
-        }
-        #btn-right { grid-column: 3; grid-row: 2; }
+.hud-console-header {
+  display: flex; 
+  justify-content: space-between; 
+  align-items: center;
+  border-bottom: 1px solid rgba(203, 184, 157, 0.2);
+  padding-bottom: 8px; 
+  margin-bottom: 12px;
+}
 
-        /* =========================================
-           TOAST NOTIFICATION (Matching Brand Colors)
-           ========================================= */
-        #toast-container {
-            position: absolute; top: 20px; left: 50%; transform: translateX(-50%);
-            z-index: 2000; display: flex; flex-direction: column; gap: 10px; pointer-events: none;
-        }
-        .toast {
-            background: var(--hud-bg-dark); 
-            color: var(--hud-text-light); 
-            padding: 12px 25px;
-            border-radius: 3px; 
-            font-family: 'Poppins', sans-serif;
-            font-weight: 600; font-size: 14px;
-            box-shadow: 0 12px 30px rgba(0,0,0,0.3);
-            opacity: 0; transform: translateY(-20px);
-            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-            text-align: center; backdrop-filter: blur(5px); 
-            border: 1px solid rgba(203, 184, 157, 0.2);
-        }
-        .toast.show { opacity: 1; transform: translateY(0); }
-        .toast.success { border-bottom: 3px solid var(--brand-sage); }
-        .toast.error { border-bottom: 3px solid var(--brand-brick-red); }
+.hud-console-title {
+  font-size: 11px; 
+  font-weight: 800; 
+  letter-spacing: 2px;
+  color: var(--brand-accent-race);
+  font-family: var(--font-hud);
+}
 
-        /* =========================================
-           PREMIUM HUD MODAL & OVERLAYS (Max 5px Radius)
-           ========================================= */
-        .overlay-bg {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle, rgba(63, 58, 54, 0.6) 0%, rgba(26, 23, 20, 0.94) 100%);
-            backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
-            display: none; justify-content: center; align-items: center; z-index: 1000;
-            transition: all 0.3s ease;
-        }
-        
-        .modal-card {
-            background: linear-gradient(135deg, rgba(42, 38, 34, 0.96) 0%, rgba(26, 23, 20, 0.98) 100%);
-            border: 1.5px solid var(--hud-border-glow);
-            border-radius: 4px; /* Strictly max 5px (4px used for crisp vintage cockpit feel) */
-            padding: 35px 40px;
-            width: 90%; max-width: 500px;
-            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.65), 
-                        inset 0 1px 0 rgba(255, 255, 255, 0.05);
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-            color: var(--hud-text-light);
-            font-family: 'Poppins', sans-serif;
-            animation: modalFadeIn 0.4s cubic-bezier(0.165, 0.84, 0.44, 1) both;
-        }
+.hud-metrics {
+  display: grid; 
+  grid-template-columns: 1fr 1fr; 
+  gap: 15px; 
+  margin-bottom: 12px;
+}
 
-        @keyframes modalFadeIn {
-            0% { transform: scale(0.94) translateY(15px); opacity: 0; }
-            100% { transform: scale(1) translateY(0); opacity: 1; }
-        }
+.hud-metric {
+  display: flex; 
+  flex-direction: column;
+}
 
-        /* HUD Corner Brackets */
-        .hud-bracket {
-            position: absolute;
-            width: 14px; height: 14px;
-            border-color: rgba(203, 184, 157, 0.3);
-            border-style: solid;
-            pointer-events: none;
-        }
-        .hud-bracket.tl { top: 12px; left: 12px; border-width: 1.5px 0 0 1.5px; }
-        .hud-bracket.tr { top: 12px; right: 12px; border-width: 1.5px 1.5px 0 0; }
-        .hud-bracket.bl { bottom: 12px; left: 12px; border-width: 0 0 1.5px 1.5px; }
-        .hud-bracket.br { bottom: 12px; right: 12px; border-width: 0 1.5px 1.5px 0; }
+.hud-label {
+  font-size: 9px; 
+  font-weight: 700; 
+  letter-spacing: 1px;
+  color: var(--brand-cream-soft); 
+  opacity: 0.65;
+  margin-bottom: 2px;
+  text-transform: uppercase;
+}
 
-        /* Scanning Line Effect */
-        .hud-scanner {
-            position: absolute; top: 0; left: 0; width: 100%; height: 2px;
-            background: linear-gradient(to bottom, rgba(203, 184, 157, 0.15), rgba(203, 184, 157, 0));
-            animation: scanLine 6s linear infinite;
-            pointer-events: none;
-        }
-        @keyframes scanLine {
-            0% { top: 0%; opacity: 0; }
-            5% { opacity: 1; }
-            95% { opacity: 1; }
-            100% { top: 100%; opacity: 0; }
-        }
+.hud-val {
+  font-family: var(--font-hud);
+  font-size: 18px; 
+  font-weight: 800;
+  color: var(--hud-text-light);
+}
 
-        /* Status & Stage Badges (Crisp Blocky Badges) */
-        .hud-badge {
-            display: inline-block;
-            font-family: 'Outfit', sans-serif;
-            font-size: 10px; font-weight: 800; letter-spacing: 2px;
-            padding: 4px 12px; border-radius: 2px;
-            margin-bottom: 20px;
-            text-transform: uppercase;
-        }
-        .hud-badge.cyan {
-            background: rgba(203, 184, 157, 0.1);
-            color: var(--brand-accent-race);
-            border: 1px solid rgba(203, 184, 157, 0.3);
-            box-shadow: 0 0 8px rgba(203, 184, 157, 0.1);
-        }
-        .hud-badge.yellow {
-            background: rgba(237, 230, 220, 0.08);
-            color: var(--brand-cream-soft);
-            border: 1px solid rgba(237, 230, 220, 0.2);
-        }
-        .hud-badge.green {
-            background: rgba(143, 163, 130, 0.15);
-            color: var(--brand-sage);
-            border: 1px solid rgba(143, 163, 130, 0.3);
-        }
+.hud-unit { 
+  font-size: 11px; 
+  font-weight: 500; 
+  opacity: 0.7; 
+  color: var(--brand-accent-race);
+}
 
-        /* Headings & Texts */
-        .tech-title {
-            font-family: 'Outfit', sans-serif;
-            font-size: 30px; font-weight: 800; letter-spacing: -0.5px;
-            color: var(--hud-text-light);
-            margin: 0 0 15px 0;
-            text-transform: uppercase;
-        }
-        .tech-desc {
-            font-family: 'Poppins', sans-serif;
-            font-size: 14px; color: var(--brand-cream-soft); opacity: 0.85;
-            line-height: 1.6; margin-bottom: 25px;
-        }
-        .tech-desc strong { color: #fff; }
-        .tech-desc em { color: var(--brand-accent-race); font-style: normal; font-weight: 600; }
+/* Fuel Tank Area */
+.hud-fuel-panel {
+  display: flex; 
+  flex-direction: column;
+}
 
-        /* Cards Specific Top Borders */
-        .start-card {
-            border-top: 3px solid var(--brand-accent-race);
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5), 0 0 25px rgba(203, 184, 157, 0.15);
-        }
-        .quiz-card {
-            border-top: 3px solid var(--brand-accent-race);
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5), 0 0 25px rgba(237, 230, 220, 0.08);
-        }
-        .finish-card {
-            border-top: 3px solid var(--brand-sage);
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5), 0 0 25px rgba(143, 163, 130, 0.15);
-        }
+.hud-fuel-label-row {
+  display: flex; 
+  justify-content: space-between; 
+  align-items: center;
+  margin-bottom: 4px;
+}
 
-        /* =========================================
-           1. START GAME: "TANCAP GAS" DESIGN
-           ========================================= */
-        .f1-lights-container {
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 4px;
-            padding: 12px;
-            margin: 18px 0;
-        }
-        .f1-light-row {
-            display: flex; justify-content: center; gap: 14px; margin-bottom: 8px;
-        }
-        .f1-bulb {
-            width: 22px; height: 22px; border-radius: 50%;
-            background: #151515;
-            border: 2px solid #282828;
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.8);
-            position: relative;
-        }
-        .f1-bulb.red {
-            background: var(--brand-brick-red);
-            border-color: #383838;
-            box-shadow: 0 0 15px var(--brand-brick-red), 0 0 25px var(--brand-brick-red), inset 0 2px 4px rgba(255,255,255,0.4);
-            animation: bulbPulse 1.2s infinite alternate;
-        }
-        @keyframes bulbPulse {
-            0% { opacity: 0.6; box-shadow: 0 0 6px var(--brand-brick-red); }
-            100% { opacity: 1; box-shadow: 0 0 18px var(--brand-brick-red), 0 0 30px var(--brand-brick-red); }
-        }
-        .lights-reflection {
-            font-family: 'Outfit', sans-serif;
-            font-size: 10px; font-weight: 700; letter-spacing: 3px;
-            color: var(--brand-brick-red);
-            text-transform: uppercase;
-        }
+.hud-fuel-pct {
+  font-family: var(--font-hud);
+  font-size: 12px; 
+  font-weight: 700;
+  color: var(--brand-accent-race);
+}
 
-        /* =========================================
-           2. INTERACTIVE QUIZ DESIGN
-           ========================================= */
-        .quiz-opts { display: flex; flex-direction: column; gap: 12px; }
-        .quiz-btn {
-            background: rgba(255, 255, 255, 0.02); 
-            border: 1px solid rgba(255, 255, 255, 0.08); 
-            border-radius: 4px; /* Crisp mechanical keys matching the max-5px limit */
-            padding: 15px 18px; font-size: 15px; font-weight: 600; 
-            color: var(--hud-text-light);
-            cursor: pointer; 
-            transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1); 
-            text-align: left;   
-            font-family: 'Poppins', sans-serif;
-            position: relative;
-            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
-            display: flex; align-items: center;
-        }
-        .quiz-btn:hover { 
-            border-color: var(--brand-accent-race); 
-            background: rgba(203, 184, 157, 0.08); 
-            transform: translateX(5px);
-            box-shadow: 0 4px 12px rgba(203, 184, 157, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.1);
-        }
-        .quiz-btn:active {
-            transform: translateX(2px);
-        }
+.gas-bar-container { 
+  width: 100%; 
+  height: 8px; 
+  background: rgba(0, 0, 0, 0.3); 
+  border-radius: 2px; 
+  overflow: hidden; 
+  border: 1px solid rgba(255, 255, 255, 0.05); 
+}
 
-        /* Generated Options Labels (A, B, C) */
-        .quiz-btn::before {
-            display: inline-flex; align-items: center; justify-content: center;
-            width: 24px; height: 24px; min-width: 24px;
-            background: rgba(255, 255, 255, 0.06);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 2px;
-            margin-right: 12px;
-            font-family: 'Outfit', sans-serif;
-            font-weight: 700; font-size: 12px;
-            color: var(--brand-accent-race);
-            transition: all 0.2s;
-        }
-        .quiz-opts button:nth-child(1)::before { content: "A"; }
-        .quiz-opts button:nth-child(2)::before { content: "B"; }
-        .quiz-opts button:nth-child(3)::before { content: "C"; }
+.gas-bar-fill { 
+  height: 100%; 
+  width: 100%; 
+  background: linear-gradient(90deg, var(--brand-sage), var(--brand-sage-dark)) !important; 
+  transition: width 0.3s cubic-bezier(0.2, 0.8, 0.2, 1); 
+  border-radius: 0;
+}
 
-        .quiz-btn:hover::before {
-            background: var(--brand-accent-race);
-            color: var(--brand-navbar-dark);
-            border-color: var(--brand-accent-race);
-            box-shadow: 0 0 8px var(--brand-accent-race);
-        }
 
-        /* Telemetry Countdown Timer */
-        .hud-timer-wrap { 
-            width: 100%; height: 5px; 
-            background: rgba(255, 255, 255, 0.05); 
-            border-radius: 2px; 
-            margin-bottom: 22px; 
-            overflow: hidden; 
-            border: 1px solid rgba(255,255,255,0.02);
-            display: none; 
-        }
-        .hud-timer-fill { 
-            width: 100%; height: 100%; 
-            background: linear-gradient(90deg, var(--brand-brick-red), #e67e22); 
-            box-shadow: 0 0 6px rgba(204, 90, 67, 0.5);
-            transition: width 0.1s linear; 
-        }
+/* ==========================================================================
+   2. ACTION PANEL & D-PAD (Mechanical Classic Keys)
+   ========================================================================== */
+#action-panel { 
+  position: absolute; 
+  bottom: 25px; 
+  right: 25px; 
+  z-index: 100; 
+  display: flex; 
+  flex-direction: column; 
+  gap: 15px; 
+}
 
-        /* =========================================
-           3. FINISH LINE COMPLETE DESIGN
-           ========================================= */
-        .finish-title-wrap {
-            display: flex; align-items: center; justify-content: center; gap: 15px; margin-bottom: 15px;
-        }
-        .checkered-accent {
-            width: 40px; height: 14px;
-            background-image: linear-gradient(45deg, #000 25%, transparent 25%), 
-                              linear-gradient(-45deg, #000 25%, transparent 25%), 
-                              linear-gradient(45deg, transparent 75%, #000 75%), 
-                              linear-gradient(-45deg, transparent 75%, #000 75%);
-            background-size: 8px 8px;
-            background-position: 0 0, 0 4px, 4px -4px, -4px 0px;
-            background-color: #fff;
-            border-radius: 0px; /* Sharp retro checkered pattern */
-            opacity: 0.5;
-        }
-        .text-green { color: var(--brand-sage) !important; text-shadow: 0 0 8px rgba(143,163,130,0.3); }
-        .text-gold { color: var(--brand-accent-race) !important; text-shadow: 0 0 12px rgba(203,184,157,0.3); }
-        .text-cyan { color: var(--brand-cream-soft) !important; text-shadow: 0 0 8px rgba(237,230,220,0.2); }
+.circle-btn {
+  width: 52px; 
+  height: 52px; 
+  border-radius: var(--border-radius-sm); 
+  background: var(--hud-bg-dark); 
+  backdrop-filter: blur(10px); 
+  border: 1.5px solid var(--brand-accent-race);
+  display: flex; 
+  justify-content: center; 
+  align-items: center;
+  color: var(--hud-text-light); 
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2); 
+  transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
 
-        /* Stats Telemetry Dashboard */
-        .telemetry-dashboard {
-            display: flex; flex-direction: column; gap: 12px; margin: 20px 0;
-        }
-        .telemetry-tile {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            border-radius: 4px;
-            padding: 14px;
-            display: flex; flex-direction: column; align-items: center;
-            position: relative;
-            box-shadow: inset 0 1px 0 rgba(255,255,255,0.02);
-        }
-        .telemetry-tile.main-score {
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.03) 0%, rgba(255,255,255,0.01) 100%);
-            border-color: rgba(203, 184, 157, 0.2);
-            padding: 18px;
-        }
-        .tile-label {
-            font-family: 'Outfit', sans-serif;
-            font-size: 10px; font-weight: 700; letter-spacing: 2px;
-            color: var(--brand-accent-race);
-            margin-bottom: 5px;
-            text-transform: uppercase;
-        }
-        .tile-value {
-            font-family: 'Orbitron', sans-serif;
-            font-weight: 900;
-            letter-spacing: -1px;
-        }
-        .telemetry-tile.main-score .tile-value {
-            font-size: 42px;
-            margin: 2px 0;
-        }
-        .tile-unit {
-            font-family: 'Outfit', sans-serif;
-            font-size: 11px; font-weight: 700; letter-spacing: 1px;
-            color: var(--brand-cream-soft); opacity: 0.6;
-        }
-        .telemetry-grid {
-            display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
-        }
-        .telemetry-tile.mini {
-            padding: 12px;
-        }
-        .telemetry-tile.mini .tile-value {
-            font-size: 18px;
-            margin-top: 2px;
-        }
+.circle-btn:active { 
+  transform: scale(0.92); 
+}
 
-        /* Database Saving Status Row */
-        .saving-status-box {
-            display: flex; flex-direction: column; align-items: center; gap: 10px; margin-bottom: 10px;
-        }
-        #saving-status {
-            font-family: 'Poppins', sans-serif;
-            font-size: 13px; font-style: italic; color: var(--brand-cream-soft); opacity: 0.8;
-            margin: 0; line-height: 1.5; text-align: center;
-        }
-        #saving-status b {
-            font-family: 'Outfit', sans-serif;
-            font-weight: 700; font-size: 14px;
-            color: var(--brand-accent-race);
-        }
+.circle-btn svg {
+  width: 18px;
+  height: 18px;
+  stroke: currentColor;
+  stroke-width: 2.5;
+  fill: none;
+}
 
-        /* Pulse Dots Saving Animation */
-        .saving-loader {
-            display: flex; gap: 6px; justify-content: center; align-items: center; height: 16px;
-        }
-        .saving-loader span {
-            width: 8px; height: 8px; border-radius: 50%;
-            background-color: var(--brand-accent-race);
-            animation: loaderBounce 1.4s infinite ease-in-out both;
-        }
-        .saving-loader span:nth-child(1) { animation-delay: -0.32s; }
-        .saving-loader span:nth-child(2) { animation-delay: -0.16s; }
-        @keyframes loaderBounce {
-            0%, 80%, 100% { transform: scale(0); }
-            40% { transform: scale(1.0); }
-        }
+#d-pad {
+  position: absolute; 
+  bottom: 30px; 
+  left: 50%; 
+  transform: translateX(-50%);
+  z-index: 100; 
+  display: grid; 
+  grid-template-columns: repeat(3, 70px); 
+  grid-template-rows: repeat(2, 60px);
+  gap: 10px; 
+  user-select: none;
+}
 
-        /* Hide Loader on Complete dynamically */
-        .finish-card:has(#close-finish-btn[style*="display: block"]) #saving-loader {
-            display: none !important;
-        }
-        .finish-card:has(#close-finish-btn[style*="display: block"]) .saving-status-box {
-            margin-bottom: 5px;
-        }
+.d-btn {
+  background: var(--brand-cream); 
+  backdrop-filter: blur(8px);
+  border: 1.5px solid var(--brand-cream-soft); 
+  border-radius: var(--border-radius-sm);
+  display: flex; 
+  justify-content: center; 
+  align-items: center;
+  color: var(--brand-taupe-dark); 
+  cursor: pointer;
+  box-shadow: 0 5px 12px rgba(63, 58, 54, 0.1); 
+  transition: all 0.15s cubic-bezier(0.2, 0.8, 0.2, 1);
+  font-family: var(--font-body); 
+  font-weight: 800;
+}
 
-        /* =========================================
-           BUTTON SYSTEM & DYNAMICS (Max 5px Radius)
-           ========================================= */
-        .btn-primary {
-            position: relative;
-            overflow: hidden;
-            color: var(--brand-navbar-dark); 
-            border: none; 
-            padding: 15px 32px; font-size: 15px; font-weight: 700; cursor: pointer;
-            box-shadow: 0 6px 18px rgba(0,0,0,0.15); 
-            transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.2);
-            font-family: 'Outfit', sans-serif;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-        
-        .btn-gas-start {
-            background: linear-gradient(135deg, var(--brand-accent-race) 0%, var(--brand-cream-soft) 100%);
-            box-shadow: 0 6px 18px rgba(203, 184, 157, 0.25);
-            width: 100%;
-        }
-        .btn-gas-start:hover {
-            transform: translateY(-2px);
-            background: linear-gradient(135deg, var(--brand-cream-soft) 0%, var(--brand-accent-race) 100%);
-            box-shadow: 0 10px 22px rgba(203, 184, 157, 0.4);
-        }
-        .btn-gas-start:active {
-            transform: translateY(-1px);
-        }
+.d-btn svg {
+  width: 20px;
+  height: 20px;
+  stroke: currentColor;
+  stroke-width: 3;
+  fill: none;
+}
 
-        .btn-finish {
-            background: linear-gradient(135deg, var(--brand-sage) 0%, var(--brand-sage-dark) 100%);
-            box-shadow: 0 6px 18px rgba(143, 163, 130, 0.25);
-            color: var(--brand-navbar-dark);
-        }
-        .btn-finish:hover {
-            transform: translateY(-2px);
-            background: linear-gradient(135deg, var(--brand-sage-dark) 0%, var(--brand-sage) 100%);
-            box-shadow: 0 10px 22px rgba(143, 163, 130, 0.4);
-        }
-        .btn-finish:active {
-            transform: translateY(-1px);
-        }
+.d-btn:active { 
+  background: var(--brand-cream-soft); 
+  transform: scale(0.92); 
+}
 
-        /* Sliding Shine Micro-animation */
-        .btn-shine {
-            position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
-            background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.25) 50%, rgba(255,255,255,0) 100%);
-            transform: skewX(-25deg);
-            animation: btnShineEffect 4s infinite;
-        }
-        @keyframes btnShineEffect {
-            0% { left: -100%; }
-            15% { left: 150%; }
-            100% { left: 150%; }
-        }
+#btn-up { 
+  grid-column: 2; 
+  grid-row: 1; 
+  background: rgba(143, 163, 130, 0.2); 
+  border-color: var(--brand-sage); 
+  color: var(--brand-sage-dark); 
+} 
 
-        #start-overlay { display: flex; z-index: 1100; }
+#btn-brake { 
+  grid-column: 2; 
+  grid-row: 2; 
+  background: rgba(204, 90, 67, 0.2); 
+  border-color: var(--brand-brick-red); 
+  color: var(--brand-brick-red); 
+  font-size: 12px; 
+  font-weight: 900; 
+  letter-spacing: 1px;
+  font-family: var(--font-hud);
+}
+
+
+/* ==========================================================================
+   3. TOAST SYSTEM
+   ========================================================================== */
+#toast-container {
+  position: absolute; 
+  top: 25px; 
+  left: 50%; 
+  transform: translateX(-50%);
+  z-index: 2000; 
+  display: flex; 
+  flex-direction: column; 
+  gap: 10px; 
+  pointer-events: none;
+}
+
+.toast {
+  background: var(--hud-bg-dark); 
+  color: var(--hud-text-light); 
+  padding: 12px 25px;
+  border-radius: var(--border-radius-sm); 
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600; 
+  font-size: 13px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+  opacity: 0; 
+  transform: translateY(-20px);
+  transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  text-align: center; 
+  backdrop-filter: blur(5px); 
+  border: 1px solid rgba(203, 184, 157, 0.2);
+}
+
+.toast.show { 
+  opacity: 1; 
+  transform: translateY(0); 
+}
+
+.toast.success { 
+  border-bottom: 3px solid var(--brand-sage); 
+}
+
+.toast.error { 
+  border-bottom: 3px solid var(--brand-brick-red); 
+}
+
+
+/* ==========================================================================
+   4. CLASSIC MECHANICAL MODALS (Tactile Handcrafted Paper)
+   ========================================================================== */
+.overlay-bg {
+  position: absolute; 
+  top: 0; 
+  left: 0; 
+  width: 100%; 
+  height: 100%;
+  background: radial-gradient(circle, rgba(63, 58, 54, 0.6) 0%, rgba(26, 23, 20, 0.94) 100%);
+  backdrop-filter: blur(8px); 
+  -webkit-backdrop-filter: blur(8px);
+  display: none; 
+  justify-content: center; 
+  align-items: center; 
+  z-index: 1000;
+}
+
+.modal-card {
+  background: linear-gradient(135deg, #ede6dc 0%, #f7f3ee 100%);
+  border: 2px solid var(--brand-accent-race);
+  border-radius: var(--border-radius-sm); 
+  padding: 35px 40px;
+  width: 90%; 
+  max-width: 480px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  color: var(--brand-taupe-dark);
+  font-family: 'Poppins', sans-serif;
+  animation: modalFadeIn 0.35s cubic-bezier(0.165, 0.84, 0.44, 1) both;
+}
+
+@keyframes modalFadeIn {
+  0% { transform: scale(0.95) translateY(12px); opacity: 0; }
+  100% { transform: scale(1) translateY(0); opacity: 1; }
+}
+
+/* Redesigned printed paper badges */
+.hud-badge {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-size: 10px; 
+  font-weight: 800; 
+  letter-spacing: 1.5px;
+  padding: 4px 12px; 
+  border-radius: 2px;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+}
+
+.hud-badge.cyan {
+  background: rgba(203, 184, 157, 0.15);
+  color: var(--brand-taupe-dark);
+  border: 1px solid var(--brand-accent-race);
+}
+
+.hud-badge.yellow {
+  background: rgba(203, 184, 157, 0.12);
+  color: var(--brand-taupe-dark);
+  border: 1px solid var(--brand-accent-race);
+}
+
+.hud-badge.green {
+  background: rgba(143, 163, 130, 0.18);
+  color: var(--brand-sage-dark);
+  border: 1px solid var(--brand-sage);
+}
+
+.tech-title {
+  font-family: var(--font-body);
+  font-size: 26px; 
+  font-weight: 800; 
+  letter-spacing: -0.5px;
+  color: var(--brand-taupe-dark);
+  margin: 0 0 15px 0;
+  text-transform: uppercase;
+}
+
+.tech-desc {
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px; 
+  color: var(--brand-taupe-soft); 
+  line-height: 1.6; 
+  margin-bottom: 25px;
+}
+.tech-desc strong { color: var(--brand-taupe-dark); }
+.tech-desc em { color: var(--brand-brick-red); font-style: normal; font-weight: 700; }
+
+.start-card { border-top: 3px solid var(--brand-accent-race); }
+.quiz-card { border-top: 3px solid var(--brand-accent-race); }
+.finish-card { border-top: 3px solid var(--brand-sage-dark); }
+
+
+/* ==========================================================================
+   5. GAME LAUNCH: METALLIC LIGHTS PANEL
+   ========================================================================== */
+.f1-lights-container {
+  background: rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(63, 58, 54, 0.15);
+  border-radius: var(--border-radius-sm);
+  padding: 15px;
+  margin: 18px 0;
+}
+
+.f1-light-row {
+  display: flex; 
+  justify-content: center; 
+  gap: 14px; 
+  margin-bottom: 8px;
+}
+
+.f1-bulb {
+  width: 22px; 
+  height: 22px; 
+  border-radius: 50%;
+  background: #dbd7d2;
+  border: 2px solid #a6a19a;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.4);
+  position: relative;
+}
+
+.f1-bulb.red {
+  background: var(--brand-brick-red);
+  border-color: #aa3d29;
+  box-shadow: 0 0 12px var(--brand-brick-red), inset 0 2px 4px rgba(255, 255, 255, 0.4);
+  animation: bulbPulse 1s infinite alternate;
+}
+
+@keyframes bulbPulse {
+  0% { opacity: 0.65; }
+  100% { opacity: 1; }
+}
+
+.lights-reflection {
+  font-family: var(--font-body);
+  font-size: 10px; 
+  font-weight: 800; 
+  letter-spacing: 2px;
+  color: var(--brand-brick-red);
+  text-transform: uppercase;
+}
+
+
+/* ==========================================================================
+   6. INTERACTIVE TELEMETRY QUIZZES
+   ========================================================================== */
+.quiz-opts { 
+  display: flex; 
+  flex-direction: column; 
+  gap: 12px; 
+}
+
+.quiz-btn {
+  background: #fff; 
+  border: 1.5px solid rgba(63, 58, 54, 0.12); 
+  border-radius: var(--border-radius-sm);
+  padding: 15px 18px; 
+  font-size: 14px; 
+  font-weight: 700; 
+  color: var(--brand-taupe-dark);
+  cursor: pointer; 
+  transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1); 
+  text-align: left;   
+  font-family: 'Poppins', sans-serif;
+  position: relative;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+  display: flex; 
+  align-items: center;
+}
+
+.quiz-btn:hover { 
+  border-color: var(--brand-accent-race); 
+  background: #fffdfa; 
+  transform: translateX(6px);
+  box-shadow: 0 4px 12px rgba(63, 58, 54, 0.08);
+}
+
+.quiz-btn:active {
+  transform: translateX(2px);
+}
+
+/* Classic numbered selectors */
+.quiz-btn::before {
+  display: inline-flex; 
+  align-items: center; 
+  justify-content: center;
+  width: 24px; 
+  height: 24px; 
+  min-width: 24px;
+  background: var(--brand-cream-soft);
+  border: 1px solid rgba(63, 58, 54, 0.15);
+  border-radius: 2px;
+  margin-right: 12px;
+  font-family: var(--font-body);
+  font-weight: 800; 
+  font-size: 12px;
+  color: var(--brand-taupe-dark);
+  transition: all 0.2s ease;
+}
+.quiz-opts button:nth-child(1)::before { content: "A"; }
+.quiz-opts button:nth-child(2)::before { content: "B"; }
+.quiz-opts button:nth-child(3)::before { content: "C"; }
+
+.quiz-btn:hover::before {
+  background: var(--brand-accent-race);
+  color: #fff;
+  border-color: var(--brand-accent-race);
+}
+
+
+/* ==========================================================================
+   7. FINISH LINE COMPLETE SCENE
+   ========================================================================== */
+.finish-title-wrap {
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+  gap: 15px; 
+  margin-bottom: 15px;
+}
+
+.checkered-accent {
+  width: 40px; 
+  height: 14px;
+  background-image: linear-gradient(45deg, #000 25%, transparent 25%), 
+                    linear-gradient(-45deg, #000 25%, transparent 25%), 
+                    linear-gradient(45deg, transparent 75%, #000 75%), 
+                    linear-gradient(-45deg, transparent 75%, #000 75%);
+  background-size: 8px 8px;
+  background-position: 0 0, 0 4px, 4px -4px, -4px 0px;
+  background-color: #fff;
+  opacity: 0.7;
+}
+
+.text-green { color: var(--brand-sage-dark) !important; }
+.text-gold { color: var(--brand-accent-race) !important; }
+.text-cyan { color: var(--brand-taupe-dark) !important; }
+
+/* Stats Telemetry dashboard grid */
+.telemetry-dashboard {
+  display: flex; 
+  flex-direction: column; 
+  gap: 12px; 
+  margin: 20px 0;
+}
+
+.telemetry-tile {
+  background: #fff;
+  border: 1.5px solid rgba(63, 58, 54, 0.1);
+  border-radius: var(--border-radius-sm);
+  padding: 14px;
+  display: flex; 
+  flex-direction: column; 
+  align-items: center;
+  position: relative;
+}
+
+.telemetry-tile.main-score {
+  border-color: var(--brand-accent-race);
+  background: #fffbf5;
+  padding: 18px;
+}
+
+.tile-label {
+  font-family: var(--font-body);
+  font-size: 10px; 
+  font-weight: 800; 
+  letter-spacing: 1.5px;
+  color: var(--brand-taupe-soft);
+  margin-bottom: 5px;
+  text-transform: uppercase;
+}
+
+.tile-value {
+  font-family: var(--font-hud);
+  font-weight: 900;
+  letter-spacing: -0.5px;
+}
+
+.telemetry-tile.main-score .tile-value {
+  font-size: 42px;
+  margin: 2px 0;
+}
+
+.tile-unit {
+  font-family: var(--font-body);
+  font-size: 11px; 
+  font-weight: 700; 
+  letter-spacing: 1px;
+  color: var(--brand-taupe-soft);
+}
+
+.telemetry-grid {
+  display: grid; 
+  grid-template-columns: 1fr 1fr; 
+  gap: 12px;
+}
+
+.telemetry-tile.mini {
+  padding: 12px;
+}
+
+.telemetry-tile.mini .tile-value {
+  font-size: 18px;
+  margin-top: 2px;
+}
+
+/* Database saving status */
+.saving-status-box {
+  display: flex; 
+  flex-direction: column; 
+  align-items: center; 
+  gap: 10px; 
+  margin-bottom: 10px;
+}
+
+#saving-status {
+  font-family: 'Poppins', sans-serif;
+  font-size: 13px; 
+  color: var(--brand-taupe-soft); 
+  margin: 0; 
+  line-height: 1.5; 
+  text-align: center;
+}
+
+#saving-status b {
+  font-family: var(--font-body);
+  font-weight: 800; 
+  font-size: 14px;
+  color: var(--brand-taupe-dark);
+}
+
+/* Sync Pulsar Loader */
+.saving-loader {
+  display: flex; 
+  gap: 6px; 
+  justify-content: center; 
+  align-items: center; 
+  height: 16px;
+}
+
+.saving-loader span {
+  width: 8px; 
+  height: 8px; 
+  border-radius: 50%;
+  background-color: var(--brand-accent-race);
+  animation: loaderBounce 1.4s infinite ease-in-out both;
+}
+.saving-loader span:nth-child(1) { animation-delay: -0.32s; }
+.saving-loader span:nth-child(2) { animation-delay: -0.16s; }
+
+@keyframes loaderBounce {
+  0%, 80%, 100% { transform: scale(0); opacity: 0.3; }
+  40% { transform: scale(1.0); opacity: 1; }
+}
+
+.finish-card:has(#close-finish-btn[style*="display: block"]) #saving-loader {
+  display: none !important;
+}
+.finish-card:has(#close-finish-btn[style*="display: block"]) .saving-status-box {
+  margin-bottom: 5px;
+}
+
+
+/* ==========================================================================
+   8. BUTTONS & MICRO-INTERACTIONS
+   ========================================================================== */
+.btn-primary {
+  position: relative;
+  overflow: hidden;
+  color: #fff !important; 
+  border: none; 
+  padding: 15px 32px; 
+  font-size: 14px; 
+  font-weight: 800; 
+  cursor: pointer;
+  box-shadow: 0 5px 15px rgba(63, 58, 54, 0.15); 
+  transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.2);
+  font-family: var(--font-body);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  border-radius: var(--border-radius-sm);
+}
+
+.btn-gas-start {
+  background: linear-gradient(135deg, var(--brand-accent-race) 0%, var(--brand-taupe-dark) 100%);
+  width: 100%;
+}
+.btn-gas-start:hover {
+  transform: translateY(-2px);
+  background: linear-gradient(135deg, var(--brand-taupe-dark) 0%, var(--brand-accent-race) 100%);
+  box-shadow: 0 8px 20px rgba(63, 58, 54, 0.25);
+}
+
+.btn-finish {
+  background: linear-gradient(135deg, var(--brand-sage-dark) 0%, var(--brand-taupe-dark) 100%);
+  width: 100%;
+}
+.btn-finish:hover {
+  transform: translateY(-2px);
+  background: linear-gradient(135deg, var(--brand-taupe-dark) 0%, var(--brand-sage-dark) 100%);
+  box-shadow: 0 8px 20px rgba(63, 58, 54, 0.25);
+}
+
+.btn-primary:active {
+  transform: translateY(-1px);
+}
+
+.btn-shine {
+  position: absolute; 
+  top: 0; 
+  left: -100%; 
+  width: 50%; 
+  height: 100%;
+  background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0) 100%);
+  transform: skewX(-25deg);
+  animation: btnShineEffect 4s infinite;
+}
+
+@keyframes btnShineEffect {
+  0% { left: -100%; }
+  15% { left: 150%; }
+  100% { left: 150%; }
+}
+
+#start-overlay { 
+  display: flex; 
+  z-index: 1100; 
+}
+
+
+/* ==========================================================================
+   9. MOBILE RESPONSIVENESS
+   ========================================================================== */
+@media (max-width: 600px) {
+  #hud-panel {
+    top: 15px; 
+    left: 15px; 
+    right: 15px;
+    min-width: unset;
+    padding: 12px 16px;
+  }
+  
+  #action-panel {
+    bottom: 15px;
+    right: 15px;
+  }
+  
+  #d-pad {
+    bottom: 20px;
+    gap: 8px;
+    grid-template-columns: repeat(3, 62px); 
+    grid-template-rows: repeat(2, 54px);
+  }
+  
+  .d-btn {
+    font-size: 20px;
+  }
+  
+  #btn-brake {
+    font-size: 10px;
+  }
+
+  .modal-card {
+    padding: 25px 20px;
+    width: 92%;
+  }
+
+  .tech-title {
+    font-size: 22px;
+  }
+}

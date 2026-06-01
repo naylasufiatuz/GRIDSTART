@@ -12,9 +12,10 @@
 
     <div id="toast-container"></div>
 
+    {{-- ======================== HUD PANEL ======================== --}}
     <div id="hud-panel">
         <div class="hud-console-header">
-            <span class="hud-console-title">GRID TELEMETRY</span>
+          <span class="hud-console-title">GRID TELEMETRY</span>
         </div>
         <div class="hud-metrics">
             <div class="hud-metric">
@@ -35,22 +36,30 @@
         </div>
     </div>
 
+    {{-- ======================== ACTION DRAWER (NO EMOJIS) ======================== --}}
     <div id="action-panel">
-        <div class="circle-btn" id="pause-btn">⏸</div>
+        <div class="circle-btn" id="pause-btn" aria-label="Pause telemetry">
+            <svg viewBox="0 0 24 24" width="18" height="18"><rect x="5" y="4" width="4" height="16" fill="currentColor"></rect><rect x="15" y="4" width="4" height="16" fill="currentColor"></rect></svg>
+        </div>
     </div>
 
+    {{-- ======================== D-PAD (NO EMOJIS) ======================== --}}
     <div id="d-pad">
-        <div class="d-btn" id="btn-up">↑</div>
-        <div class="d-btn" id="btn-left">←</div>
+        <div class="d-btn" id="btn-up" aria-label="Throttle boost">
+            <svg viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"></polyline></svg>
+        </div>
+        <div class="d-btn" id="btn-left" aria-label="Steer left">
+            <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        </div>
         <div class="d-btn" id="btn-brake">REM</div>
-        <div class="d-btn" id="btn-right">→</div>
+        <div class="d-btn" id="btn-right" aria-label="Steer right">
+            <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </div>
     </div>
 
+    {{-- ======================== INTERACTIVE MODALS ======================== --}}
     <div id="start-overlay" class="overlay-bg">
         <div class="modal-card start-card">
-            <div class="hud-scanner"></div>
-            <div class="hud-bracket tl"></div><div class="hud-bracket tr"></div>
-            <div class="hud-bracket bl"></div><div class="hud-bracket br"></div>
             <div class="hud-badge cyan">STAGE 01 • INITIAL DEPARTURE</div>
             <h2 class="tech-title">START GRID</h2>
             
@@ -76,9 +85,6 @@
 
     <div id="quiz-overlay" class="overlay-bg">
         <div class="modal-card quiz-card">
-            <div class="hud-scanner"></div>
-            <div class="hud-bracket tl"></div><div class="hud-bracket tr"></div>
-            <div class="hud-bracket bl"></div><div class="hud-bracket br"></div>
             <div class="hud-badge yellow" id="quiz-badge-label">TELEMETRY CHECK</div>
             <h2 id="quiz-title" class="tech-title">Peringatan!</h2>
             
@@ -98,9 +104,6 @@
 
     <div id="finish-overlay" class="overlay-bg">
         <div class="modal-card finish-card">
-            <div class="hud-scanner"></div>
-            <div class="hud-bracket tl"></div><div class="hud-bracket tr"></div>
-            <div class="hud-bracket bl"></div><div class="hud-bracket br"></div>
             <div class="hud-badge green">STAGE COMPLETE</div>
             
             <div class="finish-title-wrap">
@@ -143,6 +146,7 @@
         </div>
     </div>
 
+    {{-- ======================== IMPORT MAP & MODULE ======================== --}}
     <script type="importmap">
         { "imports": { "three": "https://unpkg.com/three@0.160.0/build/three.module.js" } }
     </script>
@@ -151,7 +155,7 @@
         import * as THREE from 'three';
 
         // ==========================================
-        // 0. FUNGSI CUSTOM TOAST (Pengganti Alert)
+        // 0. TOAST TELEMETRY FEEDBACK
         // ==========================================
         function showToast(message, type = 'info') {
             const container = document.getElementById('toast-container');
@@ -160,10 +164,8 @@
             toast.innerHTML = message;
             container.appendChild(toast);
             
-            // Animasi masuk
             setTimeout(() => { toast.classList.add('show'); }, 10);
             
-            // Animasi hilang & hapus elemen setelah 3 detik
             setTimeout(() => {
                 toast.classList.remove('show');
                 setTimeout(() => toast.remove(), 300);
@@ -171,11 +173,11 @@
         }
 
         // ==========================================
-        // 1. SETUP SCENE, CAMERA, RENDERER
+        // 1. SCENE SETUP - CLASSIC WARM MOTORSPORT DAYLIGHT
         // ==========================================
         const scene = new THREE.Scene();
-        scene.background = new THREE.Color(0xd7f0f5);
-        scene.fog = new THREE.Fog(0xd7f0f5, 20, 150); 
+        scene.background = new THREE.Color(0xd7f0f5); // Soft blue sky
+        scene.fog = new THREE.Fog(0xd7f0f5, 20, 150); // Soft, natural fog depth
 
         const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 300);
         camera.position.set(0, 4, 10); 
@@ -184,60 +186,70 @@
         const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
         renderer.setSize(window.innerWidth, window.innerHeight);
         renderer.shadowMap.enabled = true; 
-        renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+        renderer.shadowMap.type = THREE.PCFSoftShadowMap; // Beautiful organic shadows
         document.body.appendChild(renderer.domElement);
 
         // ==========================================
-        // 2. LIGHTING 
+        // 2. SUNSET YELLOW DAYLIGHT LIGHTING
         // ==========================================
-        const hemiLight = new THREE.HemisphereLight(0xffffff, 0xc8e6c9, 0.6);
+        const hemiLight = new THREE.HemisphereLight(0xffffff, 0xc8e6c9, 0.65); // Natural sky to grass ambient
         scene.add(hemiLight);
 
-        const dirLight = new THREE.DirectionalLight(0xffeaa7, 0.8);
+        const dirLight = new THREE.DirectionalLight(0xffeaa7, 0.95); // Warm yellow directional sun
         dirLight.position.set(50, 100, 50);
         dirLight.castShadow = true;
-        dirLight.shadow.camera.top = 100; dirLight.shadow.camera.bottom = -100;
-        dirLight.shadow.camera.left = -100; dirLight.shadow.camera.right = 100;
+        dirLight.shadow.camera.top = 80; dirLight.shadow.camera.bottom = -80;
+        dirLight.shadow.camera.left = -80; dirLight.shadow.camera.right = 80;
+        dirLight.shadow.camera.near = 0.5; dirLight.shadow.camera.far = 250;
         dirLight.shadow.mapSize.width = 2048; dirLight.shadow.mapSize.height = 2048;
+        dirLight.shadow.bias = -0.0005;
         scene.add(dirLight);
 
         // ==========================================
-        // 3. GENERATOR MOBIL REALISTIS & LINGKUNGAN
+        // 3. CLASSIC MOTORSPORT MATERIALS
         // ==========================================
-        const matGround = new THREE.MeshStandardMaterial({ color: 0xe1f2e3, flatShading: true }); 
-        const matRoad = new THREE.MeshStandardMaterial({ color: 0x95a5a6, roughness: 0.9 });
-        const matLine = new THREE.MeshBasicMaterial({ color: 0xffffff });
-        const matWood = new THREE.MeshStandardMaterial({ color: 0x8b5a2b, flatShading: true });
-        const matLeaves = new THREE.MeshStandardMaterial({ color: 0x55efc4, flatShading: true });
+        const matGround = new THREE.MeshStandardMaterial({ color: 0xe1f2e3, flatShading: true }); // Sage green grass
+        const matRoad = new THREE.MeshStandardMaterial({ color: 0x95a5a6, roughness: 0.92 }); // Warm grey asphalt
+        const matLine = new THREE.MeshBasicMaterial({ color: 0xffffff }); // Classic white lanes
+        const matWood = new THREE.MeshStandardMaterial({ color: 0x8b5a2b, flatShading: true }); // Wooden trunk
+        const matLeaves = new THREE.MeshStandardMaterial({ color: 0x55efc4, flatShading: true }); // Low poly organic leaves
+        const matPole = new THREE.MeshStandardMaterial({ color: 0x2c3e50, roughness: 0.6, metalness: 0.4 });
         
-        // Material Mobil
+        // Classic Vehicle Materials
         const matGlass = new THREE.MeshStandardMaterial({ color: 0x222222, roughness: 0.1, metalness: 0.8 });
         const matDark = new THREE.MeshStandardMaterial({ color: 0x111111, roughness: 0.9 });
         const matHeadlight = new THREE.MeshBasicMaterial({ color: 0xffffff });
-        const matTaillight = new THREE.MeshBasicMaterial({ color: 0xff4757 });
+        const matTaillight = new THREE.MeshBasicMaterial({ color: 0xff4757 }); // LED Taillight red
+        const matTaillightBrake = new THREE.MeshBasicMaterial({ color: 0xff0000 }); // Brake flare red
 
+        // ==========================================
+        // 4. NATURAL LANDSCAPING AND ROAD BOUNDS
+        // ==========================================
+        
         const ground = new THREE.Mesh(new THREE.PlaneGeometry(500, 500), matGround);
         ground.rotation.x = -Math.PI / 2; ground.receiveShadow = true; scene.add(ground);
 
         const road = new THREE.Mesh(new THREE.PlaneGeometry(12, 500), matRoad);
         road.rotation.x = -Math.PI / 2; road.position.y = 0.01; road.receiveShadow = true; scene.add(road);
 
-        // Desain Mobil Baru (Sleek Sports Car)
-        function createRealisticCar(primaryColorHex) {
+        // ==========================================
+        // 5. DETAILED CLASSIC CONCEPT RACERS
+        // ==========================================
+        function createSleekSportsCar(primaryColorHex, isPlayer = false) {
             const car = new THREE.Group();
-            const matBody = new THREE.MeshStandardMaterial({ color: primaryColorHex, roughness: 0.4, metalness: 0.5, flatShading:true });
+            const matBody = new THREE.MeshStandardMaterial({ color: primaryColorHex, roughness: 0.4, metalness: 0.5, flatShading: true });
 
-            // Chassis Bawah (Lebih panjang & ceper)
+            // 1. Ceper Chassis
             const chassis = new THREE.Mesh(new THREE.BoxGeometry(2.2, 0.4, 4.8), matBody);
-            chassis.position.y = 0.4; chassis.castShadow = true;
+            chassis.position.y = 0.4; chassis.castShadow = true; chassis.receiveShadow = true;
             car.add(chassis);
 
-            // Kabin (Melengkung aerodinamis)
+            // 2. Aerodynamic Cockpit
             const cabin = new THREE.Mesh(new THREE.BoxGeometry(1.6, 0.5, 2.2), matGlass);
             cabin.position.set(0, 0.85, -0.2); cabin.castShadow = true;
             car.add(cabin);
 
-            // Spoiler Belakang (Sayap mobil balap)
+            // 3. F1 Concept Rear Spoiler
             const pillarL = new THREE.Mesh(new THREE.BoxGeometry(0.1, 0.3, 0.2), matDark);
             pillarL.position.set(-0.8, 0.7, 2.2);
             const pillarR = new THREE.Mesh(new THREE.BoxGeometry(0.1, 0.3, 0.2), matDark);
@@ -246,26 +258,68 @@
             spoilerWing.position.set(0, 0.9, 2.3); spoilerWing.castShadow = true;
             car.add(pillarL, pillarR, spoilerWing);
 
-            // Lampu Depan & Belakang
+            // 4. LED Front Headlamps & Rear Lights
             const hlL = new THREE.Mesh(new THREE.BoxGeometry(0.4, 0.1, 0.1), matHeadlight); hlL.position.set(-0.7, 0.5, -2.4);
             const hlR = new THREE.Mesh(new THREE.BoxGeometry(0.4, 0.1, 0.1), matHeadlight); hlR.position.set(0.7, 0.5, -2.4);
             const tlL = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.1, 0.1), matTaillight); tlL.position.set(-0.7, 0.5, 2.4);
             const tlR = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.1, 0.1), matTaillight); tlR.position.set(0.7, 0.5, 2.4);
             car.add(hlL, hlR, tlL, tlR);
 
-            // 4 Ban Lebar
-            const wheelGeo = new THREE.CylinderGeometry(0.4, 0.4, 0.4, 16); wheelGeo.rotateZ(Math.PI / 2);
-            [[-1.1, 0.4, 1.4], [1.1, 0.4, 1.4], [-1.1, 0.4, -1.4], [1.1, 0.4, -1.4]].forEach(pos => {
+            // 5. 4 Custom Mechanical Wheels
+            const wheelGeo = new THREE.CylinderGeometry(0.44, 0.44, 0.42, 16); wheelGeo.rotateZ(Math.PI / 2);
+            [[-1.1, 0.42, 1.4], [1.1, 0.42, 1.4], [-1.1, 0.42, -1.4], [1.1, 0.42, -1.4]].forEach(pos => {
                 const wheel = new THREE.Mesh(wheelGeo, matDark);
                 wheel.position.set(...pos); wheel.castShadow = true; car.add(wheel);
             });
+
             return car;
         }
 
-        // Spawn Mobil Player (Merah)
-        const playerCar = createRealisticCar(0xff4757);
+        // Heavy-duty mechanical delivery transporter for macet/traffic
+        function createHeavyCyberHauler() {
+            const truck = new THREE.Group();
+            const matTruckBody = new THREE.MeshStandardMaterial({ color: 0x8fa382, roughness: 0.5, metalness: 0.5, flatShading: true });
+
+            const cabin = new THREE.Mesh(new THREE.BoxGeometry(2.3, 1.4, 2.0), matDark);
+            cabin.position.set(0, 0.9, -1.3); cabin.castShadow = true;
+            
+            const cargo = new THREE.Mesh(new THREE.BoxGeometry(2.4, 1.7, 3.8), matTruckBody);
+            cargo.position.set(0, 1.15, 1.3); cargo.castShadow = true;
+
+            const trim = new THREE.Mesh(new THREE.BoxGeometry(2.32, 0.2, 1.94), matWood);
+            trim.position.set(0, 0.28, -1.3);
+
+            truck.add(cabin, cargo, trim);
+
+            const wheelGeo = new THREE.CylinderGeometry(0.55, 0.55, 0.46, 12);
+            wheelGeo.rotateZ(Math.PI / 2);
+            [[-1.15, 0.55, 1.7], [1.16, 0.55, 1.7], [-1.15, 0.55, 0.3], [1.16, 0.55, 0.3], [-1.15, 0.55, -1.5], [1.16, 0.55, -1.5]].forEach(pos => {
+                const w = new THREE.Mesh(wheelGeo, matDark); w.castShadow = true;
+                w.position.set(...pos); truck.add(w);
+            });
+
+            return truck;
+        }
+
+        // Spawn Player's classic Sports Car (Signature Red)
+        const playerCar = createSleekSportsCar(0xff4757, true);
         scene.add(playerCar);
 
+        // Add physical active taillight brake flare mesh inside player car
+        const activeBrakeLightL = new THREE.Mesh(new THREE.BoxGeometry(0.52, 0.12, 0.12), matTaillightBrake);
+        activeBrakeLightL.position.set(-0.7, 0.5, 2.42); activeBrakeLightL.visible = false;
+        const activeBrakeLightR = new THREE.Mesh(new THREE.BoxGeometry(0.52, 0.12, 0.12), matTaillightBrake);
+        activeBrakeLightR.position.set(0.7, 0.5, 2.42); activeBrakeLightR.visible = false;
+        playerCar.add(activeBrakeLightL, activeBrakeLightR);
+
+        // Add real PointLight to illuminate ground when pengereman
+        const brakePointLight = new THREE.PointLight(0xff0000, 0, 8);
+        brakePointLight.position.set(0, 0.5, 2.5);
+        playerCar.add(brakePointLight);
+
+        // ==========================================
+        // 6. SCENERY CONSTRUCTIONS - LOW POLY ORGANIC
+        // ==========================================
         function createLowPolyTree() {
             const tree = new THREE.Group();
             const trunk = new THREE.Mesh(new THREE.CylinderGeometry(0.2, 0.3, 1.5, 5), matWood);
@@ -277,9 +331,9 @@
 
         function createLampPost() {
             const lamp = new THREE.Group();
-            const pole = new THREE.Mesh(new THREE.CylinderGeometry(0.1, 0.1, 4, 8), matDark);
+            const pole = new THREE.Mesh(new THREE.CylinderGeometry(0.1, 0.1, 4, 8), matPole);
             pole.position.y = 2; pole.castShadow = true;
-            const top = new THREE.Mesh(new THREE.BoxGeometry(1.5, 0.2, 0.3), matDark);
+            const top = new THREE.Mesh(new THREE.BoxGeometry(1.5, 0.2, 0.3), matPole);
             top.position.set(0.6, 4, 0); top.castShadow = true;
             const bulb = new THREE.Mesh(new THREE.SphereGeometry(0.15, 8, 8), new THREE.MeshBasicMaterial({color: 0xffeaa7}));
             bulb.position.set(1.2, 3.9, 0);
@@ -287,95 +341,154 @@
         }
 
         let worldObjects = [];
-        let fireParticles = []; // Array untuk efek api kecelakaan
+        let fireParticles = []; // Drifting yellow/orange smoke
+        let sparkParticles = []; // Classic flame sparks
 
         function spawnEnvironment() {
-            const line = new THREE.Mesh(new THREE.PlaneGeometry(0.2, 2), matLine);
+            // Sliding central white telemetry line
+            const line = new THREE.Mesh(new THREE.PlaneGeometry(0.2, 2.5), matLine);
             line.rotation.x = -Math.PI / 2; line.position.set(0, 0.02, -150);
             scene.add(line); worldObjects.push(line);
 
-            if(Math.random() > 0.3) { const treeL = createLowPolyTree(); treeL.position.set(-8 - Math.random()*10, 0, -150); scene.add(treeL); worldObjects.push(treeL); }
-            if(Math.random() > 0.3) { const treeR = createLowPolyTree(); treeR.position.set(8 + Math.random()*10, 0, -150); scene.add(treeR); worldObjects.push(treeR); }
-            if(Math.random() > 0.8) { const lamp = createLampPost(); lamp.position.set(-6.5, 0, -150); scene.add(lamp); worldObjects.push(lamp); }
+            // Spawning organic trees and lamp posts
+            if(Math.random() > 0.28) { 
+                const treeL = createLowPolyTree(); 
+                treeL.position.set(-7.5 - Math.random()*9, 0, -150); 
+                scene.add(treeL); worldObjects.push(treeL); 
+            }
+            if(Math.random() > 0.28) { 
+                const treeR = createLowPolyTree(); 
+                treeR.position.set(7.5 + Math.random()*9, 0, -150); 
+                scene.add(treeR); worldObjects.push(treeR); 
+            }
+            if(Math.random() > 0.8) { 
+                const lamp = createLampPost(); 
+                lamp.position.set(-6.4, 0, -150); 
+                scene.add(lamp); worldObjects.push(lamp); 
+            }
         }
 
         // ==========================================
-        // 4. SKENARIO OBJEK KHUSUS (DRAMATIS & REALISTIS)
+        // 7. SPECIFIC CHOSEN SCENARIOS (TACTILE & HUMAN HANDS)
         // ==========================================
+        
+        // Scene A: Accident (190m) — Reverted to "BEFORE" layout (flipped blue car + crashed black car + wooden barriers)
         function createAccident() {
             const group = new THREE.Group();
             
-            // Mobil 1: Terguling / Terbalik
-            const car1 = createRealisticCar(0x0984e3); // Biru
-            car1.rotation.z = Math.PI; // Terbalik 180 derajat
+            // Flipped blue concept sports car
+            const car1 = createSleekSportsCar(0x0984e3); 
+            car1.rotation.z = Math.PI; 
             car1.rotation.y = Math.PI/6;
             car1.position.set(-2, 0.8, 0); 
             
-            // Mobil 2: Menabrak dari samping
-            const car2 = createRealisticCar(0x2d3436); // Hitam
+            // Smashed black concept coupe
+            const car2 = createSleekSportsCar(0x2d3436); 
             car2.rotation.y = -Math.PI/4;
             car2.position.set(-3.5, 0, 3);
             
             group.add(car1, car2);
 
-            // PARTICLE SYSTEM API & ASAP (FIRE EFFECT)
-            const fireGeo = new THREE.TetrahedronGeometry(0.5);
-            const fireMat = new THREE.MeshBasicMaterial({ color: 0xff7675, transparent: true, opacity: 0.8 });
+            // Classic caution wooden barriers
+            const barrier1 = new THREE.Mesh(new THREE.BoxGeometry(3.5, 0.6, 0.3), matWood);
+            barrier1.position.set(-1.8, 0.3, -3); barrier1.castShadow = true;
+            group.add(barrier1);
+
+            // Natural, organic expanding fire particles
+            const fireGeo = new THREE.TetrahedronGeometry(0.48);
+            const fireMat = new THREE.MeshBasicMaterial({ color: 0xff7675, transparent: true, opacity: 0.85 });
             for(let i=0; i<40; i++) {
                 const p = new THREE.Mesh(fireGeo, fireMat.clone());
-                p.position.set(-2.5 + (Math.random()-0.5)*2, Math.random()*2, 1.5 + (Math.random()-0.5)*2);
-                p.userData = { life: Math.random(), speed: 0.03 + Math.random()*0.05, scale: Math.random()*0.5 + 0.5 };
+                p.position.set(-2.5 + (Math.random()-0.5)*2.2, 0.2 + Math.random()*2, 1.5 + (Math.random()-0.5)*2.2);
+                p.userData = { life: Math.random(), speed: 0.035 + Math.random()*0.05, scale: Math.random()*0.55 + 0.45 };
                 group.add(p); fireParticles.push(p); 
             }
 
-            // Cahaya Api Dramatis
-            const fLight = new THREE.PointLight(0xff7675, 2, 15);
+            // Warm fire PointLight
+            const fLight = new THREE.PointLight(0xff7675, 2.5, 14);
             fLight.position.set(-2.5, 1, 1.5);
             group.add(fLight);
+            
+            group.userData = { light: fLight, tick: 0 };
 
-            group.position.set(-1, 0, -100); 
+            group.position.set(-1, 0, -120); 
             scene.add(group); worldObjects.push({mesh: group, isEvent: true});
         }
 
+        // Scene B: Traffic (490m) — Kept "NOW" layout (high-fidelity queue: Cyber-Hauler + Hypercars)
         function createTraffic() {
             const group = new THREE.Group();
-            // Deretan 3 mobil macet rapat di lajur kanan
-            const colors = [0xe84393, 0x00b894, 0xfdcb6e]; // Pink, Hijau, Kuning
-            for(let i=0; i<3; i++) {
-                const c = createRealisticCar(colors[i]);
-                c.position.set(3, 0, i * -5.5); // Jarak antar mobil sangat dekat (5.5 unit)
-                group.add(c);
-            }
-            group.position.set(0, 0, -100);
+            
+            // Cyber-hauler leads
+            const hauler = createHeavyCyberHauler();
+            hauler.position.set(3, 0, -11);
+            
+            // Aero-prototype follows close
+            const prototypeY = createSleekSportsCar(0xf1c40f);
+            prototypeY.position.set(3, 0, 0);
+
+            // Sleek hypercar trails
+            const prototypeP = createSleekSportsCar(0x8e44ad);
+            prototypeP.position.set(3, 0, 10.5);
+
+            group.add(hauler, prototypeY, prototypeP);
+            group.position.set(0, 0, -120);
             scene.add(group); worldObjects.push({mesh: group, isEvent: true});
         }
 
+        // Scene C: Pit Stop (640m) — Reverted to "BEFORE" layout (simple branch road + red roof + dark pillars)
         function createPitStopArea() {
             const group = new THREE.Group();
+            
+            // Offroad asphalt branch
             const branch = new THREE.Mesh(new THREE.PlaneGeometry(8, 20), matRoad);
             branch.rotation.x = -Math.PI/2; branch.position.set(-8, 0.015, 0);
-            const roof = new THREE.Mesh(new THREE.BoxGeometry(10, 0.5, 6), new THREE.MeshStandardMaterial({color:0xff7675}));
+            
+            // Classic F1 Red Canopy roof
+            const roof = new THREE.Mesh(new THREE.BoxGeometry(10, 0.5, 6), new THREE.MeshStandardMaterial({color:0xff7675, flatShading: true}));
             roof.position.set(-8, 4, 0); roof.castShadow = true;
-            const p1 = new THREE.Mesh(new THREE.CylinderGeometry(0.2,0.2,4), matDark); p1.position.set(-12, 2, -2);
-            const p2 = new THREE.Mesh(new THREE.CylinderGeometry(0.2,0.2,4), matDark); p2.position.set(-4, 2, -2);
-            group.add(branch); group.add(roof); group.add(p1); group.add(p2);
-            group.position.set(0, 0, -100);
+            
+            // Simple metallic pillars
+            const p1 = new THREE.Mesh(new THREE.CylinderGeometry(0.18, 0.18, 4), matDark); p1.position.set(-12.2, 2, -2);
+            const p2 = new THREE.Mesh(new THREE.CylinderGeometry(0.18, 0.18, 4), matDark); p2.position.set(-3.8, 2, -2);
+            
+            group.add(branch, roof, p1, p2);
+            group.position.set(0, 0, -120);
             scene.add(group); worldObjects.push({mesh: group, isEvent: true, isPitstop: true});
         }
 
+        // Scene D: Damaged Road (790m) — Kept "NOW" layout (detailed potholes + hazard cones)
         function createPotholes() {
             const group = new THREE.Group();
             const holeMat = new THREE.MeshBasicMaterial({color: 0x1a1a1a});
+            
+            // Detailed asphalt pothole cracks
             const h1 = new THREE.Mesh(new THREE.CircleGeometry(1.2, 8), holeMat); h1.rotation.x = -Math.PI/2; h1.position.set(3, 0.02, 0);
             const h2 = new THREE.Mesh(new THREE.CircleGeometry(0.8, 6), holeMat); h2.rotation.x = -Math.PI/2; h2.position.set(2, 0.02, 3);
             const h3 = new THREE.Mesh(new THREE.CircleGeometry(1.5, 7), holeMat); h3.rotation.x = -Math.PI/2; h3.position.set(4, 0.02, -2);
-            group.add(h1); group.add(h2); group.add(h3);
-            group.position.set(0, 0, -100);
+            
+            group.add(h1, h2, h3);
+
+            // Warning traffic caution cones blocking the damage lanes
+            const coneMat = new THREE.MeshStandardMaterial({color: 0xff5e00, roughness: 0.5});
+            const coneWhite = new THREE.MeshBasicMaterial({color: 0xffffff});
+            
+            [ [3, 0], [2, 3], [4, -2] ].forEach(pos => {
+                const cone = new THREE.Group();
+                const base = new THREE.Mesh(new THREE.BoxGeometry(0.55, 0.04, 0.55), coneMat); base.castShadow = true;
+                const body = new THREE.Mesh(new THREE.ConeGeometry(0.2, 0.72, 6), coneMat); body.position.y = 0.36; body.castShadow = true;
+                const strip = new THREE.Mesh(new THREE.CylinderGeometry(0.12, 0.15, 0.18, 6), coneWhite); strip.position.y = 0.4;
+                cone.add(base, body, strip);
+                cone.position.set(pos[0], 0.02, pos[1]);
+                group.add(cone);
+            });
+
+            group.position.set(0, 0, -120);
             scene.add(group); worldObjects.push({mesh: group, isEvent: true});
         }
 
         // ==========================================
-        // 5. STATE & LOGIKA GAME
+        // 8. STATE & GAMEPLAY CONTROL ENGINE
         // ==========================================
         let speed = 0.8; 
         let isPaused = true; 
@@ -427,7 +540,7 @@
         document.getElementById('close-finish-btn').onclick = () => { window.location.href = '/finish-line'; };
 
         // ==========================================
-        // 6. LOGIKA KUIS & PIT STOP
+        // 9. TELEMETRY COGNITIVE CHALLENGES
         // ==========================================
         let currentQuizMode = ''; 
         const articleQuizzes = [
@@ -465,12 +578,11 @@
             clearInterval(pitTimer); timeLeft = 100; document.getElementById('timer-bar-fill').style.width = "100%";
             document.getElementById('timer-bar-wrap').style.display = 'block';
             document.getElementById('quiz-title').innerText = "PIT STOP";
-            document.getElementById('quiz-title').innerText = "PIT STOP";
             document.getElementById('quiz-question').innerText = pitStopQs[pitIndex].q;
             qBtns.forEach((btn, i) => { btn.innerText = pitStopQs[pitIndex].a[i].t; btn.setAttribute('data-correct', pitStopQs[pitIndex].a[i].c); });
             
             pitTimer = setInterval(() => {
-                timeLeft -= 1.5; document.getElementById('timer-bar-fill').style.width = timeLeft + "%";
+                timeLeft -= 1.4; document.getElementById('timer-bar-fill').style.width = timeLeft + "%";
                 if(timeLeft <= 0) { clearInterval(pitTimer); handlePitAnswer(false); }
             }, 100);
         }
@@ -516,13 +628,19 @@
         });
 
         // ==========================================
-        // 7. RENDER LOOP UTAMA
+        // 10. REAL-TIME GAME CLOCK & RENDERING
         // ==========================================
         function animate() {
             requestAnimationFrame(animate);
 
             if (!isPaused && !isGameOver && !hasHitFinishLine) {
-                let moveSpeed = keys.ArrowUp ? speed * 1.5 : (keys.ArrowDown ? speed * 0.4 : speed);
+                // Taillight active reaction
+                const braking = keys.ArrowDown;
+                activeBrakeLightL.visible = braking;
+                activeBrakeLightR.visible = braking;
+                brakePointLight.intensity = braking ? 2.0 : 0;
+
+                let moveSpeed = keys.ArrowUp ? speed * 1.5 : (braking ? speed * 0.4 : speed);
                 distance += (moveSpeed * 0.2); 
                 let currentDist = Math.floor(distance);
                 document.getElementById('distance-ui').innerText = currentDist;
@@ -535,9 +653,15 @@
                     let mesh = obj.mesh || obj; 
                     mesh.position.z += moveSpeed;
                     
-                    if(obj.isEvent && Math.abs(mesh.position.z) < 1) {
+                    if(obj.isEvent && Math.abs(mesh.position.z) < 1.2) {
                         if(obj.isPitstop) triggerPitStop();
                         obj.isEvent = false; 
+                    }
+
+                    // Flicker accident fire lights
+                    if (mesh.userData && mesh.userData.light) {
+                        mesh.userData.tick += 0.15;
+                        mesh.userData.light.intensity = 2.0 + Math.sin(mesh.userData.tick) * 0.5;
                     }
 
                     if (mesh.position.z > 20) {
@@ -545,22 +669,20 @@
                     }
                 }
 
-                // ANIMASI EFEK API KECELAKAAN (Bergerak & Berubah Warna)
+                // Natural fire particle drift animations
                 if (fireParticles.length > 0) {
                     fireParticles.forEach(p => {
-                        // Cek kalau partikel masih berada di dalam scene (parent ada)
                         if (p.parent) {
                             p.position.y += p.userData.speed;
-                            p.userData.life -= 0.02;
+                            p.userData.life -= 0.022;
                             p.scale.setScalar(p.userData.life * p.userData.scale);
                             
-                            // Reset particle
                             if(p.userData.life <= 0) {
-                                p.position.y = 0; 
+                                p.position.y = 0.2; 
                                 p.userData.life = 1;
                             }
                             
-                            // Gradasi Warna: Kuning -> Merah -> Abu-abu asap
+                            // Cream Yellow -> Orange -> Ash grey
                             if(p.userData.life > 0.6) p.material.color.setHex(0xfdcb6e); 
                             else if(p.userData.life > 0.3) p.material.color.setHex(0xff7675); 
                             else p.material.color.setHex(0x636e72); 
@@ -582,23 +704,25 @@
                 
                 const gasFill = document.getElementById('gas-fill');
                 gasFill.style.width = gas + "%";
-                gasFill.style.background = gas < 30 ? "linear-gradient(90deg, #ff7675, #d63031)" : "linear-gradient(90deg, #55efc4, #00b894)";
+                gasFill.style.background = gas < 30 ? "linear-gradient(90deg, var(--brand-brick-red), #e74c3c)" : "linear-gradient(90deg, var(--brand-sage), var(--brand-sage-dark))";
                 
                 const fuelPercent = document.getElementById('fuel-percentage-ui');
                 if (fuelPercent) fuelPercent.innerText = Math.round(gas) + "%";
 
+                // Turning & Steering
                 const turnSpeed = 0.15;
-                if (keys.ArrowLeft && playerCar.position.x > -4) playerCar.position.x -= turnSpeed;
-                if (keys.ArrowRight && playerCar.position.x < 4) playerCar.position.x += turnSpeed;
+                if (keys.ArrowLeft && playerCar.position.x > -4.5) playerCar.position.x -= turnSpeed;
+                if (keys.ArrowRight && playerCar.position.x < 4.5) playerCar.position.x += turnSpeed;
                 
-                playerCar.children.forEach(child => {
-                    if(child.geometry.type === 'CylinderGeometry') {
-                        child.rotation.x -= moveSpeed * 0.1; 
+                // Spin wheels mesh over velocity
+                playerCar.children.forEach(w => {
+                    if (w.geometry && w.geometry.type === 'CylinderGeometry') {
+                        w.rotation.x -= moveSpeed * 0.1;
                     }
                 });
 
                 // ==========================================
-                // FINISH LINE LOGIC
+                // FINISH LINE SEQUENCER
                 // ==========================================
                 if (currentDist >= 1000 && !hasHitFinishLine) {
                     hasHitFinishLine = true; isPaused = true;
@@ -611,15 +735,18 @@
 
                     fetch('/save-score', {
                         method: 'POST',
-                        headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content') },
+                        headers: { 
+                            'Content-Type': 'application/json', 
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content') 
+                        },
                         body: JSON.stringify({ score: score, best_time: bestTimeStr })
                     }).then(res => res.json()).then(data => {
                         document.getElementById('saving-status').innerHTML = `Data tersimpan!<br>Waktu kamu: <b>${bestTimeStr}</b>`;
-                        document.getElementById('saving-status').style.color = "#00b894";
+                        document.getElementById('saving-status').style.color = "var(--brand-sage-dark)";
                         document.getElementById('close-finish-btn').style.display = "block";
                     }).catch(err => {
                         document.getElementById('saving-status').innerText = "Gagal menyimpan skor ke server.";
-                        document.getElementById('saving-status').style.color = "#ff7675";
+                        document.getElementById('saving-status').style.color = "var(--brand-brick-red)";
                         document.getElementById('close-finish-btn').style.display = "block";
                     });
                 }

@@ -854,12 +854,12 @@
 
 .cockpit-hud-empty p {
   font-size: 13px;
-  color: rgba(247, 243, 238, 0.7);
+
   margin-bottom: 12px;
 }
 
 .cockpit-hud-empty a {
-  color: var(--hud-gold);
+  color: black;
   font-weight: 700;
   text-decoration: underline;
 }
