@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Grid Start - Pro Simulation</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800;900&family=Outfit:wght@300;400;600;800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/simulation.css') }}">
 </head>
 <body>
@@ -13,10 +13,26 @@
     <div id="toast-container"></div>
 
     <div id="hud-panel">
-        <div class="hud-item">Jarak <span class="hud-value"><span id="distance-ui">0</span>m</span></div>
-        <div class="hud-item">Poin <span class="hud-value" id="score-ui">0</span></div>
-        <div style="margin-top: 15px; font-size: 14px; font-weight: 600;">Bensin</div>
-        <div class="gas-bar-container"><div class="gas-bar-fill" id="gas-fill"></div></div>
+        <div class="hud-console-header">
+            <span class="hud-console-title">GRID TELEMETRY</span>
+        </div>
+        <div class="hud-metrics">
+            <div class="hud-metric">
+                <span class="hud-label">DISTANCE</span>
+                <span class="hud-val"><span id="distance-ui">0</span> <span class="hud-unit">M</span></span>
+            </div>
+            <div class="hud-metric">
+                <span class="hud-label">PTS EARNED</span>
+                <span class="hud-val" id="score-ui">0</span>
+            </div>
+        </div>
+        <div class="hud-fuel-panel">
+            <div class="hud-fuel-label-row">
+                <span class="hud-label">FUEL CAPACITY</span>
+                <span class="hud-fuel-pct" id="fuel-percentage-ui">100%</span>
+            </div>
+            <div class="gas-bar-container"><div class="gas-bar-fill" id="gas-fill"></div></div>
+        </div>
     </div>
 
     <div id="action-panel">
@@ -31,18 +47,47 @@
     </div>
 
     <div id="start-overlay" class="overlay-bg">
-        <div class="modal-card">
-            <h2>START GRID</h2>
-            <p><strong>Pengenalan Keselamatan Berkendara</strong><br><br>Persiapkan mental dan pahami prinsip <em>Safety First</em>. Hindari kelalaian, dan selalu utamakan keselamatan di atas kecepatan!</p>
-            <button id="btn-start-game" class="btn-primary">UDAH SIAP? AYO GAS!</button>
+        <div class="modal-card start-card">
+            <div class="hud-scanner"></div>
+            <div class="hud-bracket tl"></div><div class="hud-bracket tr"></div>
+            <div class="hud-bracket bl"></div><div class="hud-bracket br"></div>
+            <div class="hud-badge cyan">STAGE 01 • INITIAL DEPARTURE</div>
+            <h2 class="tech-title">START GRID</h2>
+            
+            <div class="f1-lights-container">
+                <div class="f1-light-row">
+                    <span class="f1-bulb red"></span>
+                    <span class="f1-bulb red"></span>
+                    <span class="f1-bulb red"></span>
+                    <span class="f1-bulb red"></span>
+                    <span class="f1-bulb red"></span>
+                </div>
+                <div class="lights-reflection">READY TO ACCELERATE</div>
+            </div>
+
+            <p class="tech-desc"><strong>Pengenalan Keselamatan Berkendara</strong><br><br>Persiapkan mental dan pahami prinsip <em>Safety First</em>. Hindari kelalaian, dan selalu utamakan keselamatan di atas kecepatan!</p>
+            
+            <button id="btn-start-game" class="btn-primary btn-gas-start">
+                <span class="btn-shine"></span>
+                TANCAP GAS!
+            </button>
         </div>
     </div>
 
     <div id="quiz-overlay" class="overlay-bg">
-        <div class="modal-card">
-            <h2 id="quiz-title">Peringatan!</h2>
-            <p id="quiz-question">Pertanyaan akan muncul di sini.</p>
-            <div id="timer-bar-wrap"><div id="timer-bar-fill"></div></div>
+        <div class="modal-card quiz-card">
+            <div class="hud-scanner"></div>
+            <div class="hud-bracket tl"></div><div class="hud-bracket tr"></div>
+            <div class="hud-bracket bl"></div><div class="hud-bracket br"></div>
+            <div class="hud-badge yellow" id="quiz-badge-label">TELEMETRY CHECK</div>
+            <h2 id="quiz-title" class="tech-title">Peringatan!</h2>
+            
+            <div id="timer-bar-wrap" class="hud-timer-wrap">
+                <div id="timer-bar-fill" class="hud-timer-fill"></div>
+            </div>
+            
+            <p id="quiz-question" class="tech-desc">Pertanyaan akan muncul di sini.</p>
+            
             <div class="quiz-opts">
                 <button class="quiz-btn" id="btn-opt-a">A</button>
                 <button class="quiz-btn" id="btn-opt-b">B</button>
@@ -52,13 +97,49 @@
     </div>
 
     <div id="finish-overlay" class="overlay-bg">
-        <div class="modal-card">
-            <h2 style="color: var(--accent-green);">FINISH LINE!</h2>
-            <p>Simulasi berkendara telah selesai dengan sukses.</p>
-            <div style="font-size: 18px; color: #636e72; margin: 20px 0;">Total Poin</div>
-            <div style="font-size: 48px; font-weight: 800; color: var(--accent-yellow); margin-bottom: 20px;" id="final-score">0</div>
-            <p id="saving-status" style="font-style: italic; font-size: 14px;">Menyimpan skor ke server...</p>
-            <button id="close-finish-btn" class="btn-primary" style="display: none; width: 100%; margin-top:15px;">Lanjutkan</button>
+        <div class="modal-card finish-card">
+            <div class="hud-scanner"></div>
+            <div class="hud-bracket tl"></div><div class="hud-bracket tr"></div>
+            <div class="hud-bracket bl"></div><div class="hud-bracket br"></div>
+            <div class="hud-badge green">STAGE COMPLETE</div>
+            
+            <div class="finish-title-wrap">
+                <div class="checkered-accent"></div>
+                <h2 class="tech-title text-green">FINISH LINE!</h2>
+                <div class="checkered-accent"></div>
+            </div>
+
+            <p class="tech-desc">Simulasi berkendara telah selesai dengan sukses. Analisis data performa Anda telah tersimpan.</p>
+            
+            <div class="telemetry-dashboard">
+                <div class="telemetry-tile main-score">
+                    <span class="tile-label">TOTAL RACING POINTS</span>
+                    <span class="tile-value text-gold" id="final-score">0</span>
+                    <span class="tile-unit">PTS</span>
+                </div>
+                <div class="telemetry-grid">
+                    <div class="telemetry-tile mini">
+                        <span class="tile-label">STATUS</span>
+                        <span class="tile-value text-green">PASSED</span>
+                    </div>
+                    <div class="telemetry-tile mini">
+                        <span class="tile-label">SAFETY RATIO</span>
+                        <span class="tile-value text-cyan">98.4%</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="saving-status-box">
+                <div class="saving-loader" id="saving-loader">
+                    <span></span><span></span><span></span>
+                </div>
+                <p id="saving-status">Menyimpan skor ke server...</p>
+            </div>
+            
+            <button id="close-finish-btn" class="btn-primary btn-finish" style="display: none; width: 100%;">
+                <span class="btn-shine"></span>
+                Lanjutkan
+            </button>
         </div>
     </div>
 
@@ -502,6 +583,9 @@
                 const gasFill = document.getElementById('gas-fill');
                 gasFill.style.width = gas + "%";
                 gasFill.style.background = gas < 30 ? "linear-gradient(90deg, #ff7675, #d63031)" : "linear-gradient(90deg, #55efc4, #00b894)";
+                
+                const fuelPercent = document.getElementById('fuel-percentage-ui');
+                if (fuelPercent) fuelPercent.innerText = Math.round(gas) + "%";
 
                 const turnSpeed = 0.15;
                 if (keys.ArrowLeft && playerCar.position.x > -4) playerCar.position.x -= turnSpeed;
