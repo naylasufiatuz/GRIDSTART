@@ -31,6 +31,9 @@
     <button class="nav-item" onclick="showSection('pesan')">
       <span class="icon">✉</span> Pesan
     </button>
+    <button class="nav-item" onclick="showSection('quizzes')">
+      <span class="icon">▩</span> Quizzes
+    </button>
   </div>
 
   <div class="sidebar-footer">
@@ -213,6 +216,30 @@
         </table>
       </div>
     </div>
+
+    <!-- QUIZZES -->
+    <div class="section" id="section-quizzes">
+      <div class="page-header">
+        <h1>Quizzes</h1>
+        <p>Kelola bank soal kuis simulasi mengemudi dan kuis pit stop</p>
+      </div>
+      <div class="section-header">
+        <h2>Semua Pertanyaan Kuis</h2>
+        <button class="btn-add" onclick="openQuizModal()">+ Add Quiz</button>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th><th>Tipe Kuis</th><th>Tipe Rintangan</th><th style="min-width: 250px;">Pertanyaan</th><th>Pilihan (Benar)</th><th>Points</th><th>Aksi</th>
+            </tr>
+          </thead>
+          <tbody id="quizzes-tbody">
+            <tr class="loading-row"><td colspan="7">Loading...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
   </div>
 </main>
 
@@ -264,6 +291,61 @@
     <div class="modal-footer">
       <button class="btn-cancel" onclick="closeModal('score-modal')">Batal</button>
       <button class="btn-save" onclick="saveScore()">Simpan</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL QUIZ -->
+<div class="modal-overlay" id="quiz-modal">
+  <div class="modal" style="max-width: 520px;">
+    <h3 id="quiz-modal-title">Add Quiz</h3>
+    <input type="hidden" id="quiz-id"/>
+    <div class="form-group">
+      <label>Quiz Type</label>
+      <select id="quiz-type" onchange="toggleObstacleTypeSelect()" style="width: 100%; padding: 8px; border-radius: 4px; border: 1px solid var(--border);">
+        <option value="obstacle">Obstacle (Di Dalam Game)</option>
+        <option value="pitstop">Pit Stop (Pengisian Bensin)</option>
+      </select>
+    </div>
+    <div class="form-group" id="obstacle-type-group">
+      <label>Trigger Category (Rintangan)</label>
+      <select id="quiz-obstacle-type" style="width: 100%; padding: 8px; border-radius: 4px; border: 1px solid var(--border);">
+        <option value="yellow_flag">Yellow Flag (200m)</option>
+        <option value="racing_line">Racing Line (500m)</option>
+        <option value="brake_zone">Brake Zone (800m)</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Question Text</label>
+      <textarea id="quiz-question-text" rows="3" placeholder="Pertanyaan kuis..." style="width: 100%; padding: 8px; border-radius: 4px; border: 1px solid var(--border); font-family: inherit;"></textarea>
+    </div>
+    <div class="form-group">
+      <label>Pilihan A</label>
+      <input type="text" id="quiz-opt-a" placeholder="Pilihan Jawaban A"/>
+    </div>
+    <div class="form-group">
+      <label>Pilihan B</label>
+      <input type="text" id="quiz-opt-b" placeholder="Pilihan Jawaban B"/>
+    </div>
+    <div class="form-group">
+      <label>Pilihan C</label>
+      <input type="text" id="quiz-opt-c" placeholder="Pilihan Jawaban C"/>
+    </div>
+    <div class="form-group">
+      <label>Jawaban Benar</label>
+      <select id="quiz-correct-answer" style="width: 100%; padding: 8px; border-radius: 4px; border: 1px solid var(--border);">
+        <option value="A">A</option>
+        <option value="B">B</option>
+        <option value="C">C</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Point</label>
+      <input type="number" id="quiz-points" placeholder="10" value="10"/>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-cancel" onclick="closeModal('quiz-modal')">Batal</button>
+      <button class="btn-save" onclick="saveQuiz()">Simpan</button>
     </div>
   </div>
 </div>

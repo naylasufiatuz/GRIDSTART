@@ -543,16 +543,68 @@
         // 9. TELEMETRY COGNITIVE CHALLENGES
         // ==========================================
         let currentQuizMode = ''; 
-        const articleQuizzes = [
+        let articleQuizzes = [
             { dist: 200, title: "YELLOW FLAG", q: "Ada kecelakaan di bagian kiri jalan. Tindakan antisipasi terbaik?", a: [{t: "Melaju maksimal", c: false}, {t: "Turunkan kecepatan & berhati-hati", c: true}, {t: "Pindah kanan & gaspol", c: false}], triggered: false },
             { dist: 500, title: "RACING LINE", q: "Kondisi lalu lintas padat di lajur kanan. Langkah aman?", a: [{t: "Pindah ke lajur kosong & sesuaikan kecepatan", c: true}, {t: "Paksa masuk ke kanan", c: false}, {t: "Rem mendadak", c: false}], triggered: false },
             { dist: 800, title: "BRAKE ZONE", q: "Jalanan rusak parah di kanan lintasan. Teknik pengereman yang tepat?", a: [{t: "Melaju berliku tanpa rem", c: false}, {t: "Tarik rem tangan mendadak", c: false}, {t: "Rem bertahap sebelum lubang & menghindar", c: true}], triggered: false }
         ];
-        const pitStopQs = [
+        let pitStopQs = [
             { q: "(1/3) Fungsi utama oli mesin?", a: [{t: "Mendinginkan AC", c: false}, {t: "Melumasi komponen internal", c: true}, {t: "Menambah listrik", c: false}] },
             { q: "(2/3) Indikator temperatur merah artinya?", a: [{t: "Mesin Overheat", c: true}, {t: "Bensin bocor", c: false}, {t: "Ban kempis", c: false}] },
             { q: "(3/3) Cairan untuk wiper kaca depan?", a: [{t: "Air Aki", c: false}, {t: "Cairan khusus wiper", c: true}, {t: "Air sabun cuci", c: false}] }
         ];
+
+        // Fetch dynamic quizzes from database API
+        async function fetchQuizzes() {
+            try {
+                const res = await fetch('/api/admin/quizzes');
+                if (!res.ok) return;
+                const json = await res.json();
+                if (json.data && json.data.length > 0) {
+                    const dbObstacles = json.data.filter(q => q.quiz_type === 'obstacle');
+                    const dbPitstops = json.data.filter(q => q.quiz_type === 'pitstop');
+
+                    // Map dynamic Obstacle Quizzes
+                    if (dbObstacles.length > 0) {
+                        articleQuizzes = dbObstacles.map(q => {
+                            let dist = 200;
+                            let title = "YELLOW FLAG";
+                            if (q.obstacle_type === 'racing_line') { dist = 500; title = "RACING LINE"; }
+                            if (q.obstacle_type === 'brake_zone') { dist = 800; title = "BRAKE ZONE"; }
+
+                            return {
+                                dist: dist,
+                                title: title,
+                                q: q.question,
+                                a: [
+                                    { t: q.option_a, c: q.correct_answer === 'A' },
+                                    { t: q.option_b, c: q.correct_answer === 'B' },
+                                    { t: q.option_c, c: q.correct_answer === 'C' }
+                                ],
+                                triggered: false
+                            };
+                        });
+                    }
+
+                    // Map dynamic Pit Stop Quizzes
+                    if (dbPitstops.length > 0) {
+                        pitStopQs = dbPitstops.map((q, idx) => {
+                            return {
+                                q: `(${idx+1}/${dbPitstops.length}) ${q.question}`,
+                                a: [
+                                    { t: q.option_a, c: q.correct_answer === 'A' },
+                                    { t: q.option_b, c: q.correct_answer === 'B' },
+                                    { t: q.option_c, c: q.correct_answer === 'C' }
+                                ]
+                            };
+                        });
+                    }
+                }
+            } catch (err) {
+                console.warn("Dynamic quizzes fetch error, falling back to static lists.", err);
+            }
+        }
+        fetchQuizzes();
 
         let pitIndex = 0; let pitTimer; let timeLeft = 100;
         const qOverlay = document.getElementById('quiz-overlay');
@@ -602,7 +654,12 @@
             } else {
                 qOverlay.style.display = 'none'; currentQuizMode = '';
                 if(gas <= 0) { 
-                    isGameOver = true; showToast("GAME OVER! Bensin Habis.", "error"); 
+                    isGameOver = true; 
+                    showToast("GAME OVER! Bensin Habis.", "error"); 
+                    setTimeout(() => {
+                        alert("GAME OVER! Bensin Habis. Silakan coba lagi.");
+                        window.location.reload();
+                    }, 1000);
                 } else { 
                     showToast("Pit Stop Selesai! Melanjutkan perjalanan.", "success"); 
                     playerCar.position.x = 0; isPaused = false; 
@@ -700,7 +757,18 @@
                 if (!hasDonePitStop) {
                     gas = 100 - (distance / 660) * 100;
                     if(gas <= 0) gas = 0; 
-                } else { gas -= 0.01; }
+                } else { 
+                    gas -= 0.01; 
+                    if(gas <= 0) {
+                        gas = 0;
+                        isGameOver = true;
+                        showToast("GAME OVER! Bensin Habis.", "error"); 
+                        setTimeout(() => {
+                            alert("GAME OVER! Bensin Habis. Silakan coba lagi.");
+                            window.location.reload();
+                        }, 1000);
+                    }
+                }
                 
                 const gasFill = document.getElementById('gas-fill');
                 gasFill.style.width = gas + "%";
