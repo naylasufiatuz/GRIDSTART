@@ -289,7 +289,7 @@
                 // Jump start! clicked too early
                 clearTimeout(gameTimer);
                 lights.forEach(l => l.classList.remove('red-on'));
-                resultBox.innerHTML = '<span style="color:#ef4444; font-weight:900;">🚨 JUMP START! Kamu menekan rem terlalu awal! Jangan terburu-buru di jalan raya.</span>';
+                resultBox.innerHTML = '<span style="color:#ef4444; font-weight:900;"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" style="vertical-align: middle; margin-right: 6px; color: #ef4444;"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>JUMP START!</span> Kamu menekan rem terlalu awal! Jangan terburu-buru di jalan raya.';
                 resetGameUI();
             } else {
                 // Legitimate click after lights out
@@ -298,13 +298,13 @@
                 
                 let comment = '';
                 if (reactionTimeMs < 150) {
-                    comment = '🚨 <strong>Waktu reaksi Elite (Lewis Hamilton level)!</strong> Refleks Anda sangat tajam.';
+                    comment = '<svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" style="vertical-align: middle; margin-right: 6px; color: #f59e0b;"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg><strong>Waktu reaksi Elite (Lewis Hamilton level)!</strong> Refleks Anda sangat tajam.';
                 } else if (reactionTimeMs <= 260) {
-                    comment = '🏁 <strong>Pembalap Profesional!</strong> Refleks yang sangat baik, sigap menghindari bahaya.';
+                    comment = '<svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" style="vertical-align: middle; margin-right: 6px; color: #10b981;"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138z"/></svg><strong>Pembalap Profesional!</strong> Refleks yang sangat baik, sigap menghindari bahaya.';
                 } else if (reactionTimeMs <= 400) {
-                    comment = '🚗 <strong>Rata-rata Pengemudi.</strong> Cukup aman, namun di jalan basah tetap harus waspada.';
+                    comment = '<svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" style="vertical-align: middle; margin-right: 6px; color: #3b82f6;"><path stroke-linecap="round" stroke-linejoin="round" d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10M21 16V10a2 2 0 00-2-2h-6M21 12H13"/></svg><strong>Rata-rata Pengemudi.</strong> Cukup aman, namun di jalan basah tetap harus waspada.';
                 } else {
-                    comment = '⚠️ <strong>Respon Lambat!</strong> Di kecepatan 80 km/jam, Anda akan meluncur 10+ meter sebelum rem bekerja. Istirahatlah jika lelah.';
+                    comment = '<svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" style="vertical-align: middle; margin-right: 6px; color: #ef4444;"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg><strong>Respon Lambat!</strong> Di kecepatan 80 km/jam, Anda akan meluncur 10+ meter sebelum rem bekerja. Istirahatlah jika lelah.';
                 }
                 
                 resultBox.innerHTML = `Waktu reaksi Anda: <strong style="color:var(--stage-accent); font-size: 1.2rem;">${reactionSec}s</strong>.<br>${comment}`;

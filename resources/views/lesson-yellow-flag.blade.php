@@ -66,11 +66,17 @@
                         <!-- TAB 1: PERSIMPANGAN -->
                         <div class="ls-tab-pane active" id="tab-yellow">
                             <div class="ls-decision-card incorrect">
-                                <h4>❌ Keputusan Salah: Tancap Gas</h4>
+                                <h4>
+                                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" style="vertical-align: middle; margin-right: 6px; color: #ef4444;"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+                                    Keputusan Salah: Tancap Gas
+                                </h4>
                                 <p>Menambah kecepatan ketika melihat lampu kuning berkedip di persimpangan agar "keburu lewat". Tindakan ini sangat berisiko karena kendaraan dari arah silang berpotensi melakukan hal yang sama.</p>
                             </div>
                             <div class="ls-decision-card correct">
-                                <h4>✅ Keputusan Benar: Siap Mengerem</h4>
+                                <h4>
+                                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" style="vertical-align: middle; margin-right: 6px; color: #10b981;"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                                    Keputusan Benar: Siap Mengerem
+                                </h4>
                                 <p>Kurangi kecepatan secara signifikan, letakkan kaki di atas pedal rem (cover braking), pastikan tidak ada kendaraan lain dari arah kiri-kanan yang menyelonong masuk, lalu melintasi persimpangan dengan waspada.</p>
                             </div>
                         </div>
@@ -78,11 +84,17 @@
                         <!-- TAB 2: MARKA JALAN -->
                         <div class="ls-tab-pane" id="tab-marking">
                             <div class="ls-decision-card incorrect">
-                                <h4>❌ Keputusan Salah: Memotong Garis Penuh</h4>
+                                <h4>
+                                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" style="vertical-align: middle; margin-right: 6px; color: #ef4444;"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+                                    Keputusan Salah: Memotong Garis Penuh
+                                </h4>
                                 <p>Menyalip kendaraan atau berpindah jalur di marka garis putih penuh (solid), terutama di jalan menikung atau jembatan. Pelanggaran marka ini merupakan penyebab terbesar tabrakan adu banteng (head-on).</p>
                             </div>
                             <div class="ls-decision-card correct">
-                                <h4>✅ Keputusan Benar: Sabar Menunggu Jalur</h4>
+                                <h4>
+                                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" style="vertical-align: middle; margin-right: 6px; color: #10b981;"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                                    Keputusan Benar: Sabar Menunggu Jalur
+                                </h4>
                                 <p>Tetap berada di lajur sendiri sepanjang marka berupa garis putih penuh. Anda hanya diperbolehkan menyalip atau mendahului kendaraan lain setelah marka berubah menjadi garis putus-putus dan situasi dipastikan aman.</p>
                             </div>
                         </div>
@@ -90,11 +102,17 @@
                         <!-- TAB 3: LAMPU MERAH -->
                         <div class="ls-tab-pane" id="tab-red">
                             <div class="ls-decision-card incorrect">
-                                <h4>❌ Keputusan Salah: Menerobos Saat Sepi</h4>
+                                <h4>
+                                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" style="vertical-align: middle; margin-right: 6px; color: #ef4444;"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+                                    Keputusan Salah: Menerobos Saat Sepi
+                                </h4>
                                 <p>Memaksa menerobos lampu merah dengan asumsi jalanan sedang sepi atau sunyi. Di F1, menerobos bendera merah berarti diskualifikasi instan. Di jalan raya, taruhannya adalah nyawa Anda dan orang lain.</p>
                             </div>
                             <div class="ls-decision-card correct">
-                                <h4>✅ Keputusan Benar: Berhenti Total</h4>
+                                <h4>
+                                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" style="vertical-align: middle; margin-right: 6px; color: #10b981;"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                                    Keputusan Benar: Berhenti Total
+                                </h4>
                                 <p>Berhenti sepenuhnya di belakang garis stop begitu lampu berganti merah. Gunakan jeda waktu ini untuk memulihkan kefokusan mata dan bersiap melaju kembali secara progresif saat lampu hijau menyala.</p>
                             </div>
                         </div>

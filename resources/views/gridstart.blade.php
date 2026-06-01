@@ -14,7 +14,7 @@
         <circle cx="100" cy="100" r="68" stroke="rgba(203, 184, 157, 0.03)" stroke-width="0.25" fill="none" />
         <text>
           <textPath href="#textCircle" startOffset="0%">
-            DRIVE SAFE • LEARN • PLAY • RACE • DRIVE SAFE • LEARN • PLAY • RACE •
+            DRIVE SAFE • LEARN • PLAY  • DRIVE SAFE • LEARN • PLAY •
           </textPath>
         </text>
       </svg>

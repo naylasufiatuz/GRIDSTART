@@ -201,7 +201,7 @@ canvas {
   z-index: 100; 
   display: grid; 
   grid-template-columns: repeat(3, 70px); 
-  grid-template-rows: repeat(2, 60px);
+  grid-template-rows: 60px;
   gap: 10px; 
   user-select: none;
 }
@@ -235,17 +235,9 @@ canvas {
   transform: scale(0.92); 
 }
 
-#btn-up { 
-  grid-column: 2; 
-  grid-row: 1; 
-  background: rgba(143, 163, 130, 0.2); 
-  border-color: var(--brand-sage); 
-  color: var(--brand-sage-dark); 
-} 
-
 #btn-brake { 
   grid-column: 2; 
-  grid-row: 2; 
+  grid-row: 1; 
   background: rgba(204, 90, 67, 0.2); 
   border-color: var(--brand-brick-red); 
   color: var(--brand-brick-red); 
@@ -371,6 +363,15 @@ canvas {
   color: var(--brand-sage-dark);
   border: 1px solid var(--brand-sage);
 }
+
+.hud-badge.red {
+  background: rgba(204, 90, 67, 0.15);
+  color: var(--brand-brick-red);
+  border: 1px solid var(--brand-brick-red);
+}
+
+.text-brick { color: var(--brand-brick-red) !important; }
+.gameover-card { border-top: 3px solid var(--brand-brick-red); }
 
 .tech-title {
   font-family: var(--font-body);

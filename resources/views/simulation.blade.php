@@ -45,9 +45,6 @@
 
     {{-- ======================== D-PAD (NO EMOJIS) ======================== --}}
     <div id="d-pad">
-        <div class="d-btn" id="btn-up" aria-label="Throttle boost">
-            <svg viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"></polyline></svg>
-        </div>
         <div class="d-btn" id="btn-left" aria-label="Steer left">
             <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
         </div>
@@ -143,6 +140,39 @@
                 <span class="btn-shine"></span>
                 Lanjutkan
             </button>
+        </div>
+    </div>
+
+    <div id="gameover-overlay" class="overlay-bg">
+        <div class="modal-card gameover-card">
+            <div class="hud-badge red">GAME OVER</div>
+            
+            <div class="finish-title-wrap">
+                <div class="checkered-accent"></div>
+                <h2 class="tech-title text-brick">BENSIN HABIS!</h2>
+                <div class="checkered-accent"></div>
+            </div>
+
+            <p class="tech-desc">Anda gagal mengelola bahan bakar dengan baik di pit stop. Pastikan untuk menjawab pertanyaan dengan tepat demi menjaga efisiensi berkendara Anda.</p>
+            
+            <div class="telemetry-dashboard" style="margin-bottom: 25px;">
+                <div class="telemetry-tile main-score" style="border-color: var(--brand-brick-red); background: #fffaf9;">
+                    <span class="tile-label" style="color: var(--brand-brick-red);">FUEL LEVEL</span>
+                    <span class="tile-value text-brick" style="color: var(--brand-brick-red);">0%</span>
+                    <span class="tile-unit" style="color: var(--brand-brick-red);">EMPTY</span>
+                </div>
+            </div>
+            
+            <div style="display: flex; gap: 12px; width: 100%;">
+                <button id="btn-restart-game" class="btn-primary" style="flex: 1; background: linear-gradient(135deg, var(--brand-sage-dark) 0%, var(--brand-taupe-dark) 100%); border: none;">
+                    <span class="btn-shine"></span>
+                    Coba Lagi
+                </button>
+                <button id="btn-exit-game" class="btn-primary" style="flex: 1; background: linear-gradient(135deg, #a49685 0%, #7e7160 100%); border: none;">
+                    <span class="btn-shine"></span>
+                    Keluar
+                </button>
+            </div>
         </div>
     </div>
 
@@ -503,12 +533,11 @@
         let envSpawnTimer = 0;
 
         // Controller Inputs
-        const keys = { ArrowLeft: false, ArrowRight: false, ArrowDown: false, ArrowUp: false };
+        const keys = { ArrowLeft: false, ArrowRight: false, ArrowDown: false };
         const mapKey = (e, state) => {
             if(e.key === 'ArrowLeft' || e.code === 'ArrowLeft') keys.ArrowLeft = state;
             if(e.key === 'ArrowRight' || e.code === 'ArrowRight') keys.ArrowRight = state;
             if(e.key === 'ArrowDown' || e.code === 'ArrowDown') keys.ArrowDown = state;
-            if(e.key === 'ArrowUp' || e.code === 'ArrowUp') keys.ArrowUp = state;
         };
         window.addEventListener('keydown', (e) => mapKey(e, true));
         window.addEventListener('keyup', (e) => mapKey(e, false));
@@ -521,7 +550,7 @@
             btn.addEventListener('mouseup', () => { keys[keyName] = false; });
             btn.addEventListener('mouseleave', () => { keys[keyName] = false; });
         };
-        setupDriveBtn('btn-left', 'ArrowLeft'); setupDriveBtn('btn-right', 'ArrowRight'); setupDriveBtn('btn-brake', 'ArrowDown'); setupDriveBtn('btn-up', 'ArrowUp');
+        setupDriveBtn('btn-left', 'ArrowLeft'); setupDriveBtn('btn-right', 'ArrowRight'); setupDriveBtn('btn-brake', 'ArrowDown');
 
         document.getElementById('btn-start-game').onclick = () => {
             document.getElementById('start-overlay').style.display = 'none';
@@ -538,6 +567,21 @@
         };
 
         document.getElementById('close-finish-btn').onclick = () => { window.location.href = '/finish-line'; };
+
+        function triggerGameOver() {
+            isGameOver = true;
+            isPaused = true;
+            showToast("GAME OVER! Bensin Habis.", "error");
+            document.getElementById('gameover-overlay').style.display = 'flex';
+        }
+
+        document.getElementById('btn-restart-game').onclick = () => {
+            window.location.reload();
+        };
+
+        document.getElementById('btn-exit-game').onclick = () => {
+            window.location.href = '/';
+        };
 
         // ==========================================
         // 9. TELEMETRY COGNITIVE CHALLENGES
@@ -654,12 +698,7 @@
             } else {
                 qOverlay.style.display = 'none'; currentQuizMode = '';
                 if(gas <= 0) { 
-                    isGameOver = true; 
-                    showToast("GAME OVER! Bensin Habis.", "error"); 
-                    setTimeout(() => {
-                        alert("GAME OVER! Bensin Habis. Silakan coba lagi.");
-                        window.location.reload();
-                    }, 1000);
+                    triggerGameOver();
                 } else { 
                     showToast("Pit Stop Selesai! Melanjutkan perjalanan.", "success"); 
                     playerCar.position.x = 0; isPaused = false; 
@@ -697,7 +736,7 @@
                 activeBrakeLightR.visible = braking;
                 brakePointLight.intensity = braking ? 2.0 : 0;
 
-                let moveSpeed = keys.ArrowUp ? speed * 1.5 : (braking ? speed * 0.4 : speed);
+                let moveSpeed = braking ? speed * 0.4 : speed;
                 distance += (moveSpeed * 0.2); 
                 let currentDist = Math.floor(distance);
                 document.getElementById('distance-ui').innerText = currentDist;
@@ -757,16 +796,11 @@
                 if (!hasDonePitStop) {
                     gas = 100 - (distance / 660) * 100;
                     if(gas <= 0) gas = 0; 
-                } else { 
+                } else if (currentQuizMode !== 'pitstop') { 
                     gas -= 0.01; 
                     if(gas <= 0) {
                         gas = 0;
-                        isGameOver = true;
-                        showToast("GAME OVER! Bensin Habis.", "error"); 
-                        setTimeout(() => {
-                            alert("GAME OVER! Bensin Habis. Silakan coba lagi.");
-                            window.location.reload();
-                        }, 1000);
+                        triggerGameOver();
                     }
                 }
                 
