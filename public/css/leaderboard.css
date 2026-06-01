@@ -1,0 +1,970 @@
+/* ==========================================================================
+   GRIDSTART RACE CONTROL HUD - LEADERBOARD CSS STYLE SHEET
+   Strictly preserving original colors, Montserrat font, & border-radius (5px/50%).
+   ========================================================================== */
+
+/* --- HUD & Layout Tokens --- */
+:root {
+  --hud-dark: #2a2622;
+  --hud-charcoal: #3f3a36;
+  --hud-gold: #cbb89d;
+  --hud-silver: #a8a9ad;
+  --hud-bronze: #a0522d;
+  --hud-neon-green: #a7c093;
+  --hud-neon-blue: #a3c4d7;
+  --hud-red: #d17a7a;
+  --border-radius-sm: 5px;
+}
+
+/* --- Container Fade In --- */
+.lb-hud-ready {
+  opacity: 0;
+  animation: lbContentFadeIn 1s cubic-bezier(0.2, 1, 0.2, 1) forwards;
+  animation-delay: 2.5s; /* Plays after F1 light sequence finishes */
+}
+
+@keyframes lbContentFadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ==========================================================================
+   1. F1 STARTING LIGHTS SEQUENCER
+   ========================================================================== */
+.f1-lights-wrapper {
+  max-width: 600px;
+  margin: 0 auto 50px auto;
+  background: #1a1715;
+  border: 1.5px solid rgba(203, 184, 157, 0.15);
+  border-radius: var(--border-radius-sm);
+  padding: 20px 30px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15),
+              inset 0 1px 3px rgba(255, 255, 255, 0.05);
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+  animation: lightsPanelCollapse 0.8s cubic-bezier(0.77, 0, 0.175, 1) forwards;
+  animation-delay: 4.5s; /* Slide out slightly to clean up space */
+}
+
+@keyframes lightsPanelCollapse {
+  0% { margin-bottom: 50px; opacity: 1; }
+  100% { margin-bottom: 25px; border-color: rgba(203, 184, 157, 0.08); background: rgba(26, 23, 21, 0.4); }
+}
+
+.f1-lights-title {
+  font-size: 10px;
+  letter-spacing: 3px;
+  color: var(--hud-gold);
+  text-transform: uppercase;
+  margin-bottom: 15px;
+  font-weight: 800;
+}
+
+.f1-light-grid {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  max-width: 450px;
+  margin: 0 auto;
+}
+
+/* Individual Light Pillars */
+.f1-light-pillar {
+  display: flex;
+  flex-direction: column;
+  background: #100e0d;
+  padding: 8px 10px;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  gap: 8px;
+}
+
+.f1-light-bulb {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #221d1b;
+  position: relative;
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.8);
+  transition: background 0.1s ease;
+}
+
+/* Red Light Bulbs Sequence */
+.f1-light-pillar:nth-child(1) .f1-light-bulb { animation: f1RedLight 5s infinite; animation-delay: 0.5s; }
+.f1-light-pillar:nth-child(2) .f1-light-bulb { animation: f1RedLight 5s infinite; animation-delay: 1.0s; }
+.f1-light-pillar:nth-child(3) .f1-light-bulb { animation: f1RedLight 5s infinite; animation-delay: 1.5s; }
+.f1-light-pillar:nth-child(4) .f1-light-bulb { animation: f1RedLight 5s infinite; animation-delay: 2.0s; }
+.f1-light-pillar:nth-child(5) .f1-light-bulb { animation: f1RedLight 5s infinite; animation-delay: 2.5s; }
+
+@keyframes f1RedLight {
+  0%, 8% { background: #221d1b; box-shadow: none; }
+  10%, 50% { background: #ff1e1e; box-shadow: 0 0 15px #ff1e1e, 0 0 30px #ff1e1e, inset 0 2px 2px rgba(255, 255, 255, 0.4); }
+  52%, 100% { background: #1f3f1e; box-shadow: none; } /* Go green/off when lights out */
+}
+
+/* Green Action Message */
+.f1-lights-status {
+  margin-top: 15px;
+  font-size: 12px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--taupe-soft);
+  animation: statusTextGreen 5s infinite;
+}
+
+@keyframes statusTextGreen {
+  0%, 50% { color: var(--taupe-soft); content: "STAND BY..."; }
+  52%, 100% { color: #52b757; text-shadow: 0 0 8px rgba(82, 183, 87, 0.3); }
+}
+
+
+/* ==========================================================================
+   2. TACTILE PILLED TABS
+   ========================================================================== */
+.lb-tabs-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 40px;
+}
+
+.lb-hud-tabs {
+  display: flex;
+  background: rgba(42, 38, 34, 0.95);
+  border: 1.5px solid rgba(203, 184, 157, 0.25);
+  padding: 4px;
+  position: relative;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+}
+
+.lb-hud-tab {
+  border: none;
+  background: transparent;
+  color: rgba(247, 243, 238, 0.6);
+  font-family: 'Montserrat', sans-serif;
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  padding: 12px 28px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.2, 1, 0.2, 1);
+  position: relative;
+  z-index: 2;
+}
+
+.lb-hud-tab:hover {
+  color: #fff;
+}
+
+.lb-hud-tab.active {
+  color: #1a1715;
+  background: var(--hud-gold);
+  box-shadow: 0 4px 10px rgba(203, 184, 157, 0.3);
+  font-weight: 900;
+}
+
+
+/* ==========================================================================
+   3. STAGGERED F1 PODIUM GRID (POLE LINEUP)
+   ========================================================================== */
+.lb-grid-podium {
+  display: grid;
+  grid-template-columns: 1fr 1.15fr 1fr;
+  gap: 24px;
+  align-items: end;
+  margin-bottom: 60px;
+  perspective: 1000px;
+}
+
+.podium-slot {
+  position: relative;
+  background: #ffffff;
+  border: 1.5px solid rgba(63, 58, 54, 0.08);
+  border-radius: var(--border-radius-sm);
+  padding: 30px 20px 24px 20px;
+  text-align: center;
+  transition: all 0.5s cubic-bezier(0.2, 1, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Perspective Slant offsets matching F1 positions */
+.podium-slot.p1 {
+  order: 2;
+  border-color: rgba(203, 184, 157, 0.3);
+  box-shadow: 0 10px 30px rgba(203, 184, 157, 0.1);
+  transform: translateY(-25px);
+  z-index: 3;
+}
+
+.podium-slot.p2 {
+  order: 1;
+  transform: translateY(-5px) rotateY(4deg);
+  z-index: 2;
+}
+
+.podium-slot.p3 {
+  order: 3;
+  transform: translateY(10px) rotateY(-4deg);
+  z-index: 1;
+}
+
+/* Background HUD scanner elements */
+.podium-hud-bg {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    linear-gradient(rgba(63, 58, 54, 0.01) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(63, 58, 54, 0.01) 1px, transparent 1px);
+  background-size: 15px 15px;
+  opacity: 0.8;
+  pointer-events: none;
+  border-radius: var(--border-radius-sm);
+  z-index: 0;
+}
+
+.podium-halo {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.podium-slot:hover .podium-halo {
+  opacity: 1;
+}
+
+.podium-slot.p1 .podium-halo { background: radial-gradient(circle at 50% 0%, rgba(203, 184, 157, 0.12), transparent 70%); }
+.podium-slot.p2 .podium-halo { background: radial-gradient(circle at 50% 0%, rgba(168, 169, 173, 0.1), transparent 70%); }
+.podium-slot.p3 .podium-halo { background: radial-gradient(circle at 50% 0%, rgba(160, 82, 45, 0.1), transparent 70%); }
+
+/* Interactive Hover Scales */
+.podium-slot:hover {
+  border-color: var(--hud-dark);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+}
+
+.podium-slot.p1:hover {
+  transform: translateY(-35px) scale(1.04);
+  border-color: var(--hud-gold);
+  box-shadow: 0 20px 45px rgba(203, 184, 157, 0.25);
+}
+
+.podium-slot.p2:hover {
+  transform: translateY(-12px) scale(1.03) rotateY(0);
+}
+
+.podium-slot.p3:hover {
+  transform: translateY(2px) scale(1.03) rotateY(0);
+}
+
+/* Card Focus Dimming */
+.lb-grid-podium:has(.podium-slot:hover) .podium-slot:not(:hover) {
+  opacity: 0.45;
+  filter: blur(1px) grayscale(0.2);
+}
+
+/* Position Badge */
+.slot-pos-badge {
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  color: var(--taupe-soft);
+  text-transform: uppercase;
+  background: rgba(63, 58, 54, 0.05);
+  border: 1px solid rgba(63, 58, 54, 0.1);
+  padding: 3px 10px;
+  border-radius: 3px;
+  margin-bottom: 18px;
+  z-index: 2;
+}
+
+.podium-slot.p1 .slot-pos-badge {
+  background: linear-gradient(135deg, var(--hud-gold), #fff);
+  color: #2a1e00;
+  border: none;
+  box-shadow: 0 0 10px rgba(203, 184, 157, 0.3);
+}
+
+/* Avatar Frame & Scan Rings */
+.slot-avatar-frame {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: rgba(63, 58, 54, 0.03);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  margin-bottom: 18px;
+  z-index: 2;
+  border: 2.5px solid rgba(63, 58, 54, 0.1);
+}
+
+.podium-slot.p1 .slot-avatar-frame { border-color: var(--hud-gold); background: rgba(203, 184, 157, 0.08); }
+.podium-slot.p2 .slot-avatar-frame { border-color: var(--hud-silver); background: rgba(168, 169, 173, 0.08); }
+.podium-slot.p3 .slot-avatar-frame { border-color: var(--hud-bronze); background: rgba(160, 82, 45, 0.08); }
+
+.slot-avatar-initials {
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: var(--taupe-dark);
+}
+
+.podium-slot.p1 .slot-avatar-initials { color: #574d3f; }
+
+/* Dashboard Ring Rotators */
+.slot-telemetry-ring {
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  border: 1.5px dashed rgba(63, 58, 54, 0.15);
+  animation: slotRingRotate 18s linear infinite;
+  pointer-events: none;
+}
+
+.podium-slot.p1 .slot-telemetry-ring { border-color: rgba(203, 184, 157, 0.45); }
+.podium-slot.p2 .slot-telemetry-ring { border-color: rgba(168, 169, 173, 0.4); }
+.podium-slot.p3 .slot-telemetry-ring { border-color: rgba(160, 82, 45, 0.4); }
+
+@keyframes slotRingRotate {
+  100% { transform: rotate(360deg); }
+}
+
+/* Scanner HUD laser sweep line */
+.slot-avatar-scanner {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--hud-gold);
+  opacity: 0;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.podium-slot.p1 .slot-avatar-scanner { background: var(--hud-gold); }
+.podium-slot.p2 .slot-avatar-scanner { background: var(--hud-silver); }
+.podium-slot.p3 .slot-avatar-scanner { background: var(--hud-bronze); }
+
+.podium-slot:hover .slot-avatar-scanner {
+  animation: slotHUDScan 1.8s ease-in-out infinite;
+}
+
+@keyframes slotHUDScan {
+  0% { top: 0%; opacity: 0; }
+  10% { opacity: 0.8; }
+  90% { opacity: 0.8; }
+  100% { top: 100%; opacity: 0; }
+}
+
+/* Driver Standing Info */
+.slot-driver-name {
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--taupe-dark);
+  margin-bottom: 6px;
+  z-index: 2;
+  letter-spacing: 0.5px;
+}
+
+.slot-score-value {
+  font-size: 24px;
+  font-weight: 900;
+  color: var(--hud-dark);
+  letter-spacing: 0.5px;
+  z-index: 2;
+}
+
+.slot-sub-info {
+  font-size: 11px;
+  color: var(--taupe-soft);
+  margin-top: 4px;
+  z-index: 2;
+  font-weight: 600;
+}
+
+.podium-crown-svg {
+  width: 32px;
+  height: 32px;
+  color: var(--hud-gold);
+  margin-bottom: 2px;
+  filter: drop-shadow(0 0 6px rgba(203, 184, 157, 0.6));
+  animation: crownBobbing 2.5s ease-in-out infinite;
+}
+
+@keyframes crownBobbing {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+
+/* ==========================================================================
+   4. RACETRACK LANES TELEMETRY DRIVER FEED
+   ========================================================================== */
+.lb-track-feed-wrapper {
+  position: relative;
+  padding-left: 45px;
+}
+
+/* Vertical Racetrack axis line representing road bounds */
+.lb-track-feed-wrapper::before {
+  content: '';
+  position: absolute;
+  left: 15px;
+  top: 0;
+  bottom: 0;
+  width: 6px;
+  background: repeating-linear-gradient(
+    to bottom,
+    #fff,
+    #fff 12px,
+    #ff3a3a 12px,
+    #ff3a3a 24px
+  );
+  border-radius: 3px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.08);
+  opacity: 0.85;
+}
+
+/* Telemetry stripes (driver listings) */
+.telemetry-stripe {
+  position: relative;
+  background: #ffffff;
+  border: 1.5px solid rgba(63, 58, 54, 0.08);
+  border-radius: var(--border-radius-sm);
+  padding: 16px 20px;
+  margin-bottom: 16px;
+  transition: all 0.4s cubic-bezier(0.2, 1, 0.2, 1);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+}
+
+.telemetry-stripe:hover {
+  transform: translateX(6px) skewX(-1.5deg);
+  border-color: var(--hud-gold);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+  background: #faf9f6;
+}
+
+/* Custom left node connecting stripes to racetrack line */
+.telemetry-stripe::before {
+  content: '';
+  position: absolute;
+  left: -30px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 14px;
+  height: 2px;
+  background: var(--hud-gold);
+  opacity: 0.4;
+  transition: all 0.3s ease;
+}
+
+.telemetry-stripe:hover::before {
+  width: 20px;
+  left: -36px;
+  background: var(--hud-dark);
+  opacity: 1;
+}
+
+/* Slanted Left Rank indicator box */
+.stripe-rank-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  height: 32px;
+  background: var(--hud-dark);
+  color: #fff;
+  border-radius: var(--border-radius-sm);
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.5px;
+  box-shadow: inset 0 1px 3px rgba(255, 255, 255, 0.1);
+  transform: skewX(-8deg);
+}
+
+.stripe-rank-indicator.pos-gold { background: linear-gradient(135deg, var(--hud-gold), #fff); color: #2a1e00; }
+.stripe-rank-indicator.pos-silver { background: linear-gradient(135deg, var(--hud-silver), #fff); color: #1f2937; }
+.stripe-rank-indicator.pos-bronze { background: linear-gradient(135deg, var(--hud-bronze), #ff8957); color: #fff; }
+
+/* Driver core info column */
+.stripe-driver-cell {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1 1 30%;
+}
+
+.stripe-avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(63, 58, 54, 0.05);
+  color: var(--taupe-dark);
+  font-weight: 800;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(63, 58, 54, 0.1);
+}
+
+.stripe-driver-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.stripe-driver-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--taupe-dark);
+}
+
+.stripe-driver-meta {
+  font-size: 11px;
+  color: var(--taupe-soft);
+  margin-top: 2px;
+}
+
+/* Delta metrics and gamified badges */
+.stripe-telemetry-data {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+  flex: 1 1 45%;
+  justify-content: flex-end;
+}
+
+/* Horizontal Point delta progress scale bar */
+.stripe-delta-visualizer {
+  display: flex;
+  flex-direction: column;
+  width: 140px;
+  gap: 4px;
+}
+
+.delta-label {
+  font-size: 9px;
+  letter-spacing: 1px;
+  color: var(--taupe-soft);
+  text-transform: uppercase;
+  font-weight: 800;
+  text-align: right;
+}
+
+.delta-track-bar {
+  height: 5px;
+  background: rgba(63, 58, 54, 0.05);
+  border-radius: 2px;
+  overflow: hidden;
+  position: relative;
+}
+
+.delta-fill-bar {
+  height: 100%;
+  background: var(--hud-gold);
+  border-radius: 2px;
+  transition: width 1s ease-out;
+}
+
+.telemetry-stripe:hover .delta-fill-bar {
+  background: var(--hud-dark);
+}
+
+/* Driver digital scorecard value */
+.stripe-score-wrap {
+  text-align: right;
+  min-width: 70px;
+}
+
+.stripe-score-value {
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--taupe-dark);
+}
+
+.stripe-score-desc {
+  font-size: 10px;
+  color: var(--taupe-soft);
+  margin-top: 1px;
+}
+
+/* Highlight row for logged-in user */
+.telemetry-stripe.stripe-row-me {
+  background: rgba(203, 184, 157, 0.11);
+  border: 1.5px solid var(--hud-gold);
+  box-shadow: 0 4px 12px rgba(203, 184, 157, 0.15);
+}
+
+.telemetry-stripe.stripe-row-me::after {
+  content: 'YOU';
+  position: absolute;
+  right: 12px;
+  top: -8px;
+  background: var(--hud-gold);
+  color: #1a1715;
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: 1px;
+  padding: 1px 6px;
+  border-radius: 2px;
+}
+
+
+/* ==========================================================================
+   5. DYNAMIC HUD BADGES & STREAKS SYSTEM
+   ========================================================================== */
+.stripe-badges-container {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.hud-badge {
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: 0.5px;
+  padding: 3px 6px;
+  border-radius: 3px;
+  text-transform: uppercase;
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.hud-badge-gold { background: rgba(203, 184, 157, 0.15); color: #876d47; border: 1px solid rgba(203, 184, 157, 0.3); }
+.hud-badge-green { background: rgba(167, 192, 147, 0.18); color: #436a28; border: 1px solid rgba(167, 192, 147, 0.3); }
+.hud-badge-blue { background: rgba(163, 196, 215, 0.18); color: #32627e; border: 1px solid rgba(163, 196, 215, 0.3); }
+.hud-badge-red { background: rgba(209, 122, 122, 0.18); color: #8c3636; border: 1px solid rgba(209, 122, 122, 0.3); }
+
+
+/* ==========================================================================
+   6. STEERING WHEEL COCKPIT HUD (PERSONAL STANDING CAPSULE)
+   ========================================================================== */
+.cockpit-hud-capsule {
+  background: var(--hud-dark);
+  border: 1.5px solid rgba(203, 184, 157, 0.25);
+  border-radius: var(--border-radius-sm);
+  padding: 24px 30px;
+  margin-bottom: 40px;
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+.cockpit-hud-capsule::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle at 100% 150%, rgba(203, 184, 157, 0.1), transparent 60%);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.cockpit-hud-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 25px;
+  position: relative;
+  z-index: 1;
+}
+
+/* Left dial displays user standing rank */
+.cockpit-rank-dial {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.03);
+  border: 3px solid rgba(203, 184, 157, 0.3);
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.5), 0 0 15px rgba(203, 184, 157, 0.1);
+  flex-shrink: 0;
+  position: relative;
+}
+
+.cockpit-rank-dial::after {
+  content: '';
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  border: 1px dashed rgba(255, 255, 255, 0.15);
+  animation: slotRingRotate 25s linear infinite;
+}
+
+.cockpit-rank-number {
+  font-size: 26px;
+  font-weight: 900;
+  color: var(--hud-gold);
+  line-height: 1;
+}
+
+.cockpit-rank-label {
+  font-size: 9px;
+  letter-spacing: 1px;
+  color: rgba(255, 255, 255, 0.4);
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+
+/* Main pilot stats layout */
+.cockpit-pilot-data {
+  flex-grow: 1;
+}
+
+.cockpit-pilot-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.cockpit-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--hud-gold);
+  color: #1a1715;
+  font-size: 15px;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 10px rgba(203, 184, 157, 0.3);
+}
+
+.cockpit-pilot-name {
+  font-size: 17px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  color: #fff;
+}
+
+.cockpit-pilot-stats {
+  margin-top: 14px;
+  display: flex;
+  gap: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 14px;
+}
+
+.cockpit-stat-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.cockpit-stat-label {
+  font-size: 9px;
+  letter-spacing: 1px;
+  color: rgba(255, 255, 255, 0.45);
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.cockpit-stat-val {
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--hud-gold);
+}
+
+/* Interactive pilot telemetry dials & return action */
+.cockpit-hud-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.cockpit-return-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, var(--hud-gold), #dfceb7);
+  color: #1a1715;
+  border: none;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  padding: 12px 22px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(203, 184, 157, 0.2);
+}
+
+.cockpit-return-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(203, 184, 157, 0.35);
+  background: #fff;
+}
+
+.cockpit-status-readout {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.readout-indicator {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #52b757;
+  box-shadow: 0 0 6px #52b757;
+  animation: cockpitBlinker 1.5s infinite;
+}
+
+@keyframes cockpitBlinker {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+.readout-text {
+  font-size: 9px;
+  letter-spacing: 1px;
+  color: rgba(255, 255, 255, 0.4);
+  text-transform: uppercase;
+  font-weight: 800;
+}
+
+/* personal standing empty card */
+.cockpit-hud-empty {
+  text-align: center;
+  padding: 10px 0;
+  width: 100%;
+}
+
+.cockpit-hud-empty p {
+  font-size: 13px;
+  color: rgba(247, 243, 238, 0.7);
+  margin-bottom: 12px;
+}
+
+.cockpit-hud-empty a {
+  color: var(--hud-gold);
+  font-weight: 700;
+  text-decoration: underline;
+}
+
+
+/* ==========================================================================
+   7. RESPONSIVE DESIGN SCALES & SCREEN MEDIA QUERIES
+   ========================================================================== */
+@media (max-width: 900px) {
+  .lb-grid-podium {
+    gap: 15px;
+  }
+  .podium-slot {
+    padding: 24px 15px 20px 15px;
+  }
+  .slot-score-value {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .leaderboard-section {
+    padding: 100px 24px 60px;
+  }
+
+  /* Podiums stacked vertically for narrow screens */
+  .lb-grid-podium {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .podium-slot.p1,
+  .podium-slot.p2,
+  .podium-slot.p3 {
+    order: unset;
+    transform: none !important;
+  }
+  .podium-slot:hover {
+    transform: translateY(-4px) !important;
+  }
+  
+  .lb-grid-podium:has(.podium-slot:hover) .podium-slot:not(:hover) {
+    opacity: 1;
+    filter: none;
+  }
+
+  /* Telemetry Feed simplified details */
+  .telemetry-stripe {
+    flex-wrap: wrap;
+    padding: 14px 16px;
+  }
+  .stripe-telemetry-data {
+    flex: 1 0 100%;
+    justify-content: space-between;
+    margin-top: 8px;
+    border-top: 1px solid rgba(63, 58, 54, 0.05);
+    padding-top: 10px;
+  }
+  .stripe-delta-visualizer {
+    width: 110px;
+  }
+
+  /* Cockpit dashboard elements vertical stack */
+  .cockpit-hud-inner {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 20px;
+  }
+  .cockpit-pilot-header {
+    flex-direction: column;
+  }
+  .cockpit-pilot-stats {
+    justify-content: center;
+  }
+  .cockpit-hud-actions {
+    align-items: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .f1-lights-wrapper {
+    padding: 15px;
+  }
+  .f1-light-bulb {
+    width: 18px;
+    height: 18px;
+  }
+  .f1-light-pillar {
+    padding: 6px;
+    gap: 6px;
+  }
+  .lb-hud-tab {
+    padding: 10px 16px;
+    font-size: 10px;
+  }
+  .lb-track-feed-wrapper {
+    padding-left: 25px;
+  }
+  .lb-track-feed-wrapper::before {
+    left: 5px;
+  }
+  .telemetry-stripe::before {
+    left: -20px;
+  }
+  .stripe-delta-visualizer {
+    display: none; /* Hide bar to fit scores and badges on extremely tiny devices */
+  }
+}

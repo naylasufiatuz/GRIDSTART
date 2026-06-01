@@ -1,234 +1,597 @@
 @extends('app')
 
+@section('styles')
+  <link rel="stylesheet" href="{{ asset('css/leaderboard.css') }}">
+@endsection
+
 @section('content')
 
 <section class="leaderboard-section">
   <div class="leaderboard-container">
 
+    {{-- ======================== RACE CONTROL HEADER ======================== --}}
     <div class="lb-header">
       <p class="lb-sub">GRIDSTART CHAMPIONSHIP</p>
       <h1 class="lb-title">Driver Standings</h1>
-      <p class="lb-desc">All-time leaderboard — siapa yang paling jago?</p>
+      <p class="lb-desc">All-time live standings feed — who dominates the starting grid?</p>
     </div>
 
-    <div class="lb-tabs">
-      <button class="lb-tab active" onclick="switchTab('points', this)">Points</button>
-      <button class="lb-tab" onclick="switchTab('time', this)">Fastest Lap</button>
+    {{-- ======================== F1 STARTING LIGHTS BOARD ======================== --}}
+    <div class="f1-lights-wrapper" id="start-light-board">
+      <div class="f1-lights-title">RACE CONTROL: TELEMETRY TRANSMISSION</div>
+      <div class="f1-light-grid">
+        <div class="f1-light-pillar">
+          <div class="f1-light-bulb"></div>
+          <div class="f1-light-bulb"></div>
+        </div>
+        <div class="f1-light-pillar">
+          <div class="f1-light-bulb"></div>
+          <div class="f1-light-bulb"></div>
+        </div>
+        <div class="f1-light-pillar">
+          <div class="f1-light-bulb"></div>
+          <div class="f1-light-bulb"></div>
+        </div>
+        <div class="f1-light-pillar">
+          <div class="f1-light-bulb"></div>
+          <div class="f1-light-bulb"></div>
+        </div>
+        <div class="f1-light-pillar">
+          <div class="f1-light-bulb"></div>
+          <div class="f1-light-bulb"></div>
+        </div>
+      </div>
+      <div class="f1-lights-status">STAND BY...</div>
     </div>
 
-    {{-- ======================== POINTS TAB ======================== --}}
-    <div id="tab-points">
+    {{-- ======================== TACTILE TABS SWITCHER ======================== --}}
+    <div class="lb-tabs-container">
+      <div class="lb-hud-tabs">
+        <button class="lb-hud-tab active" onclick="switchTab('points', this)">Championship Points</button>
+        <button class="lb-hud-tab" onclick="switchTab('time', this)">Fastest Laps</button>
+      </div>
+    </div>
 
-      {{-- posisi user --}}
-      <div class="my-standing">
-        @if(Auth::check())
-          @if($userBestPoint)
-          <div class="my-standing-inner">
-            <div class="my-standing-pos">
-              <span class="pos-number">P{{ $userPointRank }}</span>
-              <span class="pos-cap">Posisi Kamu</span>
+    {{-- ======================== FADE-IN HUD BODY ======================== --}}
+    <div class="lb-hud-ready">
+
+      {{-- ====================================================================
+           POINTS CHAMPIONSHIP TAB
+           ==================================================================== --}}
+      <div id="tab-points">
+
+        {{-- DRIVER COCKPIT STEERING HUD (User standing status) --}}
+        <div class="my-standing">
+          @if(Auth::check())
+            @if($userBestPoint)
+            <div class="cockpit-hud-capsule">
+              <div class="cockpit-hud-inner">
+                <div class="cockpit-rank-dial">
+                  <span class="cockpit-rank-number">P{{ $userPointRank }}</span>
+                  <span class="cockpit-rank-label">Rank</span>
+                </div>
+                <div class="cockpit-pilot-data">
+                  <div class="cockpit-pilot-header">
+                    <div class="cockpit-avatar">
+                      {{ strtoupper(substr(Auth::user()->username, 0, 2)) }}
+                    </div>
+                    <div>
+                      <p class="cockpit-pilot-name">{{ Auth::user()->username }}</p>
+                      <div class="cockpit-status-readout">
+                        <span class="readout-indicator"></span>
+                        <span class="readout-text">TELEMETRY ACTIVE · DRS ONLINE</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="cockpit-pilot-stats">
+                    <div class="cockpit-stat-item">
+                      <span class="cockpit-stat-label">Personal Best</span>
+                      <span class="cockpit-stat-val">{{ number_format($userBestPoint->score) }} pts</span>
+                    </div>
+                    <div class="cockpit-stat-item">
+                      <span class="cockpit-stat-label">Best Lap</span>
+                      <span class="cockpit-stat-val">{{ $userBestPoint->best_time ?? '—' }}</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="cockpit-hud-actions">
+                  <a href="/simulasi" class="cockpit-return-btn">
+                    <span>Return to Grid</span>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                  </a>
+                </div>
+              </div>
             </div>
-            <div class="my-standing-info">
-              <div class="avatar-sm">{{ strtoupper(substr(Auth::user()->username, 0, 2)) }}</div>
-              <div>
-                <p class="my-standing-name">{{ Auth::user()->username }}</p>
-                <p class="my-standing-detail">{{ number_format($userBestPoint->score) }} pts · {{ $userBestPoint->best_time ?? '—' }}</p>
+            @else
+            <div class="cockpit-hud-capsule">
+              <div class="cockpit-hud-inner">
+                <div class="cockpit-hud-empty">
+                  <p>Telemetry offline — You haven't registered any lap times on the leaderboard yet!</p>
+                  <a href="/simulasi" class="cockpit-return-btn" style="display:inline-flex; float:none;">Launch Simulation</a>
+                </div>
+              </div>
+            </div>
+            @endif
+          @else
+          <div class="cockpit-hud-capsule" style="border-color: rgba(209, 122, 122, 0.25);">
+            <div class="cockpit-hud-inner">
+              <div class="cockpit-hud-empty">
+                <p>Telemetry system locked — Sign on as a driver to track your real-time ranking!</p>
+                <a href="/login" class="cockpit-return-btn" style="display:inline-flex; float:none;">Pilot Log On</a>
               </div>
             </div>
           </div>
-          @else
-          <div class="my-standing-inner my-standing-empty">
-            <p>Kamu belum punya skor — <a href="/simulasi">main sekarang</a></p>
-          </div>
           @endif
-        @else
-          <div class="my-standing-inner my-standing-empty">
-            <p><a href="/login">Login</a> untuk melihat posisimu di klasemen</p>
-          </div>
-        @endif
-      </div>
-
-      {{-- podium --}}
-      @if($byPoints->count() >= 3)
-      <div class="lb-podium">
-        <div class="podium-card p2">
-          <div class="podium-pos">P2</div>
-          <div class="podium-avatar">{{ strtoupper(substr($byPoints[1]->user->username, 0, 2)) }}</div>
-          <div class="podium-name">{{ $byPoints[1]->user->username }}</div>
-          <div class="podium-score">{{ number_format($byPoints[1]->score) }}</div>
-          @if($byPoints[1]->best_time)<div class="podium-time">{{ $byPoints[1]->best_time }}</div>@endif
         </div>
-        <div class="podium-card p1">
-          <div class="podium-pos">P1</div>
-          <div class="podium-crown"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l3-10 4 6 4-6 3 10H3z"/><path d="M7 14h10"/></svg></div>
-          <div class="podium-avatar gold">{{ strtoupper(substr($byPoints[0]->user->username, 0, 2)) }}</div>
-          <div class="podium-name">{{ $byPoints[0]->user->username }}</div>
-          <div class="podium-score">{{ number_format($byPoints[0]->score) }}</div>
-          @if($byPoints[0]->best_time)<div class="podium-time">{{ $byPoints[0]->best_time }}</div>@endif
-        </div>
-        <div class="podium-card p3">
-          <div class="podium-pos">P3</div>
-          <div class="podium-avatar bronze">{{ strtoupper(substr($byPoints[2]->user->username, 0, 2)) }}</div>
-          <div class="podium-name">{{ $byPoints[2]->user->username }}</div>
-          <div class="podium-score">{{ number_format($byPoints[2]->score) }}</div>
-          @if($byPoints[2]->best_time)<div class="podium-time">{{ $byPoints[2]->best_time }}</div>@endif
-        </div>
-      </div>
-      @endif
 
-      {{-- tombol lihat semua --}}
-      <div class="expand-wrap">
-        <button class="expand-btn" onclick="toggleTable('pts-table', this)">
-          <span>Lihat Semua</span>
-          <svg class="expand-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-        </button>
-        <small class="expand-note">{{ $byPoints->count() }} data tercatat</small>
-      </div>
-
-      {{-- tabel lengkap --}}
-      <div id="pts-table" class="expandable-table" style="display:none;">
-        <div class="lb-table-wrap">
-          <table class="lb-table">
-            <thead>
-              <tr>
-                <th>POS</th><th>DRIVER</th><th>PTS</th><th>BEST LAP</th><th>GAP</th>
-              </tr>
-            </thead>
-            <tbody>
-              @forelse($byPoints as $i => $row)
-              <tr class="{{ Auth::check() && $row->user_id === Auth::user()->id_user ? 'row-me' : '' }}">
-                <td>
-                  <span class="pos-badge {{ $i===0?'pos-gold':($i===1?'pos-silver':($i===2?'pos-bronze':'')) }}">{{ $i+1 }}</span>
-                </td>
-                <td>
-                  <div class="driver-cell">
-                    <div class="avatar-sm">{{ strtoupper(substr($row->user->username, 0, 2)) }}</div>
-                    <span>{{ $row->user->username }}</span>
-                  </div>
-                </td>
-                <td><strong>{{ number_format($row->score) }}</strong></td>
-                <td class="muted">{{ $row->best_time ?? '—' }}</td>
-                <td class="muted">@if($i===0) — @else +{{ number_format($byPoints[0]->score - $row->score) }} @endif</td>
-              </tr>
-              @empty
-              <tr><td colspan="5" class="empty-td">Belum ada skor.</td></tr>
-              @endforelse
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-
-    {{-- ======================== TIME TAB ======================== --}}
-    <div id="tab-time" style="display:none;">
-
-      {{-- posisi user --}}
-      <div class="my-standing">
-        @if(Auth::check())
-          @if($userBestTime)
-          <div class="my-standing-inner">
-            <div class="my-standing-pos">
-              <span class="pos-number">P{{ $userTimeRank }}</span>
-              <span class="pos-cap">Posisi Kamu</span>
+        {{-- POLE STAGGERED GRID PODIUM (TOP 3 DRIVERS) --}}
+        @if($byPoints->count() >= 3)
+        <div class="lb-grid-podium">
+          
+          {{-- P2 SLOT (Staggered back-left) --}}
+          <div class="podium-slot p2">
+            <div class="podium-hud-bg"></div>
+            <div class="podium-halo"></div>
+            <div class="slot-pos-badge">P2</div>
+            <div class="slot-avatar-frame">
+              <div class="slot-telemetry-ring"></div>
+              <div class="slot-avatar-scanner"></div>
+              <span class="slot-avatar-initials">{{ strtoupper(substr($byPoints[1]->user->username, 0, 2)) }}</span>
             </div>
-            <div class="my-standing-info">
-              <div class="avatar-sm">{{ strtoupper(substr(Auth::user()->username, 0, 2)) }}</div>
-              <div>
-                <p class="my-standing-name">{{ Auth::user()->username }}</p>
-                <p class="my-standing-detail">{{ $userBestTime->best_time }} · {{ number_format($userBestTime->score) }} pts</p>
+            <div class="slot-driver-name">{{ $byPoints[1]->user->username }}</div>
+            <div class="slot-score-value">{{ number_format($byPoints[1]->score) }}</div>
+            <div class="slot-sub-info">PTS</div>
+            @if($byPoints[1]->best_time)
+              <div class="slot-sub-info" style="color:var(--hud-gold);">Lap: {{ $byPoints[1]->best_time }}</div>
+            @endif
+          </div>
+
+          {{-- P1 SLOT (Pole front-center) --}}
+          <div class="podium-slot p1">
+            <div class="podium-hud-bg"></div>
+            <div class="podium-halo"></div>
+            <svg class="podium-crown-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 17l3-10 4 6 4-6 3 10H3z"/>
+              <path d="M7 14h10"/>
+            </svg>
+            <div class="slot-pos-badge">P1 POLE</div>
+            <div class="slot-avatar-frame">
+              <div class="slot-telemetry-ring"></div>
+              <div class="slot-avatar-scanner"></div>
+              <span class="slot-avatar-initials">{{ strtoupper(substr($byPoints[0]->user->username, 0, 2)) }}</span>
+            </div>
+            <div class="slot-driver-name">{{ $byPoints[0]->user->username }}</div>
+            <div class="slot-score-value" style="color:var(--hud-gold);">{{ number_format($byPoints[0]->score) }}</div>
+            <div class="slot-sub-info" style="font-weight:800;">PTS</div>
+            @if($byPoints[0]->best_time)
+              <div class="slot-sub-info" style="color:var(--hud-gold);">Lap: {{ $byPoints[0]->best_time }}</div>
+            @endif
+          </div>
+
+          {{-- P3 SLOT (Staggered back-right) --}}
+          <div class="podium-slot p3">
+            <div class="podium-hud-bg"></div>
+            <div class="podium-halo"></div>
+            <div class="slot-pos-badge">P3</div>
+            <div class="slot-avatar-frame">
+              <div class="slot-telemetry-ring"></div>
+              <div class="slot-avatar-scanner"></div>
+              <span class="slot-avatar-initials">{{ strtoupper(substr($byPoints[2]->user->username, 0, 2)) }}</span>
+            </div>
+            <div class="slot-driver-name">{{ $byPoints[2]->user->username }}</div>
+            <div class="slot-score-value">{{ number_format($byPoints[2]->score) }}</div>
+            <div class="slot-sub-info">PTS</div>
+            @if($byPoints[2]->best_time)
+              <div class="slot-sub-info" style="color:var(--hud-gold);">Lap: {{ $byPoints[2]->best_time }}</div>
+            @endif
+          </div>
+
+        </div>
+        @endif
+
+        {{-- SHOW ALL TRIGGER --}}
+        <div class="expand-wrap">
+          <button class="expand-btn" onclick="toggleTable('pts-table', this)">
+            <span>Lihat Semua</span>
+            <svg class="expand-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <small class="expand-note">{{ $byPoints->count() }} active pilots on track</small>
+        </div>
+
+        {{-- ASYMMETRIC RACETRACK LAPS FEED --}}
+        <div id="pts-table" class="expandable-table" style="display:none;">
+          <div class="lb-track-feed-wrapper">
+            
+            @forelse($byPoints as $i => $row)
+              @php
+                // Calculate percentage relative to leader for bar visualization
+                $percentage = $byPoints[0]->score > 0 ? ($row->score / $byPoints[0]->score) * 100 : 0;
+              @endphp
+              <div class="telemetry-stripe {{ Auth::check() && $row->user_id === Auth::user()->id_user ? 'stripe-row-me' : '' }}">
+                
+                {{-- Slanted position indicator --}}
+                <div class="stripe-rank-indicator {{ $i===0?'pos-gold':($i===1?'pos-silver':($i===2?'pos-bronze':'')) }}">
+                  {{ $i+1 }}
+                </div>
+
+                {{-- Driver Info --}}
+                <div class="stripe-driver-cell">
+                  <div class="stripe-avatar">
+                    {{ strtoupper(substr($row->user->username, 0, 2)) }}
+                  </div>
+                  <div class="stripe-driver-details">
+                    <span class="stripe-driver-name">{{ $row->user->username }}</span>
+                    <span class="stripe-driver-meta">Lap Time: {{ $row->best_time ?? '—' }}</span>
+                  </div>
+                </div>
+
+                {{-- Telemetry data & custom gamified badges --}}
+                <div class="stripe-telemetry-data">
+                  
+                  {{-- Badges System --}}
+                  <div class="stripe-badges-container">
+                    @if($i === 0)
+                      <span class="hud-badge hud-badge-gold">
+                        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l3-10 4 6 4-6 3 10H3z"/><path d="M7 14h10"/></svg>
+                        POLE
+                      </span>
+                      <span class="hud-badge hud-badge-green">
+                        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                        APEX
+                      </span>
+                    @elseif($i === 1 || $i === 2)
+                      <span class="hud-badge hud-badge-blue">
+                        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                        PODIUM
+                      </span>
+                    @endif
+
+                    @if($i % 3 === 0 && $i > 0)
+                      <span class="hud-badge hud-badge-green">
+                        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>
+                        SECTOR 1
+                      </span>
+                    @elseif($i % 2 === 0 && $i > 2)
+                      <span class="hud-badge hud-badge-red">
+                        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polygon points="17 6 23 6 23 12"/></svg>
+                        STREAK
+                      </span>
+                    @endif
+                  </div>
+
+                  {{-- Horizontal Delta Progress scale --}}
+                  <div class="stripe-delta-visualizer">
+                    <div class="delta-label">
+                      @if($i === 0)
+                        LEADER
+                      @else
+                        +{{ number_format($byPoints[0]->score - $row->score) }} pts
+                      @endif
+                    </div>
+                    <div class="delta-track-bar">
+                      <div class="delta-fill-bar" style="width: {{ $percentage }}%"></div>
+                    </div>
+                  </div>
+
+                  {{-- Digital Scorecard --}}
+                  <div class="stripe-score-wrap">
+                    <span class="stripe-score-value">{{ number_format($row->score) }}</span>
+                    <div class="stripe-score-desc">PTS</div>
+                  </div>
+
+                </div>
+
+              </div>
+            @empty
+              <div class="telemetry-stripe" style="justify-content:center; padding: 40px 20px;">
+                <p style="color:var(--taupe-soft); font-style:italic;">No active pilots on the championship track yet.</p>
+              </div>
+            @endforelse
+
+          </div>
+        </div>
+
+      </div>
+
+      {{-- ====================================================================
+           FASTEST LAPS TAB
+           ==================================================================== --}}
+      <div id="tab-time" style="display:none;">
+
+        {{-- DRIVER COCKPIT STEERING HUD (User standing status) --}}
+        <div class="my-standing">
+          @if(Auth::check())
+            @if($userBestTime)
+            <div class="cockpit-hud-capsule">
+              <div class="cockpit-hud-inner">
+                <div class="cockpit-rank-dial" style="border-color: rgba(168, 169, 173, 0.3);">
+                  <span class="cockpit-rank-number">P{{ $userTimeRank }}</span>
+                  <span class="cockpit-rank-label">Rank</span>
+                </div>
+                <div class="cockpit-pilot-data">
+                  <div class="cockpit-pilot-header">
+                    <div class="cockpit-avatar">
+                      {{ strtoupper(substr(Auth::user()->username, 0, 2)) }}
+                    </div>
+                    <div>
+                      <p class="cockpit-pilot-name">{{ Auth::user()->username }}</p>
+                      <div class="cockpit-status-readout">
+                        <span class="readout-indicator"></span>
+                        <span class="readout-text">TELEMETRY ACTIVE · LAP COUNTER ACTIVE</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="cockpit-pilot-stats">
+                    <div class="cockpit-stat-item">
+                      <span class="cockpit-stat-label">Best Lap Time</span>
+                      <span class="cockpit-stat-val" style="color:var(--hud-silver);">{{ $userBestTime->best_time }}</span>
+                    </div>
+                    <div class="cockpit-stat-item">
+                      <span class="cockpit-stat-label">Best Score</span>
+                      <span class="cockpit-stat-val">{{ number_format($userBestTime->score) }} pts</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="cockpit-hud-actions">
+                  <a href="/simulasi" class="cockpit-return-btn">
+                    <span>Return to Grid</span>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                  </a>
+                </div>
+              </div>
+            </div>
+            @else
+            <div class="cockpit-hud-capsule">
+              <div class="cockpit-hud-inner">
+                <div class="cockpit-hud-empty">
+                  <p>Telemetry offline — You haven't registered any lap times on the leaderboard yet!</p>
+                  <a href="/simulasi" class="cockpit-return-btn" style="display:inline-flex; float:none;">Launch Simulation</a>
+                </div>
+              </div>
+            </div>
+            @endif
+          @else
+          <div class="cockpit-hud-capsule" style="border-color: rgba(209, 122, 122, 0.25);">
+            <div class="cockpit-hud-inner">
+              <div class="cockpit-hud-empty">
+                <p>Telemetry system locked — Sign on as a driver to track your real-time ranking!</p>
+                <a href="/login" class="cockpit-return-btn" style="display:inline-flex; float:none;">Pilot Log On</a>
               </div>
             </div>
           </div>
-          @else
-          <div class="my-standing-inner my-standing-empty">
-            <p>Kamu belum punya catatan waktu — <a href="/simulasi">main sekarang</a></p>
-          </div>
           @endif
-        @else
-          <div class="my-standing-inner my-standing-empty">
-            <p><a href="/login">Login</a> untuk melihat posisimu di klasemen</p>
+        </div>
+
+        {{-- POLE STAGGERED GRID PODIUM (TOP 3 FASTEST LAP DRIVERS) --}}
+        @if($byTime->count() >= 3)
+        <div class="lb-grid-podium">
+          
+          {{-- P2 SLOT (Staggered back-left) --}}
+          <div class="podium-slot p2">
+            <div class="podium-hud-bg"></div>
+            <div class="podium-halo"></div>
+            <div class="slot-pos-badge">P2</div>
+            <div class="slot-avatar-frame">
+              <div class="slot-telemetry-ring"></div>
+              <div class="slot-avatar-scanner"></div>
+              <span class="slot-avatar-initials">{{ strtoupper(substr($byTime[1]->user->username, 0, 2)) }}</span>
+            </div>
+            <div class="slot-driver-name">{{ $byTime[1]->user->username }}</div>
+            <div class="slot-score-value">{{ $byTime[1]->best_time }}</div>
+            <div class="slot-sub-info">LAP TIME</div>
+            <div class="slot-sub-info" style="color:var(--hud-silver);">Score: {{ number_format($byTime[1]->score) }} pts</div>
           </div>
+
+          {{-- P1 SLOT (Pole front-center) --}}
+          <div class="podium-slot p1">
+            <div class="podium-hud-bg"></div>
+            <div class="podium-halo"></div>
+            <svg class="podium-crown-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 17l3-10 4 6 4-6 3 10H3z"/>
+              <path d="M7 14h10"/>
+            </svg>
+            <div class="slot-pos-badge">P1 POLE</div>
+            <div class="slot-avatar-frame">
+              <div class="slot-telemetry-ring"></div>
+              <div class="slot-avatar-scanner"></div>
+              <span class="slot-avatar-initials">{{ strtoupper(substr($byTime[0]->user->username, 0, 2)) }}</span>
+            </div>
+            <div class="slot-driver-name">{{ $byTime[0]->user->username }}</div>
+            <div class="slot-score-value" style="color:var(--hud-gold);">{{ $byTime[0]->best_time }}</div>
+            <div class="slot-sub-info" style="font-weight:800;">LAP TIME</div>
+            <div class="slot-sub-info" style="color:var(--hud-gold);">Score: {{ number_format($byTime[0]->score) }} pts</div>
+          </div>
+
+          {{-- P3 SLOT (Staggered back-right) --}}
+          <div class="podium-slot p3">
+            <div class="podium-hud-bg"></div>
+            <div class="podium-halo"></div>
+            <div class="slot-pos-badge">P3</div>
+            <div class="slot-avatar-frame">
+              <div class="slot-telemetry-ring"></div>
+              <div class="slot-avatar-scanner"></div>
+              <span class="slot-avatar-initials">{{ strtoupper(substr($byTime[2]->user->username, 0, 2)) }}</span>
+            </div>
+            <div class="slot-driver-name">{{ $byTime[2]->user->username }}</div>
+            <div class="slot-score-value">{{ $byTime[2]->best_time }}</div>
+            <div class="slot-sub-info">LAP TIME</div>
+            <div class="slot-sub-info" style="color:var(--hud-bronze);">Score: {{ number_format($byTime[2]->score) }} pts</div>
+          </div>
+
+        </div>
         @endif
-      </div>
 
-      {{-- podium --}}
-      @if($byTime->count() >= 3)
-      <div class="lb-podium">
-        <div class="podium-card p2">
-          <div class="podium-pos">P2</div>
-          <div class="podium-avatar">{{ strtoupper(substr($byTime[1]->user->username, 0, 2)) }}</div>
-          <div class="podium-name">{{ $byTime[1]->user->username }}</div>
-          <div class="podium-score">{{ $byTime[1]->best_time }}</div>
+        {{-- SHOW ALL TRIGGER --}}
+        <div class="expand-wrap">
+          <button class="expand-btn" onclick="toggleTable('time-table', this)">
+            <span>Lihat Semua</span>
+            <svg class="expand-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <small class="expand-note">{{ $byTime->count() }} active pilots on track</small>
         </div>
-        <div class="podium-card p1">
-          <div class="podium-pos">P1</div>
-          <div class="podium-crown"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l3-10 4 6 4-6 3 10H3z"/><path d="M7 14h10"/></svg></div>
-          <div class="podium-avatar gold">{{ strtoupper(substr($byTime[0]->user->username, 0, 2)) }}</div>
-          <div class="podium-name">{{ $byTime[0]->user->username }}</div>
-          <div class="podium-score">{{ $byTime[0]->best_time }}</div>
-        </div>
-        <div class="podium-card p3">
-          <div class="podium-pos">P3</div>
-          <div class="podium-avatar bronze">{{ strtoupper(substr($byTime[2]->user->username, 0, 2)) }}</div>
-          <div class="podium-name">{{ $byTime[2]->user->username }}</div>
-          <div class="podium-score">{{ $byTime[2]->best_time }}</div>
-        </div>
-      </div>
-      @endif
 
-      {{-- tombol lihat semua --}}
-      <div class="expand-wrap">
-        <button class="expand-btn" onclick="toggleTable('time-table', this)">
-          <span>Lihat Semua </span>
-          <svg class="expand-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-        </button>
-        <small class="expand-note">{{ $byTime->count() }} data tercatat</small>
-      </div>
+        {{-- ASYMMETRIC RACETRACK LAPS FEED --}}
+        <div id="time-table" class="expandable-table" style="display:none;">
+          <div class="lb-track-feed-wrapper">
+            
+            @forelse($byTime as $i => $row)
+              @php
+                // Percentage based on scores to render bar filling
+                $percentage = $byTime[0]->score > 0 ? ($row->score / $byTime[0]->score) * 100 : 0;
+              @endphp
+              <div class="telemetry-stripe {{ Auth::check() && $row->user_id === Auth::user()->id_user ? 'stripe-row-me' : '' }}">
+                
+                {{-- Slanted position indicator --}}
+                <div class="stripe-rank-indicator {{ $i===0?'pos-gold':($i===1?'pos-silver':($i===2?'pos-bronze':'')) }}">
+                  {{ $i+1 }}
+                </div>
 
-      {{-- tabel lengkap --}}
-      <div id="time-table" class="expandable-table" style="display:none;">
-        <div class="lb-table-wrap">
-          <table class="lb-table">
-            <thead>
-              <tr>
-                <th>POS</th><th>DRIVER</th><th>BEST LAP</th><th>PTS</th>
-              </tr>
-            </thead>
-            <tbody>
-              @forelse($byTime as $i => $row)
-              <tr class="{{ Auth::check() && $row->user_id === Auth::user()->id_user ? 'row-me' : '' }}">
-                <td>
-                  <span class="pos-badge {{ $i===0?'pos-gold':($i===1?'pos-silver':($i===2?'pos-bronze':'')) }}">{{ $i+1 }}</span>
-                </td>
-                <td>
-                  <div class="driver-cell">
-                    <div class="avatar-sm">{{ strtoupper(substr($row->user->username, 0, 2)) }}</div>
-                    <span>{{ $row->user->username }}</span>
+                {{-- Driver Info --}}
+                <div class="stripe-driver-cell">
+                  <div class="stripe-avatar">
+                    {{ strtoupper(substr($row->user->username, 0, 2)) }}
                   </div>
-                </td>
-                <td><strong>{{ $row->best_time }}</strong></td>
-                <td class="muted">{{ number_format($row->score) }}</td>
-              </tr>
-              @empty
-              <tr><td colspan="4" class="empty-td">Belum ada catatan waktu.</td></tr>
-              @endforelse
-            </tbody>
-          </table>
+                  <div class="stripe-driver-details">
+                    <span class="stripe-driver-name">{{ $row->user->username }}</span>
+                    <span class="stripe-driver-meta">Score Points: {{ number_format($row->score) }} pts</span>
+                  </div>
+                </div>
+
+                {{-- Telemetry data & badges --}}
+                <div class="stripe-telemetry-data">
+                  
+                  {{-- Badges System --}}
+                  <div class="stripe-badges-container">
+                    @if($i === 0)
+                      <span class="hud-badge hud-badge-gold">
+                        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                        RECORD
+                      </span>
+                      <span class="hud-badge hud-badge-green">
+                        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                        TRACKMASTER
+                      </span>
+                    @elseif($i === 1 || $i === 2)
+                      <span class="hud-badge hud-badge-blue">
+                        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                        QUICK
+                      </span>
+                    @endif
+
+                    @if($i % 3 === 0 && $i > 0)
+                      <span class="hud-badge hud-badge-blue">
+                        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1 .4-1 1v6c0 .6.4 1 1 1h1m12 0h2m-12 0c0 1.7 1.3 3 3 3s3-1.3 3-3M6 17c0 1.7 1.3 3 3 3s3-1.3 3-3"/></svg>
+                        DRIFT
+                      </span>
+                    @elseif($i % 2 === 0 && $i > 2)
+                      <span class="hud-badge hud-badge-green">
+                        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                        DRS ZONE
+                      </span>
+                    @endif
+                  </div>
+
+                  {{-- Horizontal Delta Progress --}}
+                  <div class="stripe-delta-visualizer">
+                    <div class="delta-label">
+                      @if($i === 0)
+                        SPEED LEADER
+                      @else
+                        Lap Time: {{ $row->best_time }}
+                      @endif
+                    </div>
+                    <div class="delta-track-bar">
+                      <div class="delta-fill-bar" style="width: {{ $percentage }}%"></div>
+                    </div>
+                  </div>
+
+                  {{-- Digital Scorecard --}}
+                  <div class="stripe-score-wrap">
+                    <span class="stripe-score-value" style="color: var(--hud-silver);">{{ $row->best_time }}</span>
+                    <div class="stripe-score-desc">LAP</div>
+                  </div>
+
+                </div>
+
+              </div>
+            @empty
+              <div class="telemetry-stripe" style="justify-content:center; padding: 40px 20px;">
+                <p style="color:var(--taupe-soft); font-style:italic;">No lap record logs on the championship track yet.</p>
+              </div>
+            @endforelse
+
+          </div>
         </div>
+
       </div>
+
     </div>
 
   </div>
 </section>
 
 <script>
+/**
+ * Interactive F1 Start Lights board sequencing on page load
+ */
+document.addEventListener("DOMContentLoaded", function() {
+  const bulbs = document.querySelectorAll(".f1-light-bulb");
+  const statusMessage = document.querySelector(".f1-lights-status");
+  const lightsPanel = document.getElementById("start-light-board");
+  
+  if (bulbs.length > 0) {
+    // Bulbs sequence styling
+    // At 3.0s, all lights shut off (green state triggered)
+    setTimeout(function() {
+      if (statusMessage) {
+        statusMessage.textContent = "LIGHTS OUT! GO GO GO!";
+        statusMessage.style.color = "#52b757";
+      }
+      
+      // Flash a quick green flash effect
+      bulbs.forEach(b => {
+        b.style.background = "#52b757";
+        b.style.boxShadow = "0 0 20px #52b757, 0 0 35px #52b757";
+      });
+      
+      // After another 1s, turn green lights off to clean cockpit console view
+      setTimeout(function() {
+        bulbs.forEach(b => {
+          b.style.background = "#221d1b";
+          b.style.boxShadow = "none";
+        });
+        if (statusMessage) {
+          statusMessage.textContent = "TELEMETRY LINK STABLE";
+          statusMessage.style.color = "var(--hud-gold)";
+        }
+      }, 1000);
+      
+    }, 3000);
+  }
+});
+
+/**
+ * Switch tabs smoothly between Points and Time lap standing rosters
+ */
 function switchTab(tab, el) {
-  document.getElementById('tab-points').style.display = tab==='points' ? 'block' : 'none';
-  document.getElementById('tab-time').style.display   = tab==='time'   ? 'block' : 'none';
-  document.querySelectorAll('.lb-tab').forEach(t => t.classList.remove('active'));
+  const ptsTab = document.getElementById('tab-points');
+  const timeTab = document.getElementById('tab-time');
+  
+  if (tab === 'points') {
+    ptsTab.style.display = 'block';
+    timeTab.style.display = 'none';
+  } else {
+    ptsTab.style.display = 'none';
+    timeTab.style.display = 'block';
+  }
+  
+  document.querySelectorAll('.lb-hud-tab').forEach(t => t.classList.remove('active'));
   el.classList.add('active');
 }
 
+/**
+ * Custom expand and collapse drawer widget for driver grids
+ */
 function toggleTable(id, btn) {
   var el = document.getElementById(id);
   var arrow = btn.querySelector('.expand-arrow');
@@ -236,8 +599,8 @@ function toggleTable(id, btn) {
   if (el.style.display === 'none') {
     el.style.display = 'block';
     arrow.style.transform = 'rotate(180deg)';
-    label.textContent = 'Tutup Tabel';
-    setTimeout(function(){ el.scrollIntoView({ behavior:'smooth', block:'start' }); }, 80);
+    label.textContent = 'Tutup Grid';
+    setTimeout(function(){ el.scrollIntoView({ behavior:'smooth', block:'start' }); }, 120);
   } else {
     el.style.display = 'none';
     arrow.style.transform = '';
