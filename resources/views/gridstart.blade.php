@@ -83,8 +83,8 @@
                 </div>
             </a>
 
-            <a href="https://www.youtube.com/watch?v=WJ-mx84hM6c" target="_blank" class="modal-video-thumb">
-                <img src="https://img.youtube.com/vi/WJ-mx84hM6c/maxresdefault.jpg" alt="Video 3"/>
+            <a href="https://www.youtube.com/watch?v=JuEvK-zCqio" target="_blank" class="modal-video-thumb">
+                <img src="https://i.ytimg.com/vi/JuEvK-zCqio/hqdefault.jpg" alt="Video 3"/>
                 <div class="modal-play-btn">
                 <svg viewBox="0 0 24 24" fill="white" width="28" height="28"><path d="M8 5v14l11-7z"/></svg>
                 </div>

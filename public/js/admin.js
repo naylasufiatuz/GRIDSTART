@@ -33,6 +33,10 @@ async function loadUsers() {
   const tbody = document.getElementById('users-tbody');
   tbody.innerHTML = '<tr class="loading-row"><td colspan="7">Loading...</td></tr>';
 
+  const master = document.getElementById('user-select-all');
+  if (master) master.checked = false;
+  updateBulkDeleteBtn('users');
+
   const res  = await fetch(BASE + '/users');
   const json = await res.json();
 
@@ -43,6 +47,7 @@ async function loadUsers() {
 
   tbody.innerHTML = json.data.map(u => `
     <tr>
+      <td style="text-align: center;"><input type="checkbox" class="user-checkbox" value="${u.id_user}" onchange="updateBulkDeleteBtn('users')"/></td>
       <td><span class="badge">#${u.id_user}</span></td>
       <td>${u.username}</td>
       <td>${u.email}</td>
@@ -122,19 +127,24 @@ headers: { 'Accept': 'application/json', 'X-CSRF-TOKEN': CSRF },  });
 // ══════════════════
 async function loadScores() {
   const tbody = document.getElementById('scores-tbody');
-  tbody.innerHTML = '<tr class="loading-row"><td colspan="6">Loading...</td></tr>';
+  tbody.innerHTML = '<tr class="loading-row"><td colspan="7">Loading...</td></tr>';
 
-const res  = await fetch(BASE + '/game-scores', {
-  headers: { 'Accept': 'application/json' }
-});  const json = await res.json();
+  const master = document.getElementById('score-select-all');
+  if (master) master.checked = false;
+  updateBulkDeleteBtn('scores');
+
+  const res  = await fetch(BASE + '/game-scores', {
+    headers: { 'Accept': 'application/json' }
+  });  const json = await res.json();
 
   if (!json.data.length) {
-    tbody.innerHTML = '<tr class="loading-row"><td colspan="6">Tidak ada data.</td></tr>';
+    tbody.innerHTML = '<tr class="loading-row"><td colspan="7">Tidak ada data.</td></tr>';
     return;
   }
 
   tbody.innerHTML = json.data.map(s => `
     <tr>
+      <td style="text-align: center;"><input type="checkbox" class="score-checkbox" value="${s.id}" onchange="updateBulkDeleteBtn('scores')"/></td>
       <td><span class="badge">#${s.id}</span></td>
       <td>${s.username}</td>
       <td><strong style="color:var(--accent)">${s.score}</strong></td>
@@ -210,7 +220,11 @@ headers: { 'Accept': 'application/json', 'X-CSRF-TOKEN': CSRF },
 // ══════════════════
 async function loadPesans() {
   const tbody = document.getElementById('pesan-tbody');
-  tbody.innerHTML = '<tr class="loading-row"><td colspan="8">Loading...</td></tr>';
+  tbody.innerHTML = '<tr class="loading-row"><td colspan="9">Loading...</td></tr>';
+
+  const master = document.getElementById('pesan-select-all');
+  if (master) master.checked = false;
+  updateBulkDeleteBtn('pesan');
 
   const res  = await fetch(BASE + '/pesan', {
     headers: { 'Accept': 'application/json' }
@@ -218,12 +232,13 @@ async function loadPesans() {
   const json = await res.json();
 
   if (!json.data.length) {
-    tbody.innerHTML = '<tr class="loading-row"><td colspan="8">Tidak ada data.</td></tr>';
+    tbody.innerHTML = '<tr class="loading-row"><td colspan="9">Tidak ada data.</td></tr>';
     return;
   }
 
   tbody.innerHTML = json.data.map(p => `
     <tr>
+      <td style="text-align: center;"><input type="checkbox" class="pesan-checkbox" value="${p.id}" onchange="updateBulkDeleteBtn('pesan')"/></td>
       <td><span class="badge">#${p.id}</span></td>
       <td>${p.name}</td>
       <td>${p.email}</td>
@@ -270,7 +285,11 @@ function toggleObstacleTypeSelect() {
 
 async function loadQuizzes() {
   const tbody = document.getElementById('quizzes-tbody');
-  tbody.innerHTML = '<tr class="loading-row"><td colspan="7">Loading...</td></tr>';
+  tbody.innerHTML = '<tr class="loading-row"><td colspan="8">Loading...</td></tr>';
+
+  const master = document.getElementById('quiz-select-all');
+  if (master) master.checked = false;
+  updateBulkDeleteBtn('quizzes');
 
   const res  = await fetch(BASE + '/quizzes', {
     headers: { 'Accept': 'application/json' }
@@ -278,7 +297,7 @@ async function loadQuizzes() {
   const json = await res.json();
 
   if (!json.data.length) {
-    tbody.innerHTML = '<tr class="loading-row"><td colspan="7">Tidak ada data.</td></tr>';
+    tbody.innerHTML = '<tr class="loading-row"><td colspan="8">Tidak ada data.</td></tr>';
     return;
   }
 
@@ -293,6 +312,7 @@ async function loadQuizzes() {
 
     return `
       <tr>
+        <td style="text-align: center;"><input type="checkbox" class="quiz-checkbox" value="${q.id}" onchange="updateBulkDeleteBtn('quizzes')"/></td>
         <td><span class="badge">#${q.id}</span></td>
         <td>${typeBadge}</td>
         <td><strong>${triggerName}</strong></td>
@@ -405,4 +425,82 @@ async function deleteQuiz(id) {
   const json = await res.json();
   toast(json.message, res.ok ? 'success' : 'error');
   if (res.ok) loadQuizzes();
+}
+
+// ══════════════════
+// BULK OPERATIONS
+// ══════════════════
+function toggleSelectAll(master, type) {
+  const checkboxes = document.querySelectorAll(`.${type}-checkbox`);
+  checkboxes.forEach(cb => cb.checked = master.checked);
+  
+  // Pluralize for updating button ID
+  const pluralType = type === 'user' ? 'users' : 
+                     (type === 'score' ? 'scores' : 
+                     (type === 'pesan' ? 'pesan' : 'quizzes'));
+  updateBulkDeleteBtn(pluralType);
+}
+
+function updateBulkDeleteBtn(type) {
+  const cbClass = type === 'users' ? 'user-checkbox' : 
+                  (type === 'scores' ? 'score-checkbox' : 
+                  (type === 'pesan' ? 'pesan-checkbox' : 'quiz-checkbox'));
+  const btnId = `btn-bulk-delete-${type}`;
+  
+  const checkedCount = document.querySelectorAll(`.${cbClass}:checked`).length;
+  const btn = document.getElementById(btnId);
+  if (btn) {
+    btn.style.display = checkedCount > 0 ? 'inline-block' : 'none';
+  }
+}
+
+async function bulkDelete(type) {
+  const cbClass = type === 'users' ? 'user-checkbox' : 
+                  (type === 'scores' ? 'score-checkbox' : 
+                  (type === 'pesan' ? 'pesan-checkbox' : 'quiz-checkbox'));
+  const selectedCbs = document.querySelectorAll(`.${cbClass}:checked`);
+  const ids = Array.from(selectedCbs).map(cb => cb.value);
+
+  if (!ids.length) return;
+  if (!confirm(`Hapus ${ids.length} data terpilih secara permanen?`)) return;
+
+  let endpoint = '';
+  if (type === 'users') endpoint = '/users';
+  else if (type === 'scores') endpoint = '/game-scores';
+  else if (type === 'pesan') endpoint = '/pesan';
+  else if (type === 'quizzes') endpoint = '/quizzes';
+
+  let successCount = 0;
+  let failCount = 0;
+
+  for (const id of ids) {
+    try {
+      const res = await fetch(`${BASE}${endpoint}/${id}`, {
+        method: 'DELETE',
+        headers: { 'Accept': 'application/json', 'X-CSRF-TOKEN': CSRF }
+      });
+      if (res.ok) successCount++;
+      else failCount++;
+    } catch (e) {
+      failCount++;
+    }
+  }
+
+  if (successCount > 0) {
+    toast(`Berhasil menghapus ${successCount} data.`);
+  }
+  if (failCount > 0) {
+    toast(`Gagal menghapus ${failCount} data.`, 'error');
+  }
+
+  const masterId = type === 'users' ? 'user-select-all' : 
+                   (type === 'scores' ? 'score-select-all' : 
+                   (type === 'pesan' ? 'pesan-select-all' : 'quiz-select-all'));
+  const master = document.getElementById(masterId);
+  if (master) master.checked = false;
+
+  if (type === 'users') loadUsers();
+  else if (type === 'scores') loadScores();
+  else if (type === 'pesan') loadPesans();
+  else if (type === 'quizzes') loadQuizzes();
 }

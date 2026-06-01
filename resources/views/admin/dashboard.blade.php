@@ -154,17 +154,21 @@
       </div>
       <div class="section-header">
         <h2>All Users</h2>
-        <button class="btn-add" onclick="openUserModal()">+ Add User</button>
+        <div style="display: flex; gap: 10px;">
+          <button class="btn-del" id="btn-bulk-delete-users" style="display: none; padding: 10px 15px; border-radius: 5px; font-weight: 700; cursor: pointer;" onclick="bulkDelete('users')">Hapus Terpilih</button>
+          <button class="btn-add" onclick="openUserModal()">+ Add User</button>
+        </div>
       </div>
       <div class="table-wrap">
         <table>
           <thead>
             <tr>
- <th>ID</th><th>Username</th><th>Email</th><th>Point</th><th>Joined</th><th>Action</th>
+              <th style="width: 40px; text-align: center;"><input type="checkbox" id="user-select-all" onclick="toggleSelectAll(this, 'user')"/></th>
+              <th>ID</th><th>Username</th><th>Email</th><th>Point</th><th>Joined</th><th>Action</th>
             </tr>
           </thead>
           <tbody id="users-tbody">
-            <tr class="loading-row"><td colspan="6">Loading...</td></tr>
+            <tr class="loading-row"><td colspan="7">Loading...</td></tr>
           </tbody>
         </table>
       </div>
@@ -178,17 +182,21 @@
       </div>
       <div class="section-header">
         <h2>All Scores</h2>
-        <button class="btn-add" onclick="openScoreModal()">+ Add Score</button>
+        <div style="display: flex; gap: 10px;">
+          <button class="btn-del" id="btn-bulk-delete-scores" style="display: none; padding: 10px 15px; border-radius: 5px; font-weight: 700; cursor: pointer;" onclick="bulkDelete('scores')">Hapus Terpilih</button>
+          <button class="btn-add" onclick="openScoreModal()">+ Add Score</button>
+        </div>
       </div>
       <div class="table-wrap">
         <table>
           <thead>
             <tr>
+              <th style="width: 40px; text-align: center;"><input type="checkbox" id="score-select-all" onclick="toggleSelectAll(this, 'score')"/></th>
               <th>ID</th><th>Username</th><th>Score</th><th>Best Time</th><th>Date</th><th>Action</th>
             </tr>
           </thead>
           <tbody id="scores-tbody">
-            <tr class="loading-row"><td colspan="6">Loading...</td></tr>
+            <tr class="loading-row"><td colspan="7">Loading...</td></tr>
           </tbody>
         </table>
       </div>
@@ -202,16 +210,18 @@
       </div>
       <div class="section-header">
         <h2>Semua Pesan</h2>
+        <button class="btn-del" id="btn-bulk-delete-pesan" style="display: none; padding: 10px 15px; border-radius: 5px; font-weight: 700; cursor: pointer;" onclick="bulkDelete('pesan')">Hapus Terpilih</button>
       </div>
       <div class="table-wrap">
         <table>
           <thead>
             <tr>
+              <th style="width: 40px; text-align: center;"><input type="checkbox" id="pesan-select-all" onclick="toggleSelectAll(this, 'pesan')"/></th>
               <th>ID</th><th>Nama</th><th>Email</th><th>No. WhatsApp</th><th style="min-width: 250px;">Pesan</th><th>Hubungi via Email</th><th>Tanggal</th><th>Aksi</th>
             </tr>
           </thead>
           <tbody id="pesan-tbody">
-            <tr class="loading-row"><td colspan="8">Loading...</td></tr>
+            <tr class="loading-row"><td colspan="9">Loading...</td></tr>
           </tbody>
         </table>
       </div>
@@ -225,17 +235,21 @@
       </div>
       <div class="section-header">
         <h2>Semua Pertanyaan Kuis</h2>
-        <button class="btn-add" onclick="openQuizModal()">+ Add Quiz</button>
+        <div style="display: flex; gap: 10px;">
+          <button class="btn-del" id="btn-bulk-delete-quizzes" style="display: none; padding: 10px 15px; border-radius: 5px; font-weight: 700; cursor: pointer;" onclick="bulkDelete('quizzes')">Hapus Terpilih</button>
+          <button class="btn-add" onclick="openQuizModal()">+ Add Quiz</button>
+        </div>
       </div>
       <div class="table-wrap">
         <table>
           <thead>
             <tr>
+              <th style="width: 40px; text-align: center;"><input type="checkbox" id="quiz-select-all" onclick="toggleSelectAll(this, 'quiz')"/></th>
               <th>ID</th><th>Tipe Kuis</th><th>Tipe Rintangan</th><th style="min-width: 250px;">Pertanyaan</th><th>Pilihan (Benar)</th><th>Points</th><th>Aksi</th>
             </tr>
           </thead>
           <tbody id="quizzes-tbody">
-            <tr class="loading-row"><td colspan="7">Loading...</td></tr>
+            <tr class="loading-row"><td colspan="8">Loading...</td></tr>
           </tbody>
         </table>
       </div>
