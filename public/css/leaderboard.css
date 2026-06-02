@@ -5,13 +5,13 @@
 
 /* --- HUD & Layout Tokens --- */
 :root {
-  --hud-dark: #2a2622;
-  --hud-charcoal: #3f3a36;
-  --hud-gold: #cbb89d;
-  --hud-silver: #a8a9ad;
-  --hud-bronze: #a0522d;
-  --hud-neon-green: #a7c093;
-  --hud-neon-blue: #a3c4d7;
+  --hud-dark: #36322E;
+  --hud-charcoal: #3F3A36;
+  --hud-gold: #CBB89D;
+  --hud-silver: #D7E3E2;
+  --hud-bronze: #6F6660;
+  --hud-neon-green: #CCD7C3;
+  --hud-neon-blue: #DAE5EA;
   --hud-red: #d17a7a;
   --border-radius-sm: 5px;
 }
@@ -807,7 +807,7 @@
   cursor: pointer;
   text-decoration: none;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(203, 184, 157, 0.2);
+  color: #fff;
 }
 
 .cockpit-return-btn:hover {

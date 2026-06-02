@@ -18,7 +18,7 @@
 
     {{-- ======================== F1 STARTING LIGHTS BOARD ======================== --}}
     <div class="f1-lights-wrapper" id="start-light-board">
-      <div class="f1-lights-title">RACE CONTROL: TELEMETRY TRANSMISSION</div>
+      <div class="f1-lights-title">RACE CONTROL: DATA TRANSMISSION</div>
       <div class="f1-light-grid">
         <div class="f1-light-pillar">
           <div class="f1-light-bulb"></div>
@@ -41,7 +41,6 @@
           <div class="f1-light-bulb"></div>
         </div>
       </div>
-      <div class="f1-lights-status">STAND BY...</div>
     </div>
 
     {{-- ======================== TACTILE TABS SWITCHER ======================== --}}
@@ -79,7 +78,7 @@
                       <p class="cockpit-pilot-name">{{ Auth::user()->username }}</p>
                       <div class="cockpit-status-readout">
                         <span class="readout-indicator"></span>
-                        <span class="readout-text">TELEMETRY ACTIVE · DRS ONLINE</span>
+                        <span class="readout-text">SYSTEM ACTIVE · DRS ONLINE</span>
                       </div>
                     </div>
                   </div>
@@ -106,7 +105,7 @@
             <div class="cockpit-hud-capsule">
               <div class="cockpit-hud-inner">
                 <div class="cockpit-hud-empty">
-                  <p>Telemetry offline — You haven't registered any lap times on the leaderboard yet!</p>
+                  <p>System offline — You haven't registered any lap times on the leaderboard yet!</p>
                   <a href="/simulasi" class="cockpit-return-btn" style="display:inline-flex; float:none;">Launch Simulation</a>
                 </div>
               </div>
@@ -116,7 +115,7 @@
           <div class="cockpit-hud-capsule" style="border-color: rgba(209, 122, 122, 0.25);">
             <div class="cockpit-hud-inner">
               <div class="cockpit-hud-empty">
-                <p>Telemetry system locked — Sign on as a driver to track your real-time ranking!</p>
+                <p>System locked — Sign on as a driver to track your real-time ranking!</p>
                 <a href="/login" class="cockpit-return-btn" style="display:inline-flex; float:none;">Pilot Log On</a>
               </div>
             </div>
@@ -317,7 +316,7 @@
                       <p class="cockpit-pilot-name">{{ Auth::user()->username }}</p>
                       <div class="cockpit-status-readout">
                         <span class="readout-indicator"></span>
-                        <span class="readout-text">TELEMETRY ACTIVE · LAP COUNTER ACTIVE</span>
+                        <span class="readout-text">SYSTEM ACTIVE · LAP COUNTER ACTIVE</span>
                       </div>
                     </div>
                   </div>
@@ -344,7 +343,7 @@
             <div class="cockpit-hud-capsule">
               <div class="cockpit-hud-inner">
                 <div class="cockpit-hud-empty">
-                  <p>Telemetry offline — You haven't registered any lap times on the leaderboard yet!</p>
+                  <p>System offline — You haven't registered any lap times on the leaderboard yet!</p>
                   <a href="/simulasi" class="cockpit-return-btn" style="display:inline-flex; float:none;">Launch Simulation</a>
                 </div>
               </div>
@@ -354,7 +353,7 @@
           <div class="cockpit-hud-capsule" style="border-color: rgba(209, 122, 122, 0.25);">
             <div class="cockpit-hud-inner">
               <div class="cockpit-hud-empty">
-                <p>Telemetry system locked — Sign on as a driver to track your real-time ranking!</p>
+                <p>System locked — Sign on as a driver to track your real-time ranking!</p>
                 <a href="/login" class="cockpit-return-btn" style="display:inline-flex; float:none;">Pilot Log On</a>
               </div>
             </div>
@@ -536,7 +535,6 @@
  */
 document.addEventListener("DOMContentLoaded", function() {
   const bulbs = document.querySelectorAll(".f1-light-bulb");
-  const statusMessage = document.querySelector(".f1-lights-status");
   const lightsPanel = document.getElementById("start-light-board");
   
   if (bulbs.length > 0) {
@@ -561,7 +559,7 @@ document.addEventListener("DOMContentLoaded", function() {
           b.style.boxShadow = "none";
         });
         if (statusMessage) {
-          statusMessage.textContent = "TELEMETRY LINK STABLE";
+          statusMessage.textContent = "LINK STABLE";
           statusMessage.style.color = "var(--hud-gold)";
         }
       }, 1000);

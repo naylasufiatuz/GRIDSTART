@@ -79,6 +79,18 @@ Route::get('/contact', function () {
 });
 Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
 
+Route::get('/privacy-policy', function () {
+    return view('privacy-policy');
+})->name('privacy.policy');
+
+Route::get('/cookie-policy', function () {
+    return view('cookie-policy');
+})->name('cookie.policy');
+
+Route::get('/terms', function () {
+    return view('terms');
+})->name('terms');
+
 Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard')->middleware('auth');
 
 Route::post('/admin/logout', [AuthController::class, 'logout'])->name('admin.logout');

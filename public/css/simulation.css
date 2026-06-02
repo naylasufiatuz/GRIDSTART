@@ -6,19 +6,19 @@
 
 :root {
   /* Brand Vintage Motorsport Palette */
-  --brand-cream: #f7f3ee;
-  --brand-cream-soft: #ede6dc;
-  --brand-taupe-dark: #3f3a36;
-  --brand-taupe-soft: #6b625c;
-  --brand-sage: #cbd7c2;
-  --brand-sage-dark: #8fa382;
-  --brand-accent-race: #cbb89d; /* Signature F1 Gold */
-  --brand-navbar-dark: #2a2622;
+  --brand-cream: #F7F3EE;
+  --brand-cream-soft: #F2ECE5;
+  --brand-taupe-dark: #3F3A36;
+  --brand-taupe-soft: #6F6660;
+  --brand-sage: #CCD7C3;
+  --brand-sage-dark: #D1DDD3;
+  --brand-accent-race: #CBB89D;
+  --brand-navbar-dark: #36322E;
   --brand-brick-red: #cc5a43;   /* Vintage Racing Red */
   
-  --hud-bg-dark: rgba(42, 38, 34, 0.96); /* Deep warm dark taupe glass */
-  --hud-border-gold: #cbb89d;
-  --hud-text-light: #f7f3ee;
+  --hud-bg-dark: rgba(54, 50, 46, 0.96); /* Deep warm dark taupe glass */
+  --hud-border-gold: #CBB89D;
+  --hud-text-light: #F7F3EE;
   
   --font-hud: 'Orbitron', sans-serif;
   --font-body: 'Outfit', sans-serif;

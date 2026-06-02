@@ -15,7 +15,7 @@
     {{-- ======================== HUD PANEL ======================== --}}
     <div id="hud-panel">
         <div class="hud-console-header">
-          <span class="hud-console-title">GRID TELEMETRY</span>
+          <span class="hud-console-title">GRID SYSTEM</span>
         </div>
         <div class="hud-metrics">
             <div class="hud-metric">
@@ -38,7 +38,7 @@
 
     {{-- ======================== ACTION DRAWER (NO EMOJIS) ======================== --}}
     <div id="action-panel">
-        <div class="circle-btn" id="pause-btn" aria-label="Pause telemetry">
+        <div class="circle-btn" id="pause-btn" aria-label="Pause system">
             <svg viewBox="0 0 24 24" width="18" height="18"><rect x="5" y="4" width="4" height="16" fill="currentColor"></rect><rect x="15" y="4" width="4" height="16" fill="currentColor"></rect></svg>
         </div>
     </div>
@@ -82,7 +82,7 @@
 
     <div id="quiz-overlay" class="overlay-bg">
         <div class="modal-card quiz-card">
-            <div class="hud-badge yellow" id="quiz-badge-label">TELEMETRY CHECK</div>
+            <div class="hud-badge yellow" id="quiz-badge-label">SYSTEM CHECK</div>
             <h2 id="quiz-title" class="tech-title">Peringatan!</h2>
             
             <div id="timer-bar-wrap" class="hud-timer-wrap">
