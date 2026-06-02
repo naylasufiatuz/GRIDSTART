@@ -1,4 +1,4 @@
-:root {
+﻿:root {
   --cream-bg: #F7F3EE;
   --cream-soft: #F2ECE5;
   --taupe-dark: #3F3A36;
@@ -17,7 +17,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
 html {
@@ -150,7 +150,7 @@ background: linear-gradient(98deg, #F2ECE5 57.47%, #D1DDD3 72.25%, #D1DDD3 87.02
 
 .navbar-brand__grid,
 .navbar-brand__start {
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Plus Jakarta Sans', sans-serif;
   font-size: 18px;
   font-weight: 800;
   letter-spacing: 0.14em;
@@ -184,7 +184,7 @@ background: linear-gradient(98deg, #F2ECE5 57.47%, #D1DDD3 72.25%, #D1DDD3 87.02
   padding: 10px 22px;
   border: 1.5px solid rgba(255, 255, 255, 0.8);
   background: transparent;
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Plus Jakarta Sans', sans-serif;
   font-size: 12px;
   font-weight: 600;
   letter-spacing: 0.1em;
@@ -254,7 +254,7 @@ background: linear-gradient(98deg, #F2ECE5 57.47%, #D1DDD3 72.25%, #D1DDD3 87.02
 }
 
 .hero-circular-badge svg text {
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Plus Jakarta Sans', sans-serif;
   font-size: 7.2px;
   font-weight: 800;
   letter-spacing: 5.8px;
@@ -287,7 +287,7 @@ background: linear-gradient(98deg, #F2ECE5 57.47%, #D1DDD3 72.25%, #D1DDD3 87.02
 }
 
 .hero-word {
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Plus Jakarta Sans', sans-serif;
   font-size: 80px;
   line-height: 1.1;
   font-weight: 800;
@@ -840,7 +840,7 @@ background: linear-gradient(98deg, #F2ECE5 57.47%, #D1DDD3 72.25%, #D1DDD3 87.02
   font-size: 28px;
   font-weight: 800;
   color: var(--taupe-dark);
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Plus Jakarta Sans', sans-serif;
   letter-spacing: 1px;
   transition: color 0.3s ease, text-shadow 0.3s ease;
 }
@@ -897,7 +897,7 @@ background: linear-gradient(98deg, #F2ECE5 57.47%, #D1DDD3 72.25%, #D1DDD3 87.02
   color: var(--taupe-dark);
   margin-bottom: 6px;
   font-weight: 700;
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
 .td-telemetry-bar-bg {
@@ -940,7 +940,7 @@ background: linear-gradient(98deg, #F2ECE5 57.47%, #D1DDD3 72.25%, #D1DDD3 87.02
   font-size: 8px;
   letter-spacing: 1px;
   color: var(--taupe-soft);
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
 /* BEST TIME */
@@ -950,7 +950,7 @@ background: linear-gradient(98deg, #F2ECE5 57.47%, #D1DDD3 72.25%, #D1DDD3 87.02
   margin-top: 8px;
   position: relative;
   z-index: 2;
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
 /* EMPTY STATE */
@@ -1053,7 +1053,7 @@ background: linear-gradient(98deg, #F2ECE5 57.47%, #D1DDD3 72.25%, #D1DDD3 87.02
   cursor: pointer;
   background: transparent;
   color: var(--taupe-dark);
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Plus Jakarta Sans', sans-serif;
   letter-spacing: 0.05em;
   transition: all 0.2s;
 }
@@ -1351,7 +1351,7 @@ background: linear-gradient(98deg, #F2ECE5 57.47%, #D1DDD3 72.25%, #D1DDD3 87.02
   letter-spacing: 2px;
   cursor: pointer;
   transition: all 0.2s ease;
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
 .btn-other-videos:hover {
@@ -2953,7 +2953,7 @@ transform:translateY(0);
     font-size: 36px;
     font-weight: 800;
     color: #3f3a36;
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Plus Jakarta Sans', sans-serif;
     line-height: 1;
 }
 
@@ -3388,7 +3388,7 @@ transform:translateY(0);
 }
 
 .gs-logo {
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Plus Jakarta Sans', sans-serif;
     font-weight: 700;
     letter-spacing: 2px;
     text-transform: uppercase;
@@ -3748,7 +3748,7 @@ transform:translateY(0);
     border: none;
     font-size: 14px;
     color: var(--taupe-dark);
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Plus Jakarta Sans', sans-serif;
     transition: all 0.3s ease;
     background: var(--cream-soft);
     box-shadow: inset 4px 4px 8px #d9d2c8, inset -4px -4px 8px #ffffff;
@@ -3933,7 +3933,7 @@ select.form-input {
     padding: 14px 20px;
     border-radius: 5px;
     color: var(--taupe-dark);
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: 14px;
     background: var(--cream-soft);
     box-shadow: inset 4px 4px 8px #d9d2c8, inset -4px -4px 8px #ffffff;
@@ -4149,7 +4149,7 @@ select.form-input {
     font-weight: 600;
     color: var(--taupe-dark);
     text-align: left;
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
 .faq-question:hover {
@@ -4373,7 +4373,7 @@ a.roadmap-item:hover {
   font-weight: 600;
   letter-spacing: 0.5px;
   cursor: pointer;
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Plus Jakarta Sans', sans-serif;
   transition: background 0.2s, color 0.2s;
 }
 .expand-btn:hover {
