@@ -66,10 +66,6 @@ Route::get('/roadmap', function () {
     return view('gridstart');
 });
 
-Route::get('/edukasi', function () {
-    return view('edukasi');
-});
-
 Route::get('/simulasi', function () {
     return view('simulation');
 })->middleware('auth');

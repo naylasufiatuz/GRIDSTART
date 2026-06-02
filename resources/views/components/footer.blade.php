@@ -43,7 +43,7 @@
       <h4 class="section-title">Resources</h4>
       <ul class="footer-links">
         <li><a href="/contact">Contact Us</a></li>
-        <li><a href="/edukasi">Edukasi</a></li>
+        <li><a href="/roadmap">Roadmap</a></li>
         <li><a href="/simulasi">Simulasi</a></li>
       </ul>
     </div>
