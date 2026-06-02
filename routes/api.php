@@ -11,6 +11,7 @@ Route::post('/admin/users',        [AdminController::class, 'apiStoreUser']);
 Route::put('/admin/users/{id}',    [AdminController::class, 'apiUpdateUser']);
 Route::delete('/admin/users/{id}', [AdminController::class, 'apiDestroyUser']);
 
+
 // Game Scores
 Route::get('/admin/game-scores',         [AdminController::class, 'apiGameScores']);
 Route::post('/admin/game-scores',        [AdminController::class, 'apiStoreGameScore']);

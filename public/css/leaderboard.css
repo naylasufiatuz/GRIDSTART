@@ -796,9 +796,8 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: linear-gradient(135deg, var(--hud-gold), #dfceb7);
-  color: #1a1715;
-  border: none;
+  background: transparent;
+  border: 1px solid #fff;
   font-family: 'Montserrat', sans-serif;
   font-size: 11px;
   font-weight: 800;
@@ -813,8 +812,7 @@
 
 .cockpit-return-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(203, 184, 157, 0.35);
-  background: #fff;
+  background: var(--hud-dark);
 }
 
 .cockpit-status-readout {
@@ -859,7 +857,7 @@
 }
 
 .cockpit-hud-empty a {
-  color: black;
+  color: #fff;
   font-weight: 700;
   text-decoration: underline;
 }
