@@ -1,4 +1,4 @@
-﻿/* ==========================================================================
+/* ==========================================================================
    GRIDSTART WARM VINTAGE MOTORSPORT HUD - SIMULATION CSS
    Cohesive warm cream, sage-green, gold, and dark taupe aesthetic.
    No sci-fi neon glow, styled to look classic, tactile, and hand-built.
@@ -50,14 +50,14 @@ canvas {
   top: 25px; 
   left: 25px; 
   z-index: 100;
-  background: var(--hud-bg-dark);
+  background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(14px); 
   -webkit-backdrop-filter: blur(14px);
   border: 2px solid var(--brand-accent-race);
   border-radius: var(--border-radius-sm);
   padding: 16px 20px;
-  box-shadow: 0 10px 25px rgba(63, 58, 54, 0.25);
-  color: var(--hud-text-light); 
+  box-shadow: 0 10px 25px rgba(63, 58, 54, 0.12);
+  color: var(--brand-taupe-dark); 
   min-width: 220px;
 }
 
@@ -65,7 +65,7 @@ canvas {
   display: flex; 
   justify-content: space-between; 
   align-items: center;
-  border-bottom: 1px solid rgba(203, 184, 157, 0.2);
+  border-bottom: 1px solid rgba(63, 58, 54, 0.08);
   padding-bottom: 8px; 
   margin-bottom: 12px;
 }
@@ -94,8 +94,8 @@ canvas {
   font-size: 9px; 
   font-weight: 700; 
   letter-spacing: 1px;
-  color: var(--brand-cream-soft); 
-  opacity: 0.65;
+  color: var(--brand-taupe-soft); 
+  opacity: 0.85;
   margin-bottom: 2px;
   text-transform: uppercase;
 }
@@ -104,7 +104,7 @@ canvas {
   font-family: var(--font-hud);
   font-size: 18px; 
   font-weight: 800;
-  color: var(--hud-text-light);
+  color: var(--brand-taupe-dark);
 }
 
 .hud-unit { 
@@ -137,10 +137,10 @@ canvas {
 .gas-bar-container { 
   width: 100%; 
   height: 8px; 
-  background: rgba(0, 0, 0, 0.3); 
+  background: rgba(63, 58, 54, 0.08); 
   border-radius: 2px; 
   overflow: hidden; 
-  border: 1px solid rgba(255, 255, 255, 0.05); 
+  border: 1px solid rgba(63, 58, 54, 0.05); 
 }
 
 .gas-bar-fill { 
@@ -169,15 +169,15 @@ canvas {
   width: 52px; 
   height: 52px; 
   border-radius: var(--border-radius-sm); 
-  background: var(--hud-bg-dark); 
+  background: #ffffff; 
   backdrop-filter: blur(10px); 
   border: 1.5px solid var(--brand-accent-race);
   display: flex; 
   justify-content: center; 
   align-items: center;
-  color: var(--hud-text-light); 
+  color: var(--brand-taupe-dark); 
   cursor: pointer;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2); 
+  box-shadow: 0 6px 18px rgba(63, 58, 54, 0.12); 
   transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
@@ -354,7 +354,6 @@ canvas {
 
 .hud-badge.yellow {
   background: rgba(203, 184, 157, 0.12);
-  color: var(--brand-taupe-dark);
   border: 1px solid var(--brand-accent-race);
 }
 
@@ -624,7 +623,7 @@ canvas {
 #saving-status {
   font-family: var(--font-body);
   font-size: 13px; 
-  color: var(--brand-taupe-soft); 
+  color: var(--brand-taupe-dark); 
   margin: 0; 
   line-height: 1.5; 
   text-align: center;

@@ -844,7 +844,7 @@
                         body: JSON.stringify({ score: score, best_time: bestTimeStr })
                     }).then(res => res.json()).then(data => {
                         document.getElementById('saving-status').innerHTML = `Data tersimpan!<br>Waktu kamu: <b>${bestTimeStr}</b>`;
-                        document.getElementById('saving-status').style.color = "var(--brand-sage-dark)";
+                        document.getElementById('saving-status').style.color = "var(--brand-taupe-dark)"; 
                         document.getElementById('close-finish-btn').style.display = "block";
                     }).catch(err => {
                         document.getElementById('saving-status').innerText = "Gagal menyimpan skor ke server.";
