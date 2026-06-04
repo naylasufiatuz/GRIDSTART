@@ -325,7 +325,7 @@
             } else if (percentage < 100) {
                 gaugeStatus.innerHTML = '<span style="color:#f59e0b; font-weight:700;">Inspeksi Berlanjut</span>';
             } else {
-                gaugeStatus.innerHTML = '<span style="color:#10b981; font-weight:900; animation: pulseGlow 1s infinite alternate;">READY TO LAUNCH 🚀</span>';
+                gaugeStatus.innerHTML = '<span style="color:#10b981; font-weight:900; animation: pulseGlow 1s infinite alternate;">READY TO LAUNCH</span>';
             }
         }
 

@@ -1,4 +1,4 @@
-﻿:root {
+:root {
   --cream-bg: #F7F3EE;
   --cream-soft: #F2ECE5;
   --taupe-dark: #3F3A36;
@@ -11,6 +11,12 @@
   --nav-text-hover: #F7F3EE;
   --mint-grey: #D1DDD3;
   --blue-grey: #DAE5EA;
+  --hud-dark: #36322E;
+  --hud-charcoal: #3F3A36;
+  --hud-gold: #CBB89D;
+  --hud-silver: #D7E3E2;
+  --hud-bronze: #6F6660;
+  --border-radius-sm: 5px;
 }
 
 * {
@@ -189,9 +195,9 @@ background: linear-gradient(98deg, #F2ECE5 57.47%, #D1DDD3 72.25%, #D1DDD3 87.02
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  text-decoration: none;
   color: #fff;
   transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+  text-decoration: underline;
 }
 
 .navbar-cta:hover {
@@ -521,436 +527,261 @@ background: linear-gradient(98deg, #F2ECE5 57.47%, #D1DDD3 72.25%, #D1DDD3 87.02
   color: rgba(247, 243, 238, 0.5);
 }
 
-/* PODIUM GRID & PERSPECTIVE STAGE */
-.top-drivers-podium {
+/* ==========================================================================
+   3. STAGGERED F1 PODIUM GRID (POLE LINEUP)
+   ========================================================================== */
+.lb-grid-podium {
   display: grid;
   grid-template-columns: 1fr 1.15fr 1fr;
-  gap: 28px;
+  gap: 24px;
   align-items: end;
-  margin-bottom: 50px;
-  perspective: 1200px;
+  margin-bottom: 60px;
+  perspective: 1000px;
 }
 
-/* FLAT SPEED STAGE CARD */
-.td-card {
+.podium-slot {
   position: relative;
-  z-index: 1;
   background: #ffffff;
-  border: 1.5px solid rgba(16, 16, 16, 0.08);
-  border-radius: 5px;
-  padding: 38px 24px 30px;
+  border: 1.5px solid rgba(63, 58, 54, 0.08);
+  border-radius: var(--border-radius-sm);
+  padding: 30px 20px 24px 20px;
   text-align: center;
-  overflow: hidden;
-  height: 100%;
-  box-sizing: border-box;
+  transition: all 0.5s cubic-bezier(0.2, 1, 0.2, 1);
   display: flex;
   flex-direction: column;
   align-items: center;
-  transition: transform 0.6s cubic-bezier(0.2, 1, 0.2, 1),
-              filter 0.6s cubic-bezier(0.2, 1, 0.2, 1),
-              opacity 0.6s cubic-bezier(0.2, 1, 0.2, 1),
-              box-shadow 0.6s cubic-bezier(0.2, 1, 0.2, 1),
-              border-color 0.4s ease;
-  transform-style: preserve-3d;
 }
 
-/* RANK-SPECIFIC ELEVATION, BORDERS & DESKTOP ORDER */
-.td-card.p1 { 
-  border-color: rgba(212, 175, 55, 0.25); 
-  order: 2; 
-  transform: translateY(-30px); 
-}
-.td-card.p2 { 
-  border-color: rgba(168, 169, 173, 0.25); 
-  order: 3; 
-  transform: translateY(-15px); 
-}
-.td-card.p3 { 
-  border-color: rgba(160, 82, 45, 0.25); 
-  order: 1; 
-  transform: translateY(0); 
-}
-
-/* SPECTACULAR PERSPECTIVE HOVER TILT WITH RELATIVE HEIGHTS */
-.td-card:hover {
-  z-index: 5;
-  border-color: rgba(16, 16, 16, 0.15);
-}
-
-.td-card.p1:hover {
-  transform: translateY(-45px) scale(1.06) rotateX(5deg) rotateY(-1deg);
-  border-color: #D4AF37;
-  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.08),
-              0 0 35px rgba(212, 175, 55, 0.25);
-}
-
-.td-card.p2:hover {
-  transform: translateY(-30px) scale(1.05) rotateX(5deg) rotateY(-1deg);
-  border-color: #a8a9ad;
-  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.08),
-              0 0 35px rgba(86, 114, 140, 0.25);
-}
-
-.td-card.p3:hover {
-  transform: translateY(-15px) scale(1.05) rotateX(5deg) rotateY(-1deg);
-  border-color: #A0522D;
-  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.08),
-              0 0 35px rgba(160, 82, 45, 0.25);
-}
-
-/* CARD FOCUS ISOLATION: Dim other cards when one is hovered */
-.top-drivers-podium:has(.td-card:hover) .td-card:not(:hover) {
-  opacity: 0.38;
-  filter: blur(2px) grayscale(0.2);
-  transform: scale(0.96) translateY(5px);
-}
-
-/* RADAR MATRIX CONSOLE BACKING */
-.td-hud-grid {
-  position: absolute;
-  inset: 0;
-  background-image: 
-    linear-gradient(rgba(16, 16, 16, 0.015) 1px, transparent 1px),
-    radial-gradient(circle at center top, rgba(203, 184, 157, 0.04), transparent 70%);
-  background-size: 8px 8px;
-  pointer-events: none;
-  z-index: 0;
-}
-
-/* CARD GLOW (INNER HOVER EFFECT) */
-.td-card-glow {
-  position: absolute;
-  inset: 0;
-  opacity: 0;
-  transition: opacity 0.5s ease;
-  pointer-events: none;
-  z-index: 0;
-}
-
-.td-card:hover .td-card-glow {
-  opacity: 1;
-}
-
-.td-card.p1 .td-card-glow {
-  background: radial-gradient(circle at 50% 0%, rgba(212, 175, 55, 0.15), transparent 70%);
-}
-
-.td-card.p2 .td-card-glow {
-  background: radial-gradient(circle at 50% 0%, rgba(86, 114, 140, 0.12), transparent 70%);
-}
-
-.td-card.p3 .td-card-glow {
-  background: radial-gradient(circle at 50% 0%, rgba(160, 82, 45, 0.12), transparent 70%);
-}
-
-/* SHINE SWEEP ON HOVER */
-.td-card-shine {
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 70%;
-  height: 100%;
-  background: linear-gradient(105deg, transparent 30%, rgba(255, 255, 255, 0.15) 50%, transparent 70%);
-  pointer-events: none;
+/* Perspective Slant offsets matching F1 positions */
+.podium-slot.p1 {
+  order: 2;
+  border-color: rgba(203, 184, 157, 0.3);
+  box-shadow: 0 10px 30px rgba(203, 184, 157, 0.1);
+  transform: translateY(-25px);
   z-index: 3;
 }
 
-.td-card:hover .td-card-shine {
-  animation: shineSweep 0.9s cubic-bezier(0.3, 1, 0.2, 1) forwards;
-}
-
-@keyframes shineSweep {
-  0%   { left: -120%; }
-  100% { left: 160%; }
-}
-
-/* CROWN FOR CHAMPION */
-.td-crown {
-  width: 40px;
-  height: 40px;
-  margin-bottom: 6px;
-  color: #D4AF37;
-  animation: crownBob 2s ease-in-out infinite;
-  filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.6));
-  position: relative;
+.podium-slot.p2 {
+  order: 1;
+  transform: translateY(-5px) rotateY(4deg);
   z-index: 2;
 }
 
-.td-crown svg {
-  width: 100%;
-  height: 100%;
+.podium-slot.p3 {
+  order: 3;
+  transform: translateY(10px) rotateY(-4deg);
+  z-index: 1;
 }
 
-@keyframes crownBob {
-  0%, 100% { transform: translateY(0) rotate(0deg); }
-  50%      { transform: translateY(-8px) rotate(2deg); }
+/* Background HUD scanner elements */
+.podium-hud-bg {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    linear-gradient(rgba(63, 58, 54, 0.01) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(63, 58, 54, 0.01) 1px, transparent 1px);
+  background-size: 15px 15px;
+  opacity: 0.8;
+  pointer-events: none;
+  border-radius: var(--border-radius-sm);
+  z-index: 0;
 }
 
-/* RANK BADGE */
-.td-rank-badge {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 16px;
-  font-size: 14px;
-  font-weight: 800;
-  color: var(--taupe-dark);
-  background: rgba(16, 16, 16, 0.06);
-  border: 1.5px solid rgba(16, 16, 16, 0.1);
-  position: relative;
+.podium-halo {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.podium-slot:hover .podium-halo {
+  opacity: 1;
+}
+
+.podium-slot.p1 .podium-halo { background: radial-gradient(circle at 50% 0%, rgba(203, 184, 157, 0.12), transparent 70%); }
+.podium-slot.p2 .podium-halo { background: radial-gradient(circle at 50% 0%, rgba(168, 169, 173, 0.1), transparent 70%); }
+.podium-slot.p3 .podium-halo { background: radial-gradient(circle at 50% 0%, rgba(160, 82, 45, 0.1), transparent 70%); }
+
+/* Interactive Hover Scales */
+.podium-slot:hover {
+  border-color: var(--hud-dark);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+}
+
+.podium-slot.p1:hover {
+  transform: translateY(-35px) scale(1.04);
+  border-color: var(--hud-gold);
+  box-shadow: 0 20px 45px rgba(203, 184, 157, 0.25);
+}
+
+.podium-slot.p2:hover {
+  transform: translateY(-12px) scale(1.03) rotateY(0);
+}
+
+.podium-slot.p3:hover {
+  transform: translateY(2px) scale(1.03) rotateY(0);
+}
+
+/* Card Focus Dimming */
+.lb-grid-podium:has(.podium-slot:hover) .podium-slot:not(:hover) {
+  opacity: 0.45;
+  filter: blur(1px) grayscale(0.2);
+}
+
+/* Position Badge */
+.slot-pos-badge {
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  color: var(--taupe-soft);
+  text-transform: uppercase;
+  background: rgba(63, 58, 54, 0.05);
+  border: 1px solid rgba(63, 58, 54, 0.1);
+  padding: 3px 10px;
+  border-radius: 3px;
+  margin-bottom: 18px;
   z-index: 2;
-  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 
-.td-rank-badge.gold-badge {
-  background: linear-gradient(135deg, #D4AF37, #fac755);
+.podium-slot.p1 .slot-pos-badge {
+  background: linear-gradient(135deg, var(--hud-gold), #fff);
   color: #2a1e00;
   border: none;
-  box-shadow: 0 0 15px rgba(212, 175, 55, 0.4), inset 0 2px 4px rgba(255,255,255,0.4);
+  box-shadow: 0 0 10px rgba(203, 184, 157, 0.3);
 }
 
-.td-rank-badge.silver-badge {
-  background: linear-gradient(135deg, #a8a9ad, #d1d5db);
-  color: #1f2937;
-  border: none;
-  box-shadow: 0 0 12px rgba(168, 169, 173, 0.3), inset 0 2px 4px rgba(255,255,255,0.4);
-}
-
-.td-rank-badge.bronze-badge {
-  background: linear-gradient(135deg, #A0522D, #ff8957);
-  color: #fff;
-  border: none;
-  box-shadow: 0 0 12px rgba(160, 82, 45, 0.3);
-}
-
-/* AVATAR & HUD DIGITAL SCANNER */
-.td-avatar {
-  width: 76px;
-  height: 76px;
+/* Avatar Frame & Scan Rings */
+.slot-avatar-frame {
+  width: 72px;
+  height: 72px;
   border-radius: 50%;
-  background: rgba(16, 16, 16, 0.03);
-  color: var(--taupe-dark);
+  background: rgba(63, 58, 54, 0.03);
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
   margin-bottom: 18px;
-  border: 2px solid rgba(16, 16, 16, 0.08);
-  position: relative;
   z-index: 2;
-  transition: transform 0.4s cubic-bezier(0.2, 1, 0.2, 1), border-color 0.4s ease;
+  border: 2.5px solid rgba(63, 58, 54, 0.1);
 }
 
-.td-avatar-text {
-  font-size: 20px;
+.podium-slot.p1 .slot-avatar-frame { border-color: var(--hud-gold); background: rgba(203, 184, 157, 0.08); }
+.podium-slot.p2 .slot-avatar-frame { border-color: var(--hud-silver); background: rgba(168, 169, 173, 0.08); }
+.podium-slot.p3 .slot-avatar-frame { border-color: var(--hud-bronze); background: rgba(160, 82, 45, 0.08); }
+
+.slot-avatar-initials {
+  font-size: 18px;
   font-weight: 800;
-  letter-spacing: 2px;
-  position: relative;
-  z-index: 2;
+  letter-spacing: 1px;
+  color: var(--taupe-dark);
 }
 
-.td-card:hover .td-avatar {
-  transform: scale(1.1);
-  border-color: rgba(16, 16, 16, 0.2);
-}
+.podium-slot.p1 .slot-avatar-initials { color: #574d3f; }
 
-.td-avatar.gold {
-  background: rgba(212, 175, 55, 0.15);
-  color: #633806;
-  border-color: rgba(212, 175, 55, 0.3);
-}
-
-.td-avatar.bronze {
-  background: rgba(160, 82, 45, 0.15);
-  color: #712B13;
-  border-color: rgba(160, 82, 45, 0.3);
-}
-
-/* SCANNER ROTATING RING */
-.td-hud-scanner {
+/* Dashboard Ring Rotators */
+.slot-telemetry-ring {
   position: absolute;
   inset: -6px;
   border-radius: 50%;
-  border: 1px dashed rgba(16, 16, 16, 0.15);
-  animation: hudScan 15s linear infinite;
+  border: 1.5px dashed rgba(63, 58, 54, 0.15);
+  animation: slotRingRotate 18s linear infinite;
   pointer-events: none;
 }
 
-.td-avatar.gold .td-hud-scanner {
-  border-color: rgba(212, 175, 55, 0.45);
-}
+.podium-slot.p1 .slot-telemetry-ring { border-color: rgba(203, 184, 157, 0.45); }
+.podium-slot.p2 .slot-telemetry-ring { border-color: rgba(168, 169, 173, 0.4); }
+.podium-slot.p3 .slot-telemetry-ring { border-color: rgba(160, 82, 45, 0.4); }
 
-.td-avatar.bronze .td-hud-scanner {
-  border-color: rgba(160, 82, 45, 0.4);
-}
-
-@keyframes hudScan {
-  0%   { transform: rotate(0deg); }
+@keyframes slotRingRotate {
   100% { transform: rotate(360deg); }
 }
 
-/* PULSING AVATAR RING ON HOVER */
-.td-avatar-ring {
+/* Scanner HUD laser sweep line */
+.slot-avatar-scanner {
   position: absolute;
-  inset: -6px;
-  border-radius: 50%;
-  border: 2px solid transparent;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--hud-gold);
   opacity: 0;
-  transition: opacity 0.4s ease;
+  z-index: 3;
+  pointer-events: none;
 }
 
-.td-card:hover .td-avatar-ring {
-  opacity: 1;
-  animation: ringPulse 1.5s ease-in-out infinite;
+.podium-slot.p1 .slot-avatar-scanner { background: var(--hud-gold); }
+.podium-slot.p2 .slot-avatar-scanner { background: var(--hud-silver); }
+.podium-slot.p3 .slot-avatar-scanner { background: var(--hud-bronze); }
+
+.podium-slot:hover .slot-avatar-scanner {
+  animation: slotHUDScan 1.8s ease-in-out infinite;
 }
 
-.td-card.p1:hover .td-avatar-ring { border-color: rgba(212, 175, 55, 0.6); }
-.td-card.p2:hover .td-avatar-ring { border-color: rgba(86, 114, 140, 0.6); }
-.td-card.p3:hover .td-avatar-ring { border-color: rgba(160, 82, 45, 0.6); }
-
-@keyframes ringPulse {
-  0%, 100% { transform: scale(1); opacity: 0.8; }
-  50%      { transform: scale(1.15); opacity: 0.2; }
+@keyframes slotHUDScan {
+  0% { top: 0%; opacity: 0; }
+  10% { opacity: 0.8; }
+  90% { opacity: 0.8; }
+  100% { top: 100%; opacity: 0; }
 }
 
-/* DRIVER NAME */
-.td-name {
-  font-size: 17px;
-  font-weight: 700;
+/* Driver Standing Info */
+.slot-driver-name {
+  font-size: 15px;
+  font-weight: 800;
   color: var(--taupe-dark);
-  margin-bottom: 12px;
-  position: relative;
+  margin-bottom: 6px;
   z-index: 2;
   letter-spacing: 0.5px;
 }
 
-/* SCORE WRAP */
-.td-score-wrap {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2px;
-  position: relative;
+.slot-score-value {
+  font-size: 24px;
+  font-weight: 900;
+  color: var(--hud-dark);
+  letter-spacing: 0.5px;
   z-index: 2;
 }
 
-.td-score-value {
-  font-size: 28px;
-  font-weight: 800;
-  color: var(--taupe-dark);
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  letter-spacing: 1px;
-  transition: color 0.3s ease, text-shadow 0.3s ease;
-}
-
-.td-card:hover .td-score-value {
-  text-shadow: 0 0 15px rgba(16, 16, 16, 0.1);
-}
-
-.td-card.p1 .td-score-value {
-  color: #8c6700;
-}
-
-.td-card.p1:hover .td-score-value {
-  text-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
-}
-
-.td-card.p2 .td-score-value {
-  color: #235782;
-}
-
-.td-card.p2:hover .td-score-value {
-  text-shadow: 0 0 20px rgba(86, 114, 140, 0.3);
-}
-
-.td-card.p3 .td-score-value {
-  color: #8c3b16;
-}
-
-.td-card.p3:hover .td-score-value {
-  text-shadow: 0 0 20px rgba(160, 82, 45, 0.3);
-}
-
-.td-score-label {
-  font-size: 9px;
-  letter-spacing: 3px;
-  color: var(--taupe-dark);
+.slot-sub-info {
+  font-size: 11px;
+  color: var(--taupe-soft);
+  margin-top: 4px;
+  z-index: 2;
   font-weight: 600;
 }
 
-/* F1-STYLE TELEMETRY PERFORMANCE METER BAR */
-.td-telemetry-box {
-  width: 100%;
-  margin: 22px 0 8px;
-  text-align: left;
-  position: relative;
-  z-index: 2;
-  border-top: 1px solid rgba(16, 16, 16, 0.05);
-  padding-top: 14px;
+.podium-crown-svg {
+  width: 32px;
+  height: 32px;
+  color: var(--hud-gold);
+  margin-bottom: 2px;
+  filter: drop-shadow(0 0 6px rgba(203, 184, 157, 0.6));
+  animation: crownBobbing 2.5s ease-in-out infinite;
 }
 
-.td-telemetry-label {
-  font-size: 8px;
-  letter-spacing: 2px;
-  color: var(--taupe-dark);
-  margin-bottom: 6px;
-  font-weight: 700;
-  font-family: 'Plus Jakarta Sans', sans-serif;
+@keyframes crownBobbing {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
 }
 
-.td-telemetry-bar-bg {
-  width: 100%;
-  height: 5px;
-  background: rgba(16, 16, 16, 0.04);
-  border-radius: 5px;
-  overflow: hidden;
-  position: relative;
+/* Custom space mono typography */
+.slot-pos-badge,
+.slot-score-value {
+  font-family: 'Space Mono', monospace;
+  font-variant-numeric: tabular-nums;
 }
 
-.td-telemetry-bar-fill {
-  height: 100%;
-  border-radius: 5px;
-  background: linear-gradient(90deg, var(--taupe-soft), var(--taupe-dark));
-  box-shadow: 0 0 6px rgba(16, 16, 16, 0.1);
-  width: 0; /* Dynamic inline style handles the target percentage */
-  transition: width 1.5s cubic-bezier(0.1, 1, 0.1, 1);
-}
-
-.td-card.p1 .td-telemetry-bar-fill {
-  background: linear-gradient(90deg, #D4AF37, #fac755);
-  box-shadow: 0 0 8px rgba(212, 175, 55, 0.4);
-}
-
-.td-card.p2 .td-telemetry-bar-fill {
-  background: linear-gradient(90deg, #a8a9ad, #56728c);
-  box-shadow: 0 0 8px rgba(86, 114, 140, 0.4);
-}
-
-.td-card.p3 .td-telemetry-bar-fill {
-  background: linear-gradient(90deg, #A0522D, #c46238);
-  box-shadow: 0 0 8px rgba(160, 82, 45, 0.4);
-}
-
-.td-telemetry-meta {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 6px;
-  font-size: 8px;
-  letter-spacing: 1px;
-  color: var(--taupe-soft);
-  font-family: 'Plus Jakarta Sans', sans-serif;
-}
-
-/* BEST TIME */
-.td-time {
-  font-size: 12px;
-  color: var(--taupe-dark);
-  margin-top: 8px;
-  position: relative;
-  z-index: 2;
-  font-family: 'Plus Jakarta Sans', sans-serif;
+@media (max-width: 900px) {
+  .lb-grid-podium {
+    gap: 15px;
+  }
+  .podium-slot {
+    padding: 24px 15px 20px 15px;
+  }
+  .slot-score-value {
+    font-size: 20px;
+  }
 }
 
 /* EMPTY STATE */
@@ -1022,15 +853,24 @@ background: linear-gradient(98deg, #F2ECE5 57.47%, #D1DDD3 72.25%, #D1DDD3 87.02
 @media (max-width: 768px) {
   .top-drivers-section { padding: 70px 20px; }
   .top-drivers-title   { font-size: 32px; }
-  .top-drivers-podium  { grid-template-columns: 1fr; gap: 20px; }
   
-  .td-card.p1 { order: 1; transform: translateY(0); }
-  .td-card.p2 { order: 2; transform: translateY(0); }
-  .td-card.p3 { order: 3; transform: translateY(0); }
+  .lb-grid-podium {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .podium-slot.p1,
+  .podium-slot.p2,
+  .podium-slot.p3 {
+    order: unset;
+    transform: none !important;
+  }
+  .podium-slot:hover {
+    transform: translateY(-4px) !important;
+  }
   
-  /* Disable 3D transforms on mobile for performance */
-  .td-card:hover {
-    transform: translateY(-8px) scale(1.02);
+  .lb-grid-podium:has(.podium-slot:hover) .podium-slot:not(:hover) {
+    opacity: 1;
+    filter: none;
   }
 }
 
@@ -4121,6 +3961,7 @@ select.form-input {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 24px;
+    align-items: start;
 }
 
 .faq-item {

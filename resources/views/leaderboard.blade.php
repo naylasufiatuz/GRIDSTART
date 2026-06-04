@@ -95,7 +95,7 @@
                 </div>
                 <div class="cockpit-hud-actions">
                   <a href="/simulasi" class="cockpit-return-btn">
-                    <span>Return to Grid</span>
+                    <span>Return to Simulation</span>
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
                   </a>
                 </div>
@@ -555,7 +555,7 @@ document.addEventListener("DOMContentLoaded", function() {
       // After another 1s, turn green lights off to clean cockpit console view
       setTimeout(function() {
         bulbs.forEach(b => {
-          b.style.background = "#221d1b";
+          b.style.background = "#d9d2c9";
           b.style.boxShadow = "none";
         });
         if (statusMessage) {

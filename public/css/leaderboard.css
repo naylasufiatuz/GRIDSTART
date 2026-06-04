@@ -36,12 +36,7 @@
 .f1-lights-wrapper {
   max-width: 600px;
   margin: 0 auto 50px auto;
-  background: #1a1715;
-  border: 1.5px solid rgba(203, 184, 157, 0.15);
-  border-radius: var(--border-radius-sm);
   padding: 20px 30px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15),
-              inset 0 1px 3px rgba(255, 255, 255, 0.05);
   position: relative;
   overflow: hidden;
   text-align: center;
@@ -51,13 +46,13 @@
 
 @keyframes lightsPanelCollapse {
   0% { margin-bottom: 50px; opacity: 1; }
-  100% { margin-bottom: 25px; border-color: rgba(203, 184, 157, 0.08); background: rgba(26, 23, 21, 0.4); }
+  100% { margin-bottom: 25px; }
 }
 
 .f1-lights-title {
   font-size: 10px;
   letter-spacing: 3px;
-  color: var(--hud-gold);
+  color: var(--hud-dark);
   text-transform: uppercase;
   margin-bottom: 15px;
   font-weight: 800;
@@ -75,10 +70,10 @@
 .f1-light-pillar {
   display: flex;
   flex-direction: column;
-  background: #100e0d;
+  background: #f0ece6;
   padding: 8px 10px;
   border-radius: 4px;
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(63, 58, 54, 0.08);
   gap: 8px;
 }
 
@@ -86,9 +81,9 @@
   width: 24px;
   height: 24px;
   border-radius: 50%;
-  background: #221d1b;
+  background: #d9d2c9;
   position: relative;
-  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.8);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.15);
   transition: background 0.1s ease;
 }
 
@@ -100,9 +95,9 @@
 .f1-light-pillar:nth-child(5) .f1-light-bulb { animation: f1RedLight 5s infinite; animation-delay: 2.5s; }
 
 @keyframes f1RedLight {
-  0%, 8% { background: #221d1b; box-shadow: none; }
+  0%, 8% { background: #d9d2c9; box-shadow: none; }
   10%, 50% { background: #ff1e1e; box-shadow: 0 0 15px #ff1e1e, 0 0 30px #ff1e1e, inset 0 2px 2px rgba(255, 255, 255, 0.4); }
-  52%, 100% { background: #1f3f1e; box-shadow: none; } /* Go green/off when lights out */
+  52%, 100% { background: #d9d2c9; box-shadow: none; } /* Go green/off when lights out */
 }
 
 /* Green Action Message */
@@ -133,17 +128,17 @@
 
 .lb-hud-tabs {
   display: flex;
-  background: rgba(42, 38, 34, 0.95);
-  border: 1.5px solid rgba(203, 184, 157, 0.25);
+  background: #ffffff;
+  border: 1.5px solid rgba(63, 58, 54, 0.08);
   padding: 4px;
   position: relative;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
 }
 
 .lb-hud-tab {
   border: none;
   background: transparent;
-  color: rgba(247, 243, 238, 0.6);
+  color: var(--taupe-soft);
   font-family: 'Plus Jakarta Sans', sans-serif;
   font-size: 11px;
   font-weight: 800;
@@ -157,13 +152,13 @@
 }
 
 .lb-hud-tab:hover {
-  color: #fff;
+  color: var(--taupe-dark);
 }
 
 .lb-hud-tab.active {
   color: #1a1715;
   background: var(--hud-gold);
-  box-shadow: 0 4px 10px rgba(203, 184, 157, 0.3);
+  box-shadow: 0 4px 10px rgba(203, 184, 157, 0.2);
   font-weight: 900;
 }
 
@@ -654,22 +649,22 @@
    6. STEERING WHEEL COCKPIT HUD (PERSONAL STANDING CAPSULE)
    ========================================================================== */
 .cockpit-hud-capsule {
-  background: var(--hud-dark);
-  border: 1.5px solid rgba(203, 184, 157, 0.25);
+  background: #ffffff;
+  border: 1.5px solid rgba(63, 58, 54, 0.08);
   border-radius: var(--border-radius-sm);
   padding: 24px 30px;
   margin-bottom: 40px;
-  color: #fff;
+  color: var(--taupe-dark);
   position: relative;
   overflow: hidden;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
 }
 
 .cockpit-hud-capsule::before {
   content: '';
   position: absolute;
   inset: 0;
-  background-image: radial-gradient(circle at 100% 150%, rgba(203, 184, 157, 0.1), transparent 60%);
+  background-image: radial-gradient(circle at 100% 150%, rgba(203, 184, 157, 0.08), transparent 60%);
   z-index: 0;
   pointer-events: none;
 }
@@ -692,9 +687,9 @@
   width: 90px;
   height: 90px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.03);
+  background: rgba(63, 58, 54, 0.03);
   border: 3px solid rgba(203, 184, 157, 0.3);
-  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.5), 0 0 15px rgba(203, 184, 157, 0.1);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05), 0 0 15px rgba(203, 184, 157, 0.15);
   flex-shrink: 0;
   position: relative;
 }
@@ -704,7 +699,7 @@
   position: absolute;
   inset: -6px;
   border-radius: 50%;
-  border: 1px dashed rgba(255, 255, 255, 0.15);
+  border: 1px dashed rgba(63, 58, 54, 0.15);
   animation: slotRingRotate 25s linear infinite;
 }
 
@@ -718,7 +713,7 @@
 .cockpit-rank-label {
   font-size: 9px;
   letter-spacing: 1px;
-  color: rgba(255, 255, 255, 0.4);
+  color: var(--taupe-soft);
   text-transform: uppercase;
   margin-top: 4px;
 }
@@ -752,14 +747,14 @@
   font-size: 17px;
   font-weight: 800;
   letter-spacing: 0.5px;
-  color: #fff;
+  color: var(--taupe-dark);
 }
 
 .cockpit-pilot-stats {
   margin-top: 14px;
   display: flex;
   gap: 20px;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-top: 1px solid rgba(63, 58, 54, 0.08);
   padding-top: 14px;
 }
 
@@ -772,7 +767,7 @@
 .cockpit-stat-label {
   font-size: 9px;
   letter-spacing: 1px;
-  color: rgba(255, 255, 255, 0.45);
+  color: var(--taupe-soft);
   text-transform: uppercase;
   font-weight: 700;
 }
@@ -797,7 +792,7 @@
   align-items: center;
   gap: 8px;
   background: transparent;
-  border: 1px solid #fff;
+  border: 1.5px solid rgba(63, 58, 54, 0.4);
   font-family: 'Plus Jakarta Sans', sans-serif;
   font-size: 11px;
   font-weight: 800;
@@ -807,12 +802,14 @@
   cursor: pointer;
   text-decoration: none;
   transition: all 0.3s ease;
-  color: #fff;
+  color: var(--taupe-dark);
 }
 
 .cockpit-return-btn:hover {
   transform: translateY(-2px);
-  background: var(--hud-dark);
+  background: var(--taupe-dark);
+  color: #ffffff;
+  border-color: var(--taupe-dark);
 }
 
 .cockpit-status-readout {
@@ -838,7 +835,7 @@
 .readout-text {
   font-size: 9px;
   letter-spacing: 1px;
-  color: rgba(255, 255, 255, 0.4);
+  color: var(--taupe-soft);
   text-transform: uppercase;
   font-weight: 800;
 }
@@ -852,13 +849,12 @@
 
 .cockpit-hud-empty p {
   font-size: 13px;
-
   margin-bottom: 12px;
 }
 
 .cockpit-hud-empty a {
-  color: #fff;
-  font-weight: 700;
+  color: var(--taupe-dark);
+  font-weight: 600;
   text-decoration: underline;
 }
 

@@ -175,134 +175,69 @@
     @endphp
 
     @if($topDrivers->count() > 0)
-      @php
-        $maxScore = $topDrivers[0]->score > 0 ? $topDrivers[0]->score : 1;
-      @endphp
-    <div class="top-drivers-podium">
+    <div class="lb-grid-podium">
 
-    {{-- P2 --}}
-    @if($topDrivers->count() >= 2)
-    @php
-      $p2Pct = min(100, max(20, ($topDrivers[1]->score / $maxScore) * 100));
-    @endphp
-    <div class="td-card p2 reveal-item delay-1">
-        <div class="td-hud-grid"></div>
-        <div class="td-card-glow"></div>
-        <div class="td-rank-badge silver-badge">2</div>
-        
-        <div class="td-avatar">
-          <div class="td-avatar-ring"></div>
-          <div class="td-hud-scanner"></div>
-          <span class="td-avatar-text">{{ strtoupper(substr($topDrivers[1]->user->username, 0, 2)) }}</span>
+      {{-- P2 SLOT (Staggered back-left) --}}
+      @if($topDrivers->count() >= 2)
+      <div class="podium-slot p2 reveal-item delay-1">
+        <div class="podium-hud-bg"></div>
+        <div class="podium-halo"></div>
+        <div class="slot-pos-badge">P2</div>
+        <div class="slot-avatar-frame">
+          <div class="slot-telemetry-ring"></div>
+          <div class="slot-avatar-scanner"></div>
+          <span class="slot-avatar-initials">{{ strtoupper(substr($topDrivers[1]->user->username, 0, 2)) }}</span>
         </div>
-
-        <div class="td-name">{{ $topDrivers[1]->user->username }}</div>
-        
-        <div class="td-score-wrap">
-          <span class="td-score-value">{{ number_format($topDrivers[1]->score) }}</span>
-          <span class="td-score-label">POINTS</span>
-        </div>
-
-        <div class="td-telemetry-box">
-          <div class="td-telemetry-label">TELEMETRY SCORE</div>
-          <div class="td-telemetry-bar-bg">
-            <div class="td-telemetry-bar-fill" style="width: {{ $p2Pct }}%;"></div>
-          </div>
-          <div class="td-telemetry-meta">
-            <span>IDX: P2/{{ $topDrivers->count() }}</span>
-            <span>EFF: {{ round($p2Pct, 1) }}%</span>
-          </div>
-        </div>
-
+        <div class="slot-driver-name">{{ $topDrivers[1]->user->username }}</div>
+        <div class="slot-score-value">{{ number_format($topDrivers[1]->score) }}</div>
+        <div class="slot-sub-info">PTS</div>
         @if($topDrivers[1]->best_time)
-        <div class="td-time">⏱ {{ $topDrivers[1]->best_time }}</div>
+          <div class="slot-sub-info" style="color:var(--hud-gold);">Lap: {{ $topDrivers[1]->best_time }}</div>
         @endif
-        <div class="td-card-shine"></div>
-    </div>
-    @endif
+      </div>
+      @endif
 
-    {{-- P1 --}}
-    @php
-      $p1Pct = 100;
-    @endphp
-    <div class="td-card p1 reveal-item delay-2">
-        <div class="td-hud-grid"></div>
-        <div class="td-card-glow"></div>
-        <div class="td-crown">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20h20"/><path d="M4 20l2-14 5 7 3-9 3 9 5-7 2 14"/></svg>
+      {{-- P1 SLOT (Pole front-center) --}}
+      <div class="podium-slot p1 reveal-item delay-2">
+        <div class="podium-hud-bg"></div>
+        <div class="podium-halo"></div>
+        <svg class="podium-crown-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 17l3-10 4 6 4-6 3 10H3z"/>
+          <path d="M7 14h10"/>
+        </svg>
+        <div class="slot-pos-badge">P1 POLE</div>
+        <div class="slot-avatar-frame">
+          <div class="slot-telemetry-ring"></div>
+          <div class="slot-avatar-scanner"></div>
+          <span class="slot-avatar-initials">{{ strtoupper(substr($topDrivers[0]->user->username, 0, 2)) }}</span>
         </div>
-        <div class="td-rank-badge gold-badge">1</div>
-        
-        <div class="td-avatar gold">
-          <div class="td-avatar-ring"></div>
-          <div class="td-hud-scanner"></div>
-          <span class="td-avatar-text">{{ strtoupper(substr($topDrivers[0]->user->username, 0, 2)) }}</span>
-        </div>
-
-        <div class="td-name">{{ $topDrivers[0]->user->username }}</div>
-        
-        <div class="td-score-wrap">
-          <span class="td-score-value">{{ number_format($topDrivers[0]->score) }}</span>
-          <span class="td-score-label">POINTS</span>
-        </div>
-
-        <div class="td-telemetry-box">
-          <div class="td-telemetry-label">TELEMETRY SCORE</div>
-          <div class="td-telemetry-bar-bg">
-            <div class="td-telemetry-bar-fill" style="width: {{ $p1Pct }}%;"></div>
-          </div>
-          <div class="td-telemetry-meta">
-            <span>IDX: LEADER</span>
-            <span>EFF: 100%</span>
-          </div>
-        </div>
-
+        <div class="slot-driver-name">{{ $topDrivers[0]->user->username }}</div>
+        <div class="slot-score-value" style="color:var(--hud-gold);">{{ number_format($topDrivers[0]->score) }}</div>
+        <div class="slot-sub-info" style="font-weight:800;">PTS</div>
         @if($topDrivers[0]->best_time)
-        <div class="td-time">⏱ {{ $topDrivers[0]->best_time }}</div>
+          <div class="slot-sub-info" style="color:var(--hud-gold);">Lap: {{ $topDrivers[0]->best_time }}</div>
         @endif
-        <div class="td-card-shine"></div>
-    </div>
+      </div>
 
-    {{-- P3 --}}
-    @if($topDrivers->count() >= 3)
-    @php
-      $p3Pct = min(100, max(20, ($topDrivers[2]->score / $maxScore) * 100));
-    @endphp
-    <div class="td-card p3 reveal-item delay-3">
-        <div class="td-hud-grid"></div>
-        <div class="td-card-glow"></div>
-        <div class="td-rank-badge bronze-badge">3</div>
-        
-        <div class="td-avatar bronze">
-          <div class="td-avatar-ring"></div>
-          <div class="td-hud-scanner"></div>
-          <span class="td-avatar-text">{{ strtoupper(substr($topDrivers[2]->user->username, 0, 2)) }}</span>
+      {{-- P3 SLOT (Staggered back-right) --}}
+      @if($topDrivers->count() >= 3)
+      <div class="podium-slot p3 reveal-item delay-3">
+        <div class="podium-hud-bg"></div>
+        <div class="podium-halo"></div>
+        <div class="slot-pos-badge">P3</div>
+        <div class="slot-avatar-frame">
+          <div class="slot-telemetry-ring"></div>
+          <div class="slot-avatar-scanner"></div>
+          <span class="slot-avatar-initials">{{ strtoupper(substr($topDrivers[2]->user->username, 0, 2)) }}</span>
         </div>
-
-        <div class="td-name">{{ $topDrivers[2]->user->username }}</div>
-        
-        <div class="td-score-wrap">
-          <span class="td-score-value">{{ number_format($topDrivers[2]->score) }}</span>
-          <span class="td-score-label">POINTS</span>
-        </div>
-
-        <div class="td-telemetry-box">
-          <div class="td-telemetry-label">TELEMETRY SCORE</div>
-          <div class="td-telemetry-bar-bg">
-            <div class="td-telemetry-bar-fill" style="width: {{ $p3Pct }}%;"></div>
-          </div>
-          <div class="td-telemetry-meta">
-            <span>IDX: P3/{{ $topDrivers->count() }}</span>
-            <span>EFF: {{ round($p3Pct, 1) }}%</span>
-          </div>
-        </div>
-
+        <div class="slot-driver-name">{{ $topDrivers[2]->user->username }}</div>
+        <div class="slot-score-value">{{ number_format($topDrivers[2]->score) }}</div>
+        <div class="slot-sub-info">PTS</div>
         @if($topDrivers[2]->best_time)
-        <div class="td-time">⏱ {{ $topDrivers[2]->best_time }}</div>
+          <div class="slot-sub-info" style="color:var(--hud-gold);">Lap: {{ $topDrivers[2]->best_time }}</div>
         @endif
-        <div class="td-card-shine"></div>
-    </div>
-    @endif
+      </div>
+      @endif
 
     </div>
 
