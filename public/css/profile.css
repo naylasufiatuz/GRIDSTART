@@ -208,6 +208,7 @@ background: linear-gradient(98deg, #F2ECE5 57.47%, #D1DDD3 72.25%, #D1DDD3 87.02
     }
     .alert-error   { background: #fde8e8; color: #c0392b; border: 1px solid #f5c6c6; }
     .alert-success { background: #e8f8f0; color: #1e7e4e; border: 1px solid #b2e5cc; }
+    .alert-info    { background: #eef4fa; color: #5a5040; border: 1px solid #d4dce6; }
 
     /* ── BACK BUTTON ── */
     .card-header {

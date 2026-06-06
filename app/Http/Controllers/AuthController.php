@@ -91,10 +91,20 @@ class AuthController extends Controller
             'password.min'    => 'Password minimal harus 5 karakter.',
         ]);
 
-        $user->username = $request->username;
+        $changed = false;
+
+        if ($request->username !== $user->username) {
+            $user->username = $request->username;
+            $changed = true;
+        }
 
         if ($request->filled('password')) {
             $user->password = Hash::make($request->password);
+            $changed = true;
+        }
+
+        if (!$changed) {
+            return back()->with('info', 'Tidak ada perubahan yang dilakukan.');
         }
 
         $user->save();
