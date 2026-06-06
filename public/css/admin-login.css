@@ -2,17 +2,6 @@
    This file overrides and extends public/css/login.css for the Admin Panel.
 */
 
-:root {
-  /* Inherited variables from login.css:
-     --cream-bg: #f7f3ee;
-     --cream-soft: #ede6dc;
-     --taupe-dark: #3f3a36;
-     --taupe-soft: #6b625c;
-     --sage: #cbd7c2;
-     --sky-muted: #dbe7ee;
-  */
-}
-
 body {
   font-family: 'Plus Jakarta Sans', sans-serif !important;
   height: 100vh !important;
