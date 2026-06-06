@@ -4,6 +4,7 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Dashboard — GridStart Admin</title>
+  <meta name="robots" content="noindex, nofollow" />
   <meta name="csrf-token" content="{{ csrf_token() }}"/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
@@ -13,8 +14,13 @@
 <!-- SIDEBAR -->
 <aside class="sidebar">
   <div class="sidebar-brand">
-    <p class="label">GridStart</p>
-    <h2>Admin Panel</h2>
+    <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+      <div>
+        <p class="label">GridStart</p>
+        <h2>Admin Panel</h2>
+      </div>
+      <button class="sidebar-close" onclick="document.querySelector('.sidebar').classList.remove('open')" aria-label="Close Sidebar" style="display: none; font-size: 24px; color: #fff; background: transparent; border: none; cursor: pointer; line-height: 1;">&times;</button>
+    </div>
   </div>
 
   <div class="nav-section">
@@ -37,7 +43,7 @@
   </div>
 
   <div class="sidebar-footer">
-    <p class="admin-tag">Logged in as<br><strong style="color:var(--accent)">{{ session('admin_username') }}</strong></p>
+    <p class="admin-tag">Logged in as <strong style="color:var(--accent2)">{{ auth()->user()->username }}</strong></p>
     <form method="POST" action="{{ route('admin.logout') }}">
       @csrf
       <button type="submit" class="logout-btn">⏏ Logout</button>
@@ -50,6 +56,11 @@
   <div class="main-inner">
     <div class="topbar">
       <div class="topbar-left">
+        <button class="sidebar-toggle" onclick="toggleSidebar()" aria-label="Toggle Sidebar">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
         <span class="topbar-icon">▦</span>
         <div>
           <p class="topbar-label">Dashboard</p>
@@ -369,5 +380,10 @@
 <!-- TOAST -->
 <div class="toast" id="toast"></div>
 <script src="{{ asset('js/admin.js') }}"></script>
+<script>
+  function toggleSidebar() {
+    document.querySelector('.sidebar').classList.toggle('open');
+  }
+</script>
 </body>
 </html>

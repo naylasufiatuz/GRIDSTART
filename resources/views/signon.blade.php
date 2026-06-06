@@ -37,18 +37,18 @@
       <form method="POST" action="{{ route('signon') }}">
         @csrf
         <div class="form-group">
-          <label for="nama">Nama Langkap</label>
-          <input type="text" id="nama" name="username" placeholder="Nama kamu" value="{{ old('username') }}"/>
+          <label for="nama">Buat Username</label>
+          <input type="text" id="nama" name="username" placeholder="Nama kamu" value="{{ old('username') }}" required/>
         </div>
         <div class="form-group">
           <label for="email">Email</label>
-          <input type="email" id="email" name="email" placeholder="Nama@gmail.com" value="{{ old('email') }}"/>
+          <input type="email" id="email" name="email" placeholder="Nama@gmail.com" value="{{ old('email') }}" required/>
         </div>
         <!-- Password -->
         <div class="form-group">
           <div class="password-input-container">
             <label for="password">Password</label>
-            <input type="password" id="password" name="password" placeholder="........"/>
+            <input type="password" id="password" name="password" placeholder="........" required/>
             <i class="fas fa-eye toggle-icon"></i>
             <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
                   @if($errors->any())
@@ -69,7 +69,7 @@
         <div class="form-group">
           <div class="password-input-container">
             <label for="password_confirmation">Konfirmasi Password</label>
-            <input type="password" id="password_confirmation" name="password_confirmation" placeholder="........"/>
+            <input type="password" id="password_confirmation" name="password_confirmation" placeholder="........" required/>
             <i class="fas fa-eye toggle-icon"></i>
           </div>
         </div>

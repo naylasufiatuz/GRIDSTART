@@ -244,3 +244,29 @@ background: linear-gradient(98deg, #F2ECE5 57.47%, #D1DDD3 72.25%, #D1DDD3 87.02
       transform: translateX(-2px);
       box-shadow: 0 4px 16px rgba(0,0,0,0.12);
     }
+
+/* ── Mobile & Tablet Responsiveness ── */
+@media (max-width: 768px) {
+  body {
+    flex-direction: column;
+    height: auto;
+    overflow: auto;
+    min-height: 100vh;
+  }
+  .left-sidebar {
+    width: 100%;
+    height: auto;
+    padding: 24px 20px;
+    align-items: center;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  }
+  .main-content {
+    padding: 24px 16px;
+    align-items: flex-start;
+  }
+  .profile-card {
+    left: 0;
+    margin: 0 auto;
+    padding: 28px 20px 32px;
+  }
+}

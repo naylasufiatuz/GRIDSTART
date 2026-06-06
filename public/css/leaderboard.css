@@ -1,4 +1,4 @@
-﻿/* ==========================================================================
+/* ==========================================================================
    GRIDSTART RACE CONTROL HUD - LEADERBOARD CSS STYLE SHEET
    Strictly preserving original colors, Montserrat font, & border-radius (5px/50%).
    ========================================================================== */
@@ -884,10 +884,16 @@
     grid-template-columns: 1fr;
     gap: 20px;
   }
-  .podium-slot.p1,
-  .podium-slot.p2,
+  .podium-slot.p1 {
+    order: 1 !important;
+    transform: none !important;
+  }
+  .podium-slot.p2 {
+    order: 2 !important;
+    transform: none !important;
+  }
   .podium-slot.p3 {
-    order: unset;
+    order: 3 !important;
     transform: none !important;
   }
   .podium-slot:hover {

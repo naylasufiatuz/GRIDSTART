@@ -6,6 +6,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\SocialAuthController;
 use App\Http\Controllers\LeaderboardController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AdminAuthController;
 use App\Http\Controllers\ContactController;
 
 Route::get('/leaderboard', [LeaderboardController::class, 'index'])->name('leaderboard');
@@ -91,6 +92,16 @@ Route::get('/terms', function () {
     return view('terms');
 })->name('terms');
 
-Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard')->middleware('auth');
+// ═══════════════════════════════════════════════════
+// ADMIN ROUTES — Protected dengan middleware 'admin'
+// ═══════════════════════════════════════════════════
 
-Route::post('/admin/logout', [AuthController::class, 'logout'])->name('admin.logout');
+// Admin Login (public, tapi tersembunyi)
+Route::get('/admin/login', [AdminAuthController::class, 'showLogin'])->name('admin.login');
+Route::post('/admin/login', [AdminAuthController::class, 'login'])->name('admin.login.post');
+
+// Admin Routes (protected)
+Route::middleware('admin')->group(function () {
+    Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+    Route::post('/admin/logout', [AdminAuthController::class, 'logout'])->name('admin.logout');
+});

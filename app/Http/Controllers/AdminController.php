@@ -13,9 +13,7 @@ class AdminController extends Controller
     // ── DASHBOARD ──
     public function dashboard()
     {
-        if (auth()->user()->username !== 'admin') {
-            return redirect()->route('app');
-        }
+        // Admin auth sudah ditangani oleh middleware 'admin'
 
         $totalUsers      = User::count();
         $totalGameScores = GameScore::count();

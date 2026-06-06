@@ -362,8 +362,9 @@ body {
   background: #fff;
   border: 1px solid var(--border);
   border-radius: 5px;
-  overflow: hidden;
+  overflow-x: auto;
   box-shadow: var(--shadow);
+  -webkit-overflow-scrolling: touch;
 }
 
 table {
@@ -704,3 +705,71 @@ tbody tr:hover { background: #faf5ef; }
     .toast.show { opacity: 1; transform: translateY(0); }
     .toast.success { background: rgba(77,255,145,0.15); border: 1px solid rgba(77,255,145,0.3); color: var(--success); }
     .toast.error   { background: rgba(255,77,77,0.15);  border: 1px solid rgba(255,77,77,0.3);  color: var(--danger); }
+
+/* Sidebar toggle buttons hidden by default on desktop */
+.sidebar-toggle {
+  display: none;
+}
+.sidebar-close {
+  display: none;
+}
+
+/* ── Mobile & Tablet Responsiveness ── */
+@media (max-width: 1024px) {
+  .sidebar {
+    transform: translateX(-100%);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 1000;
+    box-shadow: 10px 0 30px rgba(0, 0, 0, 0.15);
+  }
+  .sidebar.open {
+    transform: translateX(0);
+  }
+  .sidebar-close {
+    display: block !important;
+  }
+  .main {
+    margin-left: 0;
+    padding: 24px 20px;
+  }
+  .sidebar-toggle {
+    display: flex !important;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 24px;
+    height: 18px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+  }
+  .sidebar-toggle span {
+    width: 100%;
+    height: 2.5px;
+    background-color: var(--text);
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    border-radius: 2px;
+  }
+  .activity-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .stat-card {
+    padding: 20px 16px;
+  }
+  .stat-value {
+    font-size: 32px;
+  }
+  .topbar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+}

@@ -205,6 +205,10 @@ background: linear-gradient(98deg, #F2ECE5 57.47%, #D1DDD3 72.25%, #D1DDD3 87.02
   color: var(--navbar-dark);
 }
 
+.navbar-toggle {
+  display: none;
+}
+
 /* ================= HERO ================= */
 .hero {
   height: 100vh;
@@ -294,7 +298,7 @@ background: linear-gradient(98deg, #F2ECE5 57.47%, #D1DDD3 72.25%, #D1DDD3 87.02
 
 .hero-word {
   font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 80px;
+  font-size: clamp(36px, 8vw, 80px);
   line-height: 1.1;
   font-weight: 800;
   text-transform: uppercase;
@@ -858,10 +862,16 @@ background: linear-gradient(98deg, #F2ECE5 57.47%, #D1DDD3 72.25%, #D1DDD3 87.02
     grid-template-columns: 1fr;
     gap: 20px;
   }
-  .podium-slot.p1,
-  .podium-slot.p2,
+  .podium-slot.p1 {
+    order: 1 !important;
+    transform: none !important;
+  }
+  .podium-slot.p2 {
+    order: 2 !important;
+    transform: none !important;
+  }
   .podium-slot.p3 {
-    order: unset;
+    order: 3 !important;
     transform: none !important;
   }
   .podium-slot:hover {
@@ -4264,5 +4274,166 @@ a.roadmap-item:hover {
   .expand-btn {
     width: 100%;
     justify-content: center;
+  }
+}
+
+/* ── Mobile & Tablet Responsiveness ── */
+@media (max-width: 1024px) {
+  /* Navbar styling */
+  .navbar {
+    padding: 0 24px;
+  }
+  .navbar-inner {
+    justify-content: space-between;
+  }
+  .navbar-brand {
+    position: relative;
+    left: 0;
+    transform: none;
+    order: 1;
+    z-index: 1002;
+  }
+  .navbar-zone--actions {
+    order: 2;
+    z-index: 1002;
+    gap: 12px;
+  }
+  .navbar-cta {
+    padding: 8px 16px;
+    font-size: 11px;
+  }
+  .navbar-toggle {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 24px;
+    height: 18px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    margin-left: 10px;
+  }
+  .navbar-toggle__bar {
+    width: 100%;
+    height: 2.5px;
+    background-color: var(--nav-text-hover);
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    border-radius: 2px;
+  }
+  
+  /* Hamburger to 'X' transition */
+  .nav-open .navbar-toggle__bar:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+  }
+  .nav-open .navbar-toggle__bar:nth-child(2) {
+    opacity: 0;
+  }
+  .nav-open .navbar-toggle__bar:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+  }
+
+  /* Slide down menu */
+  .navbar-zone--links {
+    position: fixed;
+    top: 76px;
+    left: 0;
+    right: 0;
+    background: rgba(26, 23, 20, 0.96);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(203, 184, 157, 0.12);
+    padding: 30px 24px;
+    transform: translateY(-120%);
+    opacity: 0;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+    z-index: 999;
+    pointer-events: none;
+  }
+  
+  .nav-open .navbar-zone--links {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .nav-menu {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+    width: 100%;
+  }
+  .nav-menu li {
+    width: 100%;
+  }
+  .nav-menu li a {
+    display: block;
+    font-size: 14px;
+    letter-spacing: 2px;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  /* Hero section adjustments */
+  .hero-content p {
+    font-size: 16px;
+    max-width: 100%;
+  }
+  .hero-title {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 60px;
+  }
+
+  /* Roadmap section */
+  .roadmap-container {
+    flex-direction: column;
+    gap: 40px;
+  }
+  .roadmap-visual,
+  .roadmap-content {
+    width: 100%;
+    flex: none;
+  }
+  .roadmap-section {
+    padding: 60px 24px;
+  }
+}
+
+@media (max-width: 768px) {
+  /* Hero typography and padding */
+  .hero {
+    padding: 0 20px;
+  }
+  .hero-content small {
+    font-size: 13px;
+  }
+  .hero-content a {
+    padding: 12px 30px;
+    font-size: 12px;
+  }
+  .hero-circular-badge {
+    width: 600px;
+    height: 400px;
+  }
+
+  /* Leaderboard sections */
+  .leaderboard-section {
+    padding: 80px 20px 60px;
+  }
+  .lb-title {
+    font-size: 36px;
+  }
+  .lb-desc {
+    font-size: 13px;
+  }
+
+  /* Top drivers preview */
+  .top-drivers-section {
+    padding: 60px 20px;
+  }
+  .top-drivers-title {
+    font-size: 32px;
   }
 }

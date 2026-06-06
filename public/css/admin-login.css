@@ -1,0 +1,104 @@
+/* ── ADMIN LOGIN OVERRIDES ──
+   This file overrides and extends public/css/login.css for the Admin Panel.
+*/
+
+:root {
+  /* Inherited variables from login.css:
+     --cream-bg: #f7f3ee;
+     --cream-soft: #ede6dc;
+     --taupe-dark: #3f3a36;
+     --taupe-soft: #6b625c;
+     --sage: #cbd7c2;
+     --sky-muted: #dbe7ee;
+  */
+}
+
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
+  height: 100vh !important;
+  display: flex !important;
+  overflow: hidden !important;
+  background: linear-gradient(91deg, #D7E3E2 43.32%, #F2ECE5 61.12%) !important;
+}
+
+/* Custom Input Focus Glow */
+input[type="text"]:focus,
+input[type="password"]:focus {
+  border-color: var(--sage) !important;
+  background: #ffffff !important;
+  box-shadow: 0 0 0 3px rgba(203, 215, 194, 0.35);
+}
+
+/* Security Badge */
+.security-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 24px;
+  padding: 6px 14px;
+  width: fit-content;
+  align-self: center;
+}
+
+.security-badge i {
+  font-size: 11px;
+  color: var(--taupe-soft);
+}
+
+.security-badge span {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--taupe-soft);
+}
+
+/* Alert Boxes */
+.alert-warning {
+  background: #fff9e6;
+  color: #a16207;
+  border: 1px solid #fde047;
+}
+
+/* Submit Button Loading state */
+.btn-submit:disabled {
+  background: var(--taupe-soft);
+  cursor: not-allowed;
+  opacity: 0.85;
+}
+
+/* Lockout warning at bottom of card */
+.lockout-info {
+  text-align: center;
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid #e5dfd5;
+}
+
+.lockout-info p {
+  font-size: 11.5px;
+  color: var(--taupe-soft);
+  line-height: 1.6;
+}
+
+.lockout-info i {
+  font-size: 11px;
+  margin-right: 4px;
+  color: #d97706; /* amber warning color */
+}
+
+/* Ensure centering elements inside flex/grid */
+.form-card {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── RESPONSIVE DESIGN OVERRIDES (TABLET & MOBILE) ── */
+@media (max-width: 1024px) {
+  body {
+    height: auto !important;
+    overflow: auto !important;
+  }
+}
+

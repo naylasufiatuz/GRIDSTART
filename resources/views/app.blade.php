@@ -43,6 +43,11 @@
       @auth
         <a href="/profile" class="navbar-cta">Profile</a>
       @endauth
+      <button class="navbar-toggle" onclick="toggleNavMenu()" aria-label="Toggle Menu">
+        <span class="navbar-toggle__bar"></span>
+        <span class="navbar-toggle__bar"></span>
+        <span class="navbar-toggle__bar"></span>
+      </button>
     </div>
   </div>
 </nav>
@@ -54,6 +59,10 @@
 @include('components.footer')
 
 <script>
+  function toggleNavMenu() {
+    document.querySelector('.navbar-inner').classList.toggle('nav-open');
+  }
+
   const reveals = document.querySelectorAll(
     ".reveal-left, .reveal-top, .reveal-item"
   );

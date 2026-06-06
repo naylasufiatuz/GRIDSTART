@@ -78,12 +78,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       @csrf
       <div class="form-group">
         <label for="username">Username</label>
-        <input type="text" id="username" name="username" placeholder="Username" value="<?= htmlspecialchars($_POST['username'] ?? '') ?>"/>
+        <input type="text" id="username" name="username" placeholder="Username" value="<?= htmlspecialchars($_POST['username'] ?? '') ?>" required/>
       </div>
       <div class="form-group">
-        <label for="password">Password</label>
+        <label for="password" required>Password</label>
         <div class="password-input-container">
-          <input type="password" id="password" name="password" placeholder="........"/>
+          <input type="password" id="password" name="password" placeholder="........" required/>
           <i class="fas fa-eye" id="togglePassword"></i>
         </div>
       </div>

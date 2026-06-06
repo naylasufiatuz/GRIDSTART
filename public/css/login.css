@@ -1,4 +1,4 @@
-﻿    :root {
+    :root {
       --cream-bg: #f7f3ee;
       --cream-soft: #ede6dc;
       --taupe-dark: #3f3a36;
@@ -27,15 +27,7 @@
       position: relative;
     }
 
-    .left-panel::after {
-      content: '';
-      position: absolute;
-      right: 0;
-      top: 15%;
-      height: 70%;
-      width: 1px;
-      background: rgba(255,255,255,0.3);
-    }
+    /* Left panel divider line removed for a cleaner seamless gradient */
 
     .left-content {
       max-width: 380px;
@@ -320,3 +312,85 @@
 
 .btn-github i { color: #fff; }
 .btn-google i  { color: #EA4335; }
+
+/* ── RESPONSIVE DESIGN (TABLET & MOBILE) ── */
+@media (max-width: 1024px) {
+  body {
+    height: auto;
+    min-height: 100vh;
+    overflow-y: auto;
+    flex-direction: column;
+  }
+
+  .left-panel, .right-panel {
+    width: 100%;
+    padding: 40px;
+  }
+
+  .left-panel {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 20px;
+    order: 1;
+  }
+
+  .left-content {
+    max-width: 100%;
+    text-align: center;
+  }
+
+  .left-content p, .left-content h2, .brand-label, .brand-sub {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .brand-sub {
+    margin-bottom: 16px;
+  }
+
+  .left-content h2 {
+    font-size: clamp(32px, 6vw, 44px);
+    margin-bottom: 12px;
+  }
+
+  .right-panel {
+    padding-top: 20px;
+    order: 2;
+  }
+
+  .form-card {
+    max-width: 440px;
+    margin: 0 auto;
+    padding: 30px 24px;
+  }
+  
+  .back-button {
+    top: 16px;
+    left: 16px;
+    padding: 8px 12px;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .left-panel, .right-panel {
+    padding: 24px 16px;
+  }
+  
+  .left-panel {
+    padding-top: 60px; /* Leave space for the back button */
+    padding-bottom: 10px;
+  }
+  
+  .right-panel {
+    padding-top: 10px;
+  }
+
+  .form-card {
+    padding: 24px 20px;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.05);
+  }
+}
+

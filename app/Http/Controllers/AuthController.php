@@ -56,15 +56,9 @@ class AuthController extends Controller
             return back()->with('error', 'Username belum terdaftar.');
         }
 
-        // Cek admin
-        if ($user->username === 'admin') {
-            if (Hash::check($request->password, $user->password)) {
-                Auth::login($user);
-                $request->session()->regenerate();
-                return redirect()->route('admin.dashboard');
-            } else {
-                return back()->with('error', 'Password tidak cocok.');
-            }
+        // Blokir admin login dari halaman user biasa
+        if ($user->is_admin) {
+            return back()->with('error', 'Akses tidak valid.');
         }
 
         // Login user biasa
