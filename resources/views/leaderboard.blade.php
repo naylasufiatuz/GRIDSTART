@@ -95,7 +95,7 @@
                 </div>
                 <div class="cockpit-hud-actions">
                   <a href="/simulasi" class="cockpit-return-btn">
-                    <span>Return to Simulation</span>
+                    <span>Kembali ke Simulasi</span>
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
                   </a>
                 </div>
@@ -105,7 +105,7 @@
             <div class="cockpit-hud-capsule">
               <div class="cockpit-hud-inner">
                 <div class="cockpit-hud-empty">
-                  <p>System offline — You haven't registered any lap times on the leaderboard yet!</p>
+                  <p>Kamu belum punya catatan lap. Selesaikan simulasi dulu untuk masuk grid!</p>
                   <a href="/simulasi" class="cockpit-return-btn" style="display:inline-flex; float:none;">Launch Simulation</a>
                 </div>
               </div>
@@ -115,7 +115,7 @@
           <div class="cockpit-hud-capsule" style="border-color: rgba(209, 122, 122, 0.25);">
             <div class="cockpit-hud-inner">
               <div class="cockpit-hud-empty">
-                <p>System locked — Sign on as a driver to track your real-time ranking!</p>
+                <p>Kamu belum login. Daftar sebagai driver untuk memantau ranking-mu secara langsung!</p>
                 <a href="/login" class="cockpit-return-btn" style="display:inline-flex; float:none;">Pilot Log On</a>
               </div>
             </div>
@@ -333,7 +333,7 @@
                 </div>
                 <div class="cockpit-hud-actions">
                   <a href="/simulasi" class="cockpit-return-btn">
-                    <span>Return to Grid</span>
+                    <span>Kembali ke Grid</span>
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
                   </a>
                 </div>
@@ -423,7 +423,7 @@
         {{-- SHOW ALL TRIGGER --}}
         <div class="expand-wrap">
           <button class="expand-btn" onclick="toggleTable('time-table', this)">
-            <span>Lihat Semua</span>
+            <span>Lihat Semua Driver</span>
             <svg class="expand-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
           </button>
           <small class="expand-note">{{ $byTime->count() }} active pilots on track</small>

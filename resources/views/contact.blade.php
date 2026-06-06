@@ -17,11 +17,10 @@
           <path d="M8 12h5" />
         </svg>
       </span>
-      <h1>Yuk, Ngobrol Bareng!</h1>
+      <h1>Pit Lane — Hubungi Kami</h1>
     </div>
     <p>
-      Ada pertanyaan? Mau saran? Atau sekadar ingin cerita pengalaman berkendara aman kamu?
-      Kami siap mendengarkan.
+      Punya pertanyaan seputar keselamatan berkendara? Mau kasih masukan? Atau sekadar ingin berbagi cerita? Singgah dulu di Pit Lane kami.
     </p>
   </div>
 </section>
@@ -33,8 +32,8 @@
     <!-- LEFT: FORM -->
     <div class="contact-form-wrapper neumorphic">
       <div class="form-header">
-        <h2>Pesan Buat Kami</h2>
-        <p>Isi detail singkat, kami akan bantu jawab dengan jelas dan cepat.</p>
+        <h2>Kirim Pesan</h2>
+        <p>Isi formulir di bawah, tim GridStart siap menjawab dengan jelas dan cepat.</p>
       </div>
 
       <form class="contact-form" id="contactForm">
@@ -86,7 +85,7 @@
             id="message" 
             name="message" 
             class="form-textarea neumorphic-inset" 
-            placeholder="Cerita dong..."
+            placeholder="Tulis pesanmu di sini"
             rows="5"
             required
           ></textarea>
@@ -102,7 +101,7 @@
             class="form-checkbox"
           >
           <label for="agree" class="checkbox-label">
-            Boleh aku dihubungi via email (opsional)
+            Boleh aku dihubungi via email? (opsional)
           </label>
           <span class="form-error" id="agreeError"></span>
         </div>
@@ -132,7 +131,7 @@
 <section class="faq-section">
   <div class="faq-container">
     <div class="faq-header">
-      <h2>Pertanyaan yang Sering Diajukan</h2>
+      <h2>Pertanyaan yang Sering Masuk ke Pit Lane</h2>
       <p>Mungkin pertanyaan kamu sudah ada di sini.</p>
     </div>
 
@@ -200,7 +199,7 @@
           <span class="faq-icon">+</span>
         </button>
         <div class="faq-answer">
-          <p>Kami open banget untuk partnership! Hubungi aja kami via email atau DM Instagram. Kita bahas detail-detailnya langsung.</p>
+          <p>Tentu bisa! Kami terbuka untuk kolaborasi dengan sekolah, komunitas berkendara, atau instansi terkait keselamatan jalan. Hubungi kami lewat email atau DM Instagram GridStart.</p>
         </div>
       </div>
 

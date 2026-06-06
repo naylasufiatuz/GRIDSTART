@@ -40,9 +40,9 @@
 
     <!-- GRID 3: RESOURCES -->
     <div class="footer-section">
-      <h4 class="section-title">Resources</h4>
+      <h4 class="section-title">Jelajahi</h4>
       <ul class="footer-links">
-        <li><a href="/contact">Contact Us</a></li>
+        <li><a href="/contact">Hubungi Kami</a></li>
         <li><a href="/roadmap">Roadmap</a></li>
         <li><a href="/simulasi">Simulasi</a></li>
       </ul>
@@ -50,7 +50,7 @@
 
     <!-- GRID 4: CONNECT -->
     <div class="footer-section">
-      <h4 class="section-title">Connect</h4>
+      <h4 class="section-title">Ikuti Kami</h4>
       <div class="social-links">
         <a href="https://www.instagram.com/gr1dstart?igsh=bGk2d215YzJtZXYx" class="social-icon" target="_blank" rel="noopener">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -65,7 +65,7 @@
           </svg>
         </a>
       </div>
-      <p class="footer-cta">Join our community!</p>
+      <p class="footer-cta"> Bergabung dan berbagi pengalaman berkendara aman!</p>
     </div>
 
   </div>

@@ -30,7 +30,7 @@
     <a href="#roadmap">Jelajahi Roadmap</a>
   </div>
 
-  <div class="hero-bottom-left">6 Learning Stages</div>
+  <div class="hero-bottom-left">6 Learning Stages  • Full Circuit</div>
 </section>
 
 <section class="roadmap-section">
@@ -60,7 +60,7 @@
         <div class="modal-videos" id="modal-videos" onclick="if(event.target===this)this.style.display='none'">
         <div class="modal-content">
             <div class="modal-header">
-            <h3>Educational Videos</h3>
+            <h3>Video Edukasi Berkendara</h3>
             <button class="modal-close" onclick="document.getElementById('modal-videos').style.display='none'">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20">
                 <path d="M18 6L6 18M6 6l12 12"/>
@@ -96,7 +96,7 @@
 
         <div class="roadmap-content">
 
-            <p class="roadmap-sub reveal-top">LEARNING TRACE • ROADMAP</p>
+            <p class="roadmap-sub reveal-top">JALUR BELAJARMU • RACE ROADMAP</p>
             <h1 class="roadmap-title reveal-top delay-1">Race Roadmap</h1>
 
             <div class="roadmap-list">
@@ -133,7 +133,7 @@
                 @endauth
 
                 @guest
-                    <a href="#" onclick="alert('Kamu harus Login dulu ya untuk bisa main Simulasi!'); window.location.href='/login'; return false;" class="roadmap-item reveal-item delay-6 blue" style="text-decoration: none; cursor: pointer; filter: blur(2.5px); opacity: 0.6; transition: 0.3s;">
+                    <a href="#" onclick="alert('Kamu perlu Login dulu untuk mengakses Simulasi Berkendara!'); window.location.href='/login'; return false;" class="roadmap-item reveal-item delay-6 blue" style="text-decoration: none; cursor: pointer; filter: blur(2.5px); opacity: 0.6; transition: 0.3s;">
                         <span class="number">5</span>
                         <p>SIMULATION</p>
                     </a>
@@ -164,7 +164,7 @@
     <div class="top-drivers-header">
       <p class="top-drivers-sub">GRIDSTART CHAMPIONSHIP</p>
       <h2 class="top-drivers-title">Top <span class="title-accent">Drivers</span></h2>
-      <p class="top-drivers-desc">Pembalap terbaik minggu ini — apakah kamu ada di sini?</p>
+      <p class="top-drivers-desc">Pembalap terbaik minggu ini — apakah namamu ada di sini?</p>
     </div>
 
     @php
@@ -243,7 +243,7 @@
 
     @else
     <div class="td-empty">
-      <p>Belum ada driver yang terdaftar. Jadilah yang pertama!</p>
+      <p>Belum ada driver di grid. Selesaikan semua stage dan jadilah yang pertama!</p>
     </div>
     @endif
 

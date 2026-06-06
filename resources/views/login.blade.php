@@ -47,8 +47,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <!-- RIGHT -->
 <div class="right-panel">
   <div class="form-card">
-    <p class="badge">User Login</p>
-    <h1>Mulai Belajar</h1>
+    <p class="badge">Driver Login</p>
+    <h1>Masuk ke Cockpit</h1>
 
 @if(session('error'))
   <div class="alert alert-error">{{ session('error') }}</div>
@@ -119,7 +119,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       </a>
     </div>
     
-    <p class="register-link">Belum punya akun? <a href="/signon">Daftar di sini</a></p>
+    <p class="register-link">Belum terdaftar sebagai driver? <a href="/signon">Daftar di sini</a></p>
   </div>
 </div>
 

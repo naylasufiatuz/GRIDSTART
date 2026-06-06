@@ -37,8 +37,8 @@
       <form method="POST" action="{{ route('signon') }}">
         @csrf
         <div class="form-group">
-          <label for="nama">Buat Username</label>
-          <input type="text" id="nama" name="username" placeholder="Nama kamu" value="{{ old('username') }}" required/>
+          <label for="nama">Nama Lengkap</label>
+          <input type="text" id="nama" name="username" placeholder="Nama kamu" value="{{ old('username') }}"/>
         </div>
         <div class="form-group">
           <label for="email">Email</label>
@@ -75,7 +75,7 @@
         </div>
 
 
-        <button type="submit" class="btn-submit">Masuk ke Grid</button>
+        <button type="submit" class="btn-submit">Daftarkan Dirimu</button>
       </form>
 
       <!-- Divider -->

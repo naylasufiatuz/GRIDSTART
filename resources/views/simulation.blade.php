@@ -133,7 +133,7 @@
                 <div class="saving-loader" id="saving-loader">
                     <span></span><span></span><span></span>
                 </div>
-                <p id="saving-status">Menyimpan skor ke server...</p>
+                <p id="saving-status">Mencatat lap time ke leaderboard...</p>
             </div>
             
             <button id="close-finish-btn" class="btn-primary btn-finish" style="display: none; width: 100%;">
