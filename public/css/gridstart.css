@@ -4287,10 +4287,9 @@ a.roadmap-item:hover {
     justify-content: space-between;
   }
   .navbar-brand {
-    position: relative;
-    left: 0;
-    transform: none;
-    order: 1;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
     z-index: 1002;
   }
   .navbar-zone--actions {
@@ -4357,7 +4356,8 @@ a.roadmap-item:hover {
     pointer-events: auto;
   }
 
-  .nav-menu {
+  .navbar-zone--links .nav-menu {
+    display: flex !important;
     flex-direction: column;
     align-items: flex-start;
     gap: 24px;
@@ -4402,6 +4402,10 @@ a.roadmap-item:hover {
 }
 
 @media (max-width: 768px) {
+  .navbar-zone--links {
+    top: 68px;
+  }
+
   /* Hero typography and padding */
   .hero {
     padding: 0 20px;
