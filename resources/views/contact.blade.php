@@ -8,7 +8,7 @@
 <!-- CONTACT HERO -->
 <section class="contact-hero">
   <div class="contact-hero-content fade-up">
-    <small class="hero-label">GET IN TOUCH</small>
+    <small class="hero-label">OPEN TEAM RADIO</small>
     <div class="hero-heading">
       <span class="hero-icon">
         <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
