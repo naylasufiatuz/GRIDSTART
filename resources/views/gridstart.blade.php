@@ -33,9 +33,9 @@
   <div class="hero-bottom-left">6 Learning Stages  • Full Circuit</div>
 </section>
 
-<section class="roadmap-section">
+<section class="roadmap-section" id="roadmap">
 
-    <div class="roadmap-container" id="roadmap">
+    <div class="roadmap-container">
 
         <div class="roadmap-visual reveal-left">
         <div class="video-wrapper">

@@ -587,22 +587,19 @@
         // 9. TELEMETRY COGNITIVE CHALLENGES
         // ==========================================
         let currentQuizMode = ''; 
-        let articleQuizzes = [
-            { dist: 200, title: "YELLOW FLAG", q: "Ada kecelakaan di bagian kiri jalan. Tindakan antisipasi terbaik?", a: [{t: "Melaju maksimal", c: false}, {t: "Turunkan kecepatan & berhati-hati", c: true}, {t: "Pindah kanan & gaspol", c: false}], triggered: false },
-            { dist: 500, title: "RACING LINE", q: "Kondisi lalu lintas padat di lajur kanan. Langkah aman?", a: [{t: "Pindah ke lajur kosong & sesuaikan kecepatan", c: true}, {t: "Paksa masuk ke kanan", c: false}, {t: "Rem mendadak", c: false}], triggered: false },
-            { dist: 800, title: "BRAKE ZONE", q: "Jalanan rusak parah di kanan lintasan. Teknik pengereman yang tepat?", a: [{t: "Melaju berliku tanpa rem", c: false}, {t: "Tarik rem tangan mendadak", c: false}, {t: "Rem bertahap sebelum lubang & menghindar", c: true}], triggered: false }
-        ];
-        let pitStopQs = [
-            { q: "(1/3) Fungsi utama oli mesin?", a: [{t: "Mendinginkan AC", c: false}, {t: "Melumasi komponen internal", c: true}, {t: "Menambah listrik", c: false}] },
-            { q: "(2/3) Indikator temperatur merah artinya?", a: [{t: "Mesin Overheat", c: true}, {t: "Bensin bocor", c: false}, {t: "Ban kempis", c: false}] },
-            { q: "(3/3) Cairan untuk wiper kaca depan?", a: [{t: "Air Aki", c: false}, {t: "Cairan khusus wiper", c: true}, {t: "Air sabun cuci", c: false}] }
-        ];
+        let articleQuizzes = [];
+        let pitStopQs = [];
 
-        // Fetch dynamic quizzes from database API
+        // Fetch dynamic quizzes from database API (public endpoint)
         async function fetchQuizzes() {
             try {
-                const res = await fetch('/api/admin/quizzes');
-                if (!res.ok) return;
+                const res = await fetch('/api/quizzes', {
+                    headers: { 'Accept': 'application/json' }
+                });
+                if (!res.ok) {
+                    console.warn('Quiz fetch failed with status:', res.status);
+                    return;
+                }
                 const json = await res.json();
                 if (json.data && json.data.length > 0) {
                     const dbObstacles = json.data.filter(q => q.quiz_type === 'obstacle');
@@ -619,6 +616,7 @@
                             return {
                                 dist: dist,
                                 title: title,
+                                points: q.points || 10,
                                 q: q.question,
                                 a: [
                                     { t: q.option_a, c: q.correct_answer === 'A' },
@@ -635,6 +633,7 @@
                         pitStopQs = dbPitstops.map((q, idx) => {
                             return {
                                 q: `(${idx+1}/${dbPitstops.length}) ${q.question}`,
+                                points: q.points || 10,
                                 a: [
                                     { t: q.option_a, c: q.correct_answer === 'A' },
                                     { t: q.option_b, c: q.correct_answer === 'B' },
@@ -654,8 +653,11 @@
         const qOverlay = document.getElementById('quiz-overlay');
         const qBtns = document.querySelectorAll('.quiz-btn');
 
+        let activeQuizPoints = 10; // Track points for current quiz from CRUD data
+
         function triggerQuiz(qData) {
             currentQuizMode = 'article'; isPaused = true; qData.triggered = true;
+            activeQuizPoints = qData.points || 10;
             document.getElementById('timer-bar-wrap').style.display = 'none';
             document.getElementById('quiz-title').innerText = qData.title;
             document.getElementById('quiz-question').innerText = qData.q;
@@ -710,10 +712,11 @@
             btn.onclick = (e) => {
                 const isCorrect = e.target.getAttribute('data-correct') === 'true';
                 if (currentQuizMode === 'article') {
+                    const pts = activeQuizPoints;
                     if(isCorrect) { 
-                        score += 10; showToast("Jawaban Tepat! +10 Poin.", "success"); 
+                        score += pts; showToast(`Jawaban Tepat! +${pts} Poin.`, "success"); 
                     } else { 
-                        score -= 10; showToast("Jawaban Salah! -10 Poin.", "error"); 
+                        score -= pts; showToast(`Jawaban Salah! -${pts} Poin.`, "error"); 
                     }
                     document.getElementById('score-ui').innerText = score;
                     qOverlay.style.display = 'none'; currentQuizMode = ''; isPaused = false;

@@ -9,6 +9,14 @@
 <section class="leaderboard-section">
   <div class="leaderboard-container">
 
+    {{-- ======================== BACK TO HOME BUTTON ======================== --}}
+    <div class="lb-back-btn-container">
+      <a href="/" class="lb-back-btn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+        <span>Back to Home</span>
+      </a>
+    </div>
+
     {{-- ======================== RACE CONTROL HEADER ======================== --}}
     <div class="lb-header">
       <p class="lb-sub">GRIDSTART CHAMPIONSHIP</p>

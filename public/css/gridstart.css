@@ -4311,7 +4311,7 @@ a.roadmap-item:hover {
     border: none;
     cursor: pointer;
     padding: 0;
-    margin-left: 10px;
+    margin-left: 0;
   }
   .navbar-toggle__bar {
     width: 100%;

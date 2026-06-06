@@ -6,6 +6,14 @@ use App\Http\Controllers\Api\Admin\GameSettingController;
 use App\Http\Controllers\Api\Admin\QuizController;
 
 // ═══════════════════════════════════════════════════
+// PUBLIC API ROUTES — Accessible by authenticated users
+// ═══════════════════════════════════════════════════
+Route::middleware(['web', 'auth'])->group(function () {
+    // Public read-only quiz data for the game simulation
+    Route::get('/quizzes', [QuizController::class, 'index']);
+});
+
+// ═══════════════════════════════════════════════════
 // ADMIN API ROUTES — Protected dengan middleware 'admin'
 // ═══════════════════════════════════════════════════
 Route::middleware(['web', \App\Http\Middleware\AdminMiddleware::class])->prefix('admin')->group(function () {

@@ -129,7 +129,7 @@
                 <footer class="ls-nav">
                     <a href="/" class="ls-nav-btn">
                         <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="margin-right: 8px; transform: scaleX(-1);"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                        Kembali ke Roadmap
+                        Kembali ke Home
                     </a>
                     <a href="/yellow-flag" class="ls-nav-btn next-btn">
                         Lanjut ke Yellow Flag

@@ -18,9 +18,15 @@
 <!-- NAVBAR: kiri = menu | tengah = logo | kanan = CTA (seperti referensi) -->
 <nav class="navbar" aria-label="Main navigation">
   <div class="navbar-inner">
+    <button class="navbar-toggle" onclick="toggleNavMenu()" aria-label="Toggle Menu">
+      <span class="navbar-toggle__bar"></span>
+      <span class="navbar-toggle__bar"></span>
+      <span class="navbar-toggle__bar"></span>
+    </button>
+
     <div class="navbar-zone navbar-zone--links">
       <ul class="nav-menu">
-        <li><a href="/">Roadmap</a></li>
+        <li><a href="/">Home</a></li>
         <li><a href="/simulasi">Simulasi</a></li>
         <li><a href="/leaderboard">Leaderboard</a></li>
         <li><a href="/contact">Contact</a></li>
@@ -43,11 +49,6 @@
       @auth
         <a href="/profile" class="navbar-cta">Profile</a>
       @endauth
-      <button class="navbar-toggle" onclick="toggleNavMenu()" aria-label="Toggle Menu">
-        <span class="navbar-toggle__bar"></span>
-        <span class="navbar-toggle__bar"></span>
-        <span class="navbar-toggle__bar"></span>
-      </button>
     </div>
   </div>
 </nav>

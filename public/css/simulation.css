@@ -1,4 +1,4 @@
-/* ==========================================================================
+﻿/* ==========================================================================
    GRIDSTART WARM VINTAGE MOTORSPORT HUD - SIMULATION CSS
    Cohesive warm cream, sage-green, gold, and dark taupe aesthetic.
    No sci-fi neon glow, styled to look classic, tactile, and hand-built.
@@ -74,7 +74,7 @@ canvas {
   font-size: 11px; 
   font-weight: 800; 
   letter-spacing: 2px;
-  color: var(--brand-accent-race);
+  color: var(--brand-navbar-dark);
   font-family: var(--font-hud);
 }
 
@@ -94,7 +94,7 @@ canvas {
   font-size: 9px; 
   font-weight: 700; 
   letter-spacing: 1px;
-  color: var(--brand-taupe-soft); 
+  color: var(--brand-navbar-dark); 
   opacity: 0.85;
   margin-bottom: 2px;
   text-transform: uppercase;
@@ -111,7 +111,7 @@ canvas {
   font-size: 11px; 
   font-weight: 500; 
   opacity: 0.7; 
-  color: var(--brand-accent-race);
+  color: var(--brand-navbar-dark);
 }
 
 /* Fuel Tank Area */
@@ -131,7 +131,7 @@ canvas {
   font-family: var(--font-hud);
   font-size: 12px; 
   font-weight: 700;
-  color: var(--brand-accent-race);
+  color: var(--brand-navbar-dark);
 }
 
 .gas-bar-container { 

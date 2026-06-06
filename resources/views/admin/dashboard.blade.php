@@ -40,6 +40,9 @@
     <button class="nav-item" onclick="showSection('quizzes')">
       <span class="icon">▩</span> Quizzes
     </button>
+    <button class="nav-item" onclick="window.location.href='{{ route('app') }}'">
+      <span class="icon">⌂</span> Kembali ke Aplikasi
+    </button>
   </div>
 
   <div class="sidebar-footer">

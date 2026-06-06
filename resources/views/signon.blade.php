@@ -21,7 +21,7 @@
   <div class="left-container">
     <div class="form-card">
       <div class="form-header">
-        <p class="badge">New Racer</p>
+        <p class="badge">New Driver</p>
         <h1>Daftar ke GridStart</h1>
         <p class="form-description">Bergabunglah dan pelajari keselamatan berkendara dengan pendekatan motorsport dari Start Grid hingga Finish Line.</p>
       </div>
