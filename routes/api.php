@@ -1,7 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Api\Admin\DashboardController;
+use App\Http\Controllers\Api\Admin\UserController;
+use App\Http\Controllers\Api\Admin\GameScoreController;
+use App\Http\Controllers\Api\Admin\PesanController;
 use App\Http\Controllers\Api\Admin\GameSettingController;
 use App\Http\Controllers\Api\Admin\QuizController;
 
@@ -16,24 +19,29 @@ Route::middleware(['web', 'auth'])->group(function () {
 // ═══════════════════════════════════════════════════
 // ADMIN API ROUTES — Protected dengan middleware 'admin'
 // ═══════════════════════════════════════════════════
-Route::middleware(['web', \App\Http\Middleware\AdminMiddleware::class])->prefix('admin')->group(function () {
+Route::prefix('admin')->group(function() 
+{
+    // Dashboard Stats & Activity
+    Route::get('/dashboard/stats',    [DashboardController::class, 'stats']);
+    Route::get('/dashboard/activity', [DashboardController::class, 'activity']);
+
     // Users
-    Route::get('/users',         [AdminController::class, 'apiUsers']);
-    Route::post('/users',        [AdminController::class, 'apiStoreUser']);
-    Route::put('/users/{id}',    [AdminController::class, 'apiUpdateUser']);
-    Route::delete('/users/{id}', [AdminController::class, 'apiDestroyUser']);
+    Route::get('/users',         [UserController::class, 'index']);
+    Route::post('/users',        [UserController::class, 'store']);
+    Route::put('/users/{id}',    [UserController::class, 'update']);
+    Route::delete('/users/{id}', [UserController::class, 'destroy']);
 
     // Game Scores
-    Route::get('/game-scores',         [AdminController::class, 'apiGameScores']);
-    Route::post('/game-scores',        [AdminController::class, 'apiStoreGameScore']);
-    Route::put('/game-scores/{id}',    [AdminController::class, 'apiUpdateGameScore']);
-    Route::delete('/game-scores/{id}', [AdminController::class, 'apiDestroyGameScore']);
+    Route::get('/game-scores',         [GameScoreController::class, 'index']);
+    Route::post('/game-scores',        [GameScoreController::class, 'store']);
+    Route::put('/game-scores/{id}',    [GameScoreController::class, 'update']);
+    Route::delete('/game-scores/{id}', [GameScoreController::class, 'destroy']);
 
     // Pesan (Messages)
-    Route::get('/pesan',         [AdminController::class, 'apiPesans']);
-    Route::post('/pesan',        [AdminController::class, 'apiStorePesan']);
-    Route::put('/pesan/{id}',    [AdminController::class, 'apiUpdatePesan']);
-    Route::delete('/pesan/{id}', [AdminController::class, 'apiDestroyPesan']);
+    Route::get('/pesan',         [PesanController::class, 'index']);
+    Route::post('/pesan',        [PesanController::class, 'store']);
+    Route::put('/pesan/{id}',    [PesanController::class, 'update']);
+    Route::delete('/pesan/{id}', [PesanController::class, 'destroy']);
 
     // Settings & Quizzes
     Route::get('/settings', [GameSettingController::class, 'index']);
