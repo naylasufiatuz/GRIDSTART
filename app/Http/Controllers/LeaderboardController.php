@@ -35,7 +35,7 @@ class LeaderboardController extends Controller
             $uid = Auth::user()->id_user;
 
             // Skor poin terbaik user
-            $userBestPoint = GameScore::where('user_id', $uid)
+            $userBestPoint = GameScore::where('id_user', $uid)
                                 ->orderBy('score', 'desc')
                                 ->first();
 
@@ -44,7 +44,7 @@ class LeaderboardController extends Controller
             }
 
             // Waktu terbaik user
-            $userBestTime = GameScore::where('user_id', $uid)
+            $userBestTime = GameScore::where('id_user', $uid)
                                 ->whereNotNull('best_time')
                                 ->orderBy('best_time', 'asc')
                                 ->first();
@@ -78,7 +78,7 @@ class LeaderboardController extends Controller
         try {
             // 2. Simpan ke database
             GameScore::create([
-                'user_id'   => Auth::user()->id_user, // Mengambil id_user sesuai databasemu
+                'id_user'   => Auth::user()->id_user, // Mengambil id_user sesuai databasemu
                 'score'     => $request->score,
                 'best_time' => $request->best_time
             ]);

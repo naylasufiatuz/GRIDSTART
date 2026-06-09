@@ -15,6 +15,6 @@ class GameScore extends Model
     public function user()
     {
         // WAJIB: Sesuaikan dengan struktur databasemu (user_id ke id_user)
-        return $this->belongsTo(User::class, 'user_id', 'id_user');
+        return $this->belongsTo(User::class, 'id_user', 'id_user');
     }
 }

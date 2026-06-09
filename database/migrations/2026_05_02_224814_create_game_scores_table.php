@@ -11,7 +11,7 @@ public function up(): void
     if (!Schema::hasTable('game_scores')) {
         Schema::create('game_scores', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('id_user')->constrained('users', 'id_user')->onDelete('cascade');
             $table->integer('score')->default(0);
             $table->string('best_time')->nullable();
             $table->timestamps();

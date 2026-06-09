@@ -214,7 +214,7 @@
                 // Calculate percentage relative to leader for bar visualization
                 $percentage = $byPoints[0]->score > 0 ? ($row->score / $byPoints[0]->score) * 100 : 0;
               @endphp
-              <div class="telemetry-stripe {{ Auth::check() && $row->user_id === Auth::user()->id_user ? 'stripe-row-me' : '' }}">
+              <div class="telemetry-stripe {{ Auth::check() && $row->id_user === Auth::user()->id_user ? 'stripe-row-me' : '' }}">
                 
                 {{-- Slanted position indicator --}}
                 <div class="stripe-rank-indicator {{ $i===0?'pos-gold':($i===1?'pos-silver':($i===2?'pos-bronze':'')) }}">
@@ -446,7 +446,7 @@
                 // Percentage based on scores to render bar filling
                 $percentage = $byTime[0]->score > 0 ? ($row->score / $byTime[0]->score) * 100 : 0;
               @endphp
-              <div class="telemetry-stripe {{ Auth::check() && $row->user_id === Auth::user()->id_user ? 'stripe-row-me' : '' }}">
+              <div class="telemetry-stripe {{ Auth::check() && $row->id_user === Auth::user()->id_user ? 'stripe-row-me' : '' }}">
                 
                 {{-- Slanted position indicator --}}
                 <div class="stripe-rank-indicator {{ $i===0?'pos-gold':($i===1?'pos-silver':($i===2?'pos-bronze':'')) }}">
