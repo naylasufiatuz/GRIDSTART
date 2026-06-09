@@ -21,7 +21,7 @@
     <div class="lb-header">
       <p class="lb-sub">GRIDSTART CHAMPIONSHIP</p>
       <h1 class="lb-title">Driver Standings</h1>
-      <p class="lb-desc">All-time live standings feed — who dominates the starting grid?</p>
+      <p class="lb-desc">Peringkat Keselamatan Terbaik — Siapa yang Memimpin Grid Saat Ini?</p>
     </div>
 
     {{-- ======================== F1 STARTING LIGHTS BOARD ======================== --}}
