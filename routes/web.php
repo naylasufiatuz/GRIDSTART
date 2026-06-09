@@ -68,8 +68,11 @@ Route::get('/roadmap', function () {
 });
 
 Route::get('/simulasi', function () {
+    if (!auth()->check()) {
+        return redirect()->route('login')->with('error', 'Silakan login terlebih dahulu untuk mengakses Simulasi Berkendara.');
+    }
     return view('simulation');
-})->middleware('auth');
+});
 
 Route::get('/support', function () {
     return view('support');

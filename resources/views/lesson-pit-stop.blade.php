@@ -183,10 +183,17 @@
                         <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="margin-right: 8px; transform: scaleX(-1);"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                         Kembali ke Brake Zone
                     </a>
+                    @auth
                     <a href="/simulasi" class="ls-nav-btn next-btn">
                         Lanjut ke Simulasi
                         <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="margin-left: 8px;"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                     </a>
+                    @else
+                    <a href="#" onclick="showLoginAlert(event)" class="ls-nav-btn next-btn">
+                        Lanjut ke Simulasi
+                        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="margin-left: 8px;"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </a>
+                    @endauth
                 </footer>
 
             </main>
@@ -338,6 +345,26 @@
         if (hudVal) {
             hudVal.textContent = `${percentage}%`;
         }
+    }
+
+    function showLoginAlert(event) {
+        event.preventDefault();
+        Swal.fire({
+            title: 'Akses Terbatas',
+            text: 'Untuk masuk ke simulasi berkendara, Anda wajib login terlebih dahulu.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#8b5cf6', // Stage 5 purple accent color
+            cancelButtonColor: '#3f3a36',
+            confirmButtonText: 'Login Sekarang',
+            cancelButtonText: 'Batal',
+            background: '#f7f3ee',
+            color: '#3f3a36'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = "{{ route('login') }}";
+            }
+        });
     }
 </script>
 @endsection

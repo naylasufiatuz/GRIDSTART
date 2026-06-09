@@ -133,7 +133,7 @@
                 @endauth
 
                 @guest
-                    <a href="#" onclick="alert('Kamu perlu Login dulu untuk mengakses Simulasi Berkendara!'); window.location.href='/login'; return false;" class="roadmap-item reveal-item delay-6 blue" style="text-decoration: none; cursor: pointer; filter: blur(2.5px); opacity: 0.6; transition: 0.3s;">
+                    <a href="#" onclick="showLoginAlert(event)" class="roadmap-item reveal-item delay-6 blue" style="text-decoration: none; cursor: pointer; filter: blur(2.5px); opacity: 0.6; transition: 0.3s;">
                         <span class="number">5</span>
                         <p>SIMULATION</p>
                     </a>
@@ -259,4 +259,28 @@
 
 
 
+@endsection
+
+@section('scripts')
+<script>
+    function showLoginAlert(event) {
+        event.preventDefault();
+        Swal.fire({
+            title: 'Akses Terbatas',
+            text: 'Untuk masuk ke simulasi berkendara, Anda wajib login terlebih dahulu.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3b82f6', // gridstart home uses blue accent for simulation
+            cancelButtonColor: '#3f3a36',
+            confirmButtonText: 'Login Sekarang',
+            cancelButtonText: 'Batal',
+            background: '#f7f3ee',
+            color: '#3f3a36'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = "{{ route('login') }}";
+            }
+        });
+    }
+</script>
 @endsection
