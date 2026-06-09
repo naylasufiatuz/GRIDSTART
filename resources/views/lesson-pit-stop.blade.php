@@ -246,9 +246,7 @@
                     </div>
                 </div>
 
-                <div class="ls-hud-action">
-                    <a href="/" class="ls-hud-btn">Abandon Session</a>
-                </div>
+
             </aside>
 
         </div>
