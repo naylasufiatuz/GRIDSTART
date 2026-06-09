@@ -3194,7 +3194,6 @@ transform:translateY(0);
     font-size: 1.2rem;
     letter-spacing: 4px;
     text-transform: uppercase;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .marquee-content {
