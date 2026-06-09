@@ -19,7 +19,7 @@ Route::middleware(['web', 'auth'])->group(function () {
 // ═══════════════════════════════════════════════════
 // ADMIN API ROUTES — Protected dengan middleware 'admin'
 // ═══════════════════════════════════════════════════
-Route::prefix('admin')->group(function() 
+Route::middleware(['web', 'admin'])->prefix('admin')->group(function() 
 {
     // Dashboard Stats & Activity
     Route::get('/dashboard/stats',    [DashboardController::class, 'stats']);

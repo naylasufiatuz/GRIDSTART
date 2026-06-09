@@ -54,11 +54,12 @@ class PesanTest extends TestCase
 
     public function test_admin_can_crud_pesan()
     {
-        // Create an admin user and authenticate
+                // Create an admin user and authenticate
         $admin = User::create([
             'username' => 'admin',
             'email' => 'admin@gridstart.test',
             'password' => bcrypt('password123'),
+            'is_admin' => true,
         ]);
 
         $this->actingAs($admin);
