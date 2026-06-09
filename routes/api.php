@@ -5,7 +5,6 @@ use App\Http\Controllers\Api\Admin\DashboardController;
 use App\Http\Controllers\Api\Admin\UserController;
 use App\Http\Controllers\Api\Admin\GameScoreController;
 use App\Http\Controllers\Api\Admin\PesanController;
-use App\Http\Controllers\Api\Admin\GameSettingController;
 use App\Http\Controllers\Api\Admin\QuizController;
 
 // ═══════════════════════════════════════════════════
@@ -46,9 +45,10 @@ Route::prefix('admin')->group(function()
     Route::put('/pesan/{id}',    [PesanController::class, 'update']);
     Route::delete('/pesan/{id}', [PesanController::class, 'destroy']);
 
-    // Settings & Quizzes
-    Route::get('/settings', [GameSettingController::class, 'index']);
-    Route::put('/settings', [GameSettingController::class, 'update']);
-
-    Route::apiResource('quizzes', QuizController::class);
+    // Quizzes
+    Route::get('/quizzes',          [QuizController::class, 'index']);
+    Route::post('/quizzes',         [QuizController::class, 'store']);
+    Route::get('/quizzes/{id}',     [QuizController::class, 'show']);
+    Route::put('/quizzes/{id}',     [QuizController::class, 'update']);
+    Route::delete('/quizzes/{id}',  [QuizController::class, 'destroy']);
 });
