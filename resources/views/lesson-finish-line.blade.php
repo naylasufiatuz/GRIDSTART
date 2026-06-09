@@ -163,12 +163,12 @@
 
             <!-- ACTION CTA BUTTONS -->
             <footer style="display: flex; justify-content: center; gap: 20px; margin-top: 40px; margin-bottom: 20px;">
+                <a href="/" class="ls-nav-btn" style="padding: 16px 36px;">
+                    Kembali ke Beranda
+                </a>
                 <a href="/leaderboard" class="ls-nav-btn next-btn" style="padding: 16px 36px; box-shadow: 0 4px 20px rgba(217, 119, 6, 0.35);">
                     Lihat Papan Skor
                     <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="margin-left: 8px;"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                </a>
-                <a href="/" class="ls-nav-btn" style="padding: 16px 36px;">
-                    Kembali ke Beranda
                 </a>
             </footer>
 
