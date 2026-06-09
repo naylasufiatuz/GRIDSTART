@@ -528,7 +528,7 @@ background: linear-gradient(98deg, #F2ECE5 57.47%, #D1DDD3 72.25%, #D1DDD3 87.02
 
 .top-drivers-desc {
   font-size: 15px;
-  color: rgba(247, 243, 238, 0.5);
+  color: var(--taupe-dark);
 }
 
 /* ==========================================================================
