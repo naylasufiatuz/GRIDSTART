@@ -27,7 +27,6 @@
     <div class="navbar-zone navbar-zone--links">
       <ul class="nav-menu">
         <li><a href="/">Home</a></li>
-        <li><a href="/simulasi">Simulasi</a></li>
         <li><a href="/leaderboard">Leaderboard</a></li>
         <li><a href="/contact">Contact</a></li>
       </ul>
