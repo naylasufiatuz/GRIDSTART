@@ -205,6 +205,20 @@ background: linear-gradient(98deg, #F2ECE5 57.47%, #D1DDD3 72.25%, #D1DDD3 87.02
   color: var(--navbar-dark);
 }
 
+/* Dashboard CTA — accented with race gold for admin */
+.navbar-cta--dashboard {
+  border-color: 1.5px solid rgba(255, 255, 255, 0.8);
+  color: #fff;
+  text-decoration: none;
+  margin-right: 6px;
+}
+
+.navbar-cta--dashboard:hover {
+  background: var(--accent-race);
+  color: var(--navbar-dark);
+  border-color: var(--accent-race);
+}
+
 .navbar-toggle {
   display: none;
 }
@@ -355,17 +369,6 @@ background: linear-gradient(98deg, #F2ECE5 57.47%, #D1DDD3 72.25%, #D1DDD3 87.02
   color: rgba(255, 255, 255, 0.7);
   text-transform: uppercase;
 }
-
-.hero-bottom-left {
-  position: absolute;
-  bottom: 40px;
-  left: 48px;
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 1px;
-  color: rgba(255, 255, 255, 0.6);
-}
-
 /* hero bottom right deleted - now orbits title content */
 
 /* ================= LEADERBOARD ================= */

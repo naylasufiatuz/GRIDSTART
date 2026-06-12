@@ -15,6 +15,7 @@ class quiz extends Model
         'option_a',
         'option_b',
         'option_c',
+        'option_d',
         'correct_answer',
         'points'
     ];

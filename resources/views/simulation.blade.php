@@ -23,6 +23,10 @@
                 <span class="hud-val"><span id="distance-ui">0</span> <span class="hud-unit">M</span></span>
             </div>
             <div class="hud-metric">
+                <span class="hud-label">SPEED</span>
+                <span class="hud-val"><span id="speed-ui">0</span> <span class="hud-unit">KM/H</span></span>
+            </div>
+            <div class="hud-metric">
                 <span class="hud-label">PTS EARNED</span>
                 <span class="hud-val" id="score-ui">0</span>
             </div>
@@ -43,8 +47,11 @@
         </div>
     </div>
 
-    {{-- ======================== D-PAD (NO EMOJIS) ======================== --}}
+    {{-- ======================== D-PAD (CROSS LAYOUT) ======================== --}}
     <div id="d-pad">
+        <div class="d-btn" id="btn-gas" aria-label="Accelerate">
+            <svg viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"></polyline></svg>
+        </div>
         <div class="d-btn" id="btn-left" aria-label="Steer left">
             <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
         </div>
@@ -80,21 +87,22 @@
         </div>
     </div>
 
-    <div id="quiz-overlay" class="overlay-bg">
-        <div class="modal-card quiz-card">
-            <div class="hud-badge yellow" id="quiz-badge-label">SYSTEM CHECK</div>
-            <h2 id="quiz-title" class="tech-title">Peringatan!</h2>
-            
-            <div id="timer-bar-wrap" class="hud-timer-wrap">
-                <div id="timer-bar-fill" class="hud-timer-fill"></div>
+    {{-- ======================== QUIZ BOTTOM PANEL (NO POPUP) ======================== --}}
+    <div id="quiz-panel" style="display: none;">
+        <div class="quiz-panel-inner">
+            <div class="quiz-panel-header">
+                <span class="hud-badge yellow" id="quiz-badge-label">SYSTEM CHECK</span>
+                <div id="timer-bar-wrap" class="hud-timer-wrap" style="display:none;">
+                    <div id="timer-bar-fill" class="hud-timer-fill"></div>
+                </div>
             </div>
-            
+            <h2 id="quiz-title" class="tech-title">Peringatan!</h2>
             <p id="quiz-question" class="tech-desc">Pertanyaan akan muncul di sini.</p>
-            
             <div class="quiz-opts">
                 <button class="quiz-btn" id="btn-opt-a">A</button>
                 <button class="quiz-btn" id="btn-opt-b">B</button>
                 <button class="quiz-btn" id="btn-opt-c">C</button>
+                <button class="quiz-btn" id="btn-opt-d">D</button>
             </div>
         </div>
     </div>
@@ -520,7 +528,7 @@
         // ==========================================
         // 8. STATE & GAMEPLAY CONTROL ENGINE
         // ==========================================
-        let speed = 0.8; 
+        let speed = 0.3; 
         let isPaused = true; 
         let distance = 0;
         let score = 0;
@@ -533,11 +541,12 @@
         let envSpawnTimer = 0;
 
         // Controller Inputs
-        const keys = { ArrowLeft: false, ArrowRight: false, ArrowDown: false };
+        const keys = { ArrowLeft: false, ArrowRight: false, ArrowDown: false, ArrowUp: false };
         const mapKey = (e, state) => {
             if(e.key === 'ArrowLeft' || e.code === 'ArrowLeft') keys.ArrowLeft = state;
             if(e.key === 'ArrowRight' || e.code === 'ArrowRight') keys.ArrowRight = state;
             if(e.key === 'ArrowDown' || e.code === 'ArrowDown') keys.ArrowDown = state;
+            if(e.key === 'ArrowUp' || e.code === 'ArrowUp') keys.ArrowUp = state;
         };
         window.addEventListener('keydown', (e) => mapKey(e, true));
         window.addEventListener('keyup', (e) => mapKey(e, false));
@@ -550,7 +559,7 @@
             btn.addEventListener('mouseup', () => { keys[keyName] = false; });
             btn.addEventListener('mouseleave', () => { keys[keyName] = false; });
         };
-        setupDriveBtn('btn-left', 'ArrowLeft'); setupDriveBtn('btn-right', 'ArrowRight'); setupDriveBtn('btn-brake', 'ArrowDown');
+        setupDriveBtn('btn-left', 'ArrowLeft'); setupDriveBtn('btn-right', 'ArrowRight'); setupDriveBtn('btn-brake', 'ArrowDown'); setupDriveBtn('btn-gas', 'ArrowUp');
 
         document.getElementById('btn-start-game').onclick = () => {
             document.getElementById('start-overlay').style.display = 'none';
@@ -558,7 +567,7 @@
         };
         
         document.getElementById('pause-btn').onclick = () => {
-            const isAnyModalOpen = document.getElementById('quiz-overlay').style.display === 'flex' || 
+            const isAnyModalOpen = document.getElementById('quiz-panel').style.display === 'block' || 
                                    document.getElementById('finish-overlay').style.display === 'flex' ||
                                    document.getElementById('start-overlay').style.display === 'flex';
             if(!isGameOver && !hasHitFinishLine && !isAnyModalOpen) { 
@@ -613,16 +622,20 @@
                             if (q.obstacle_type === 'racing_line') { dist = 500; title = "RACING LINE"; }
                             if (q.obstacle_type === 'brake_zone') { dist = 800; title = "BRAKE ZONE"; }
 
+                            const options = [
+                                { t: q.option_a, c: q.correct_answer === 'A' },
+                                { t: q.option_b, c: q.correct_answer === 'B' },
+                                { t: q.option_c, c: q.correct_answer === 'C' }
+                            ];
+                            if (q.option_d) options.push({ t: q.option_d, c: q.correct_answer === 'D' });
+                            while (options.length < 4) options.push({ t: '-', c: false });
+
                             return {
                                 dist: dist,
                                 title: title,
                                 points: q.points || 10,
                                 q: q.question,
-                                a: [
-                                    { t: q.option_a, c: q.correct_answer === 'A' },
-                                    { t: q.option_b, c: q.correct_answer === 'B' },
-                                    { t: q.option_c, c: q.correct_answer === 'C' }
-                                ],
+                                a: options,
                                 triggered: false
                             };
                         });
@@ -631,14 +644,18 @@
                     // Map dynamic Pit Stop Quizzes
                     if (dbPitstops.length > 0) {
                         pitStopQs = dbPitstops.map((q, idx) => {
+                            const options = [
+                                { t: q.option_a, c: q.correct_answer === 'A' },
+                                { t: q.option_b, c: q.correct_answer === 'B' },
+                                { t: q.option_c, c: q.correct_answer === 'C' }
+                            ];
+                            if (q.option_d) options.push({ t: q.option_d, c: q.correct_answer === 'D' });
+                            while (options.length < 4) options.push({ t: '-', c: false });
+
                             return {
                                 q: `(${idx+1}/${dbPitstops.length}) ${q.question}`,
                                 points: q.points || 10,
-                                a: [
-                                    { t: q.option_a, c: q.correct_answer === 'A' },
-                                    { t: q.option_b, c: q.correct_answer === 'B' },
-                                    { t: q.option_c, c: q.correct_answer === 'C' }
-                                ]
+                                a: options
                             };
                         });
                     }
@@ -650,10 +667,17 @@
         fetchQuizzes();
 
         let pitIndex = 0; let pitTimer; let timeLeft = 100;
-        const qOverlay = document.getElementById('quiz-overlay');
+        const qPanel = document.getElementById('quiz-panel');
         const qBtns = document.querySelectorAll('.quiz-btn');
 
         let activeQuizPoints = 10; // Track points for current quiz from CRUD data
+
+        function showQuizPanel() {
+            qPanel.style.display = 'block';
+        }
+        function hideQuizPanel() {
+            qPanel.style.display = 'none';
+        }
 
         function triggerQuiz(qData) {
             currentQuizMode = 'article'; isPaused = true; qData.triggered = true;
@@ -662,14 +686,14 @@
             document.getElementById('quiz-title').innerText = qData.title;
             document.getElementById('quiz-question').innerText = qData.q;
             qBtns.forEach((btn, i) => { btn.innerText = qData.a[i].t; btn.setAttribute('data-correct', qData.a[i].c); });
-            qOverlay.style.display = 'flex';
+            showQuizPanel();
         }
 
         function triggerPitStop() {
             if (hasDonePitStop) return; 
             currentQuizMode = 'pitstop'; isPaused = true; hasDonePitStop = true; pitIndex = 0;
             playerCar.position.x = -8; 
-            qOverlay.style.display = 'flex'; loadPitQ();
+            showQuizPanel(); loadPitQ();
         }
 
         function loadPitQ() {
@@ -688,17 +712,18 @@
         function handlePitAnswer(isCorrect) {
             clearInterval(pitTimer);
             if(isCorrect) { 
-                gas += 34; if(gas>100) gas=100; 
+                gas += 18; if(gas>100) gas=100; 
                 showToast("Benar! +1 Bar Bensin.", "success"); 
             } else { 
-                showToast("Salah / Waktu Habis!", "error"); 
+                gas += 5; if(gas>100) gas=100;
+                showToast("Salah / Waktu Habis! Bensin sedikit.", "error"); 
             }
             
             pitIndex++;
             if(pitIndex < pitStopQs.length) {
                 loadPitQ();
             } else {
-                qOverlay.style.display = 'none'; currentQuizMode = '';
+                hideQuizPanel(); currentQuizMode = '';
                 if(gas <= 0) { 
                     triggerGameOver();
                 } else { 
@@ -719,7 +744,7 @@
                         score -= pts; showToast(`Jawaban Salah! -${pts} Poin.`, "error"); 
                     }
                     document.getElementById('score-ui').innerText = score;
-                    qOverlay.style.display = 'none'; currentQuizMode = ''; isPaused = false;
+                    hideQuizPanel(); currentQuizMode = ''; isPaused = false;
                 } else if (currentQuizMode === 'pitstop') {
                     handlePitAnswer(isCorrect);
                 }
@@ -735,14 +760,40 @@
             if (!isPaused && !isGameOver && !hasHitFinishLine) {
                 // Taillight active reaction
                 const braking = keys.ArrowDown;
+                const accelerating = keys.ArrowUp;
                 activeBrakeLightL.visible = braking;
                 activeBrakeLightR.visible = braking;
                 brakePointLight.intensity = braking ? 2.0 : 0;
 
-                let moveSpeed = braking ? speed * 0.4 : speed;
+                // Auto-slowdown when a scene/event is approaching (within z=-80 to z=10)
+                let sceneNearby = false;
+                for (let i = 0; i < worldObjects.length; i++) {
+                    const obj = worldObjects[i];
+                    if (obj.isEvent) {
+                        const mesh = obj.mesh || obj;
+                        if (mesh.position.z < -10 && mesh.position.z > -80) {
+                            sceneNearby = true;
+                            break;
+                        }
+                    }
+                }
+
+                let moveSpeed;
+                if (braking) {
+                    moveSpeed = speed * 0.4;
+                } else if (accelerating) {
+                    moveSpeed = speed * 2.2;
+                } else {
+                    moveSpeed = speed;
+                }
+                // Auto-slowdown when scene is approaching
+                if (sceneNearby && !braking) {
+                    moveSpeed = Math.min(moveSpeed, speed * 0.55);
+                }
                 distance += (moveSpeed * 0.2); 
                 let currentDist = Math.floor(distance);
                 document.getElementById('distance-ui').innerText = currentDist;
+                document.getElementById('speed-ui').innerText = Math.round(moveSpeed * 200);
 
                 envSpawnTimer++;
                 if(envSpawnTimer > 30 / moveSpeed) { spawnEnvironment(); envSpawnTimer = 0; }
@@ -797,10 +848,10 @@
                 articleQuizzes.forEach(q => { if(currentDist === q.dist && !q.triggered) triggerQuiz(q); });
 
                 if (!hasDonePitStop) {
-                    gas = 100 - (distance / 660) * 100;
+                    gas = 100 - (distance / 640) * 100;
                     if(gas <= 0) gas = 0; 
                 } else if (currentQuizMode !== 'pitstop') { 
-                    gas -= 0.01; 
+                    gas -= 0.09;
                     if(gas <= 0) {
                         gas = 0;
                         triggerGameOver();

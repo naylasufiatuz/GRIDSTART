@@ -29,6 +29,7 @@ class QuizController extends Controller
             'option_a'       => 'required|string|max:255',
             'option_b'       => 'required|string|max:255',
             'option_c'       => 'required|string|max:255',
+            'option_d'       => 'nullable|string|max:255',
             'correct_answer' => 'required|string|size:1',
             'points'         => 'required|integer',
         ]);
@@ -61,6 +62,7 @@ class QuizController extends Controller
             'option_a'       => 'sometimes|required|string|max:255',
             'option_b'       => 'sometimes|required|string|max:255',
             'option_c'       => 'sometimes|required|string|max:255',
+            'option_d'       => 'nullable|string|max:255',
             'correct_answer' => 'sometimes|required|string|size:1',
             'points'         => 'sometimes|required|integer',
         ]);

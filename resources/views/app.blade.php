@@ -46,6 +46,9 @@
         <a href="/login" class="navbar-cta">Mulai Belajar</a>
       @endguest
       @auth
+        @if(auth()->user()->is_admin)
+          <a href="{{ route('admin.dashboard') }}" class="navbar-cta navbar-cta--dashboard">Dashboard</a>
+        @endif
         <a href="/profile" class="navbar-cta">Profile</a>
       @endauth
     </div>

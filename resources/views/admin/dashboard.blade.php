@@ -342,11 +342,16 @@
       <input type="text" id="quiz-opt-c" placeholder="Pilihan Jawaban C"/>
     </div>
     <div class="form-group">
+      <label>Pilihan D</label>
+      <input type="text" id="quiz-opt-d" placeholder="Pilihan Jawaban D"/>
+    </div>
+    <div class="form-group">
       <label>Jawaban Benar</label>
       <select id="quiz-correct-answer" style="width: 100%; padding: 8px; border-radius: 4px; border: 1px solid var(--border);">
         <option value="A">A</option>
         <option value="B">B</option>
         <option value="C">C</option>
+        <option value="D">D</option>
       </select>
     </div>
     <div class="form-group">

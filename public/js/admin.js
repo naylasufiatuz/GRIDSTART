@@ -422,12 +422,13 @@ async function loadQuizzes() {
             A: ${escapeHtml(q.option_a)}<br>
             B: ${escapeHtml(q.option_b)}<br>
             C: ${escapeHtml(q.option_c)}<br>
+            ${q.option_d ? 'D: ' + escapeHtml(q.option_d) + '<br>' : ''}
             <strong>Benar: [${q.correct_answer}]</strong>
           </td>
           <td><strong style="color:var(--accent)">${q.points}</strong></td>
           <td>
             <div class="action-btns">
-              <button class="btn-edit" onclick="editQuiz(${q.id}, '${q.quiz_type}', '${q.obstacle_type || ''}', \`${escapeJs(q.question)}\`, \`${escapeJs(q.option_a)}\`, \`${escapeJs(q.option_b)}\`, \`${escapeJs(q.option_c)}\`, '${q.correct_answer}', ${q.points})">Edit</button>
+              <button class="btn-edit" onclick="editQuiz(${q.id}, '${q.quiz_type}', '${q.obstacle_type || ''}', \`${escapeJs(q.question)}\`, \`${escapeJs(q.option_a)}\`, \`${escapeJs(q.option_b)}\`, \`${escapeJs(q.option_c)}\`, \`${escapeJs(q.option_d || '')}\`, '${q.correct_answer}', ${q.points})">Edit</button>
               <button class="btn-del"  onclick="deleteQuiz(${q.id})">Hapus</button>
             </div>
           </td>
@@ -448,13 +449,14 @@ function openQuizModal() {
   document.getElementById('quiz-opt-a').value = '';
   document.getElementById('quiz-opt-b').value = '';
   document.getElementById('quiz-opt-c').value = '';
+  document.getElementById('quiz-opt-d').value = '';
   document.getElementById('quiz-correct-answer').value = 'A';
   document.getElementById('quiz-points').value = '10';
   toggleObstacleTypeSelect();
   openModal('quiz-modal');
 }
 
-function editQuiz(id, type, obstacle_type, question, option_a, option_b, option_c, correct_answer, points) {
+function editQuiz(id, type, obstacle_type, question, option_a, option_b, option_c, option_d, correct_answer, points) {
   document.getElementById('quiz-modal-title').textContent = 'Edit Quiz';
   document.getElementById('quiz-id').value = id;
   document.getElementById('quiz-type').value = type;
@@ -463,6 +465,7 @@ function editQuiz(id, type, obstacle_type, question, option_a, option_b, option_
   document.getElementById('quiz-opt-a').value = option_a;
   document.getElementById('quiz-opt-b').value = option_b;
   document.getElementById('quiz-opt-c').value = option_c;
+  document.getElementById('quiz-opt-d').value = option_d || '';
   document.getElementById('quiz-correct-answer').value = correct_answer;
   document.getElementById('quiz-points').value = points;
   toggleObstacleTypeSelect();
@@ -477,10 +480,11 @@ async function saveQuiz() {
   const option_a       = document.getElementById('quiz-opt-a').value;
   const option_b       = document.getElementById('quiz-opt-b').value;
   const option_c       = document.getElementById('quiz-opt-c').value;
+  const option_d       = document.getElementById('quiz-opt-d').value;
   const correct_answer = document.getElementById('quiz-correct-answer').value;
   const points         = document.getElementById('quiz-points').value;
 
-  const body = { quiz_type, obstacle_type, question, option_a, option_b, option_c, correct_answer, points };
+  const body = { quiz_type, obstacle_type, question, option_a, option_b, option_c, option_d, correct_answer, points };
   const method = id ? 'PUT' : 'POST';
   const url    = id ? `${BASE}/quizzes/${id}` : `${BASE}/quizzes`;
 

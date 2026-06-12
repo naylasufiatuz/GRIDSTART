@@ -29,8 +29,7 @@
     </p>
     <a href="#roadmap">Jelajahi Roadmap</a>
   </div>
-
-  <div class="hero-bottom-left">6 Learning Stages  • Full Circuit</div>
+  
 </section>
 
 <section class="roadmap-section" id="roadmap">
