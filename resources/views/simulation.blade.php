@@ -490,21 +490,25 @@
             line.rotation.x = -Math.PI / 2; line.position.set(0, 0.02, -150);
             scene.add(line); worldObjects.push(line);
 
-            // Spawning organic trees and lamp posts
+            // Trees — random positions outside road (x=-6 to 6)
+            // Left side: x=-7 to -12 (random)
             if(Math.random() > 0.28) { 
                 const treeL = createLowPolyTree(); 
-                treeL.position.set(-7.5 - Math.random()*9, 0, -150); 
+                treeL.position.set(-7 - Math.random()*5, 0, -150); 
                 scene.add(treeL); worldObjects.push(treeL); 
             }
+            // Right side: x=7 to 14 (random)
             if(Math.random() > 0.28) { 
                 const treeR = createLowPolyTree(); 
-                treeR.position.set(7.5 + Math.random()*9, 0, -150); 
+                treeR.position.set(7 + Math.random()*7, 0, -150); 
                 scene.add(treeR); worldObjects.push(treeR); 
             }
-            if(Math.random() > 0.8) { 
-                const lamp = createLampPost(); 
-                lamp.position.set(-6.4, 0, -150); 
-                scene.add(lamp); worldObjects.push(lamp); 
+            // Lamp post — left side, skip only when near pit stop (narrow 40m zone)
+            const nearPit = distance > 620 && distance < 660;
+            if (!nearPit) {
+                const lampL = createLampPost(); 
+                lampL.position.set(-7, 0, -150); 
+                scene.add(lampL); worldObjects.push(lampL);
             }
         }
 
