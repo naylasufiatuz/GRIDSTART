@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+   <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -271,43 +271,63 @@
         road.rotation.x = -Math.PI / 2; road.position.y = 0.01; road.receiveShadow = true; scene.add(road);
 
         // ==========================================
-        // 5. DETAILED CLASSIC CONCEPT RACERS
+        // 5. MINIMALIST SPORTS RACER - BLUE/WHITE
         // ==========================================
+        const matWhiteAccent = new THREE.MeshStandardMaterial({ color: 0xecf0f1, roughness: 0.3, metalness: 0.4 });
+        const matWheelSilver = new THREE.MeshStandardMaterial({ color: 0xbdc3c7, roughness: 0.4, metalness: 0.6 });
+
         function createSleekSportsCar(primaryColorHex, isPlayer = false) {
             const car = new THREE.Group();
-            const matBody = new THREE.MeshStandardMaterial({ color: primaryColorHex, roughness: 0.4, metalness: 0.5, flatShading: true });
+            const matBody = new THREE.MeshStandardMaterial({ color: primaryColorHex, roughness: 0.35, metalness: 0.55, flatShading: true });
 
-            // 1. Ceper Chassis
-            const chassis = new THREE.Mesh(new THREE.BoxGeometry(2.2, 0.4, 4.8), matBody);
-            chassis.position.y = 0.4; chassis.castShadow = true; chassis.receiveShadow = true;
+            // 1. Low-profile aerodynamic chassis
+            const chassis = new THREE.Mesh(new THREE.BoxGeometry(2.1, 0.35, 5.0), matBody);
+            chassis.position.y = 0.38; chassis.castShadow = true; chassis.receiveShadow = true;
             car.add(chassis);
 
-            // 2. Aerodynamic Cockpit
-            const cabin = new THREE.Mesh(new THREE.BoxGeometry(1.6, 0.5, 2.2), matGlass);
-            cabin.position.set(0, 0.85, -0.2); cabin.castShadow = true;
+            // 2. Front nose taper (aerodynamic wedge)
+            const nose = new THREE.Mesh(new THREE.BoxGeometry(1.8, 0.2, 0.8), matBody);
+            nose.position.set(0, 0.32, -2.6); nose.castShadow = true;
+            car.add(nose);
+
+            // 3. Sleek low cockpit canopy
+            const cabin = new THREE.Mesh(new THREE.BoxGeometry(1.5, 0.4, 1.8), matGlass);
+            cabin.position.set(0, 0.75, -0.3); cabin.castShadow = true;
             car.add(cabin);
 
-            // 3. F1 Concept Rear Spoiler
-            const pillarL = new THREE.Mesh(new THREE.BoxGeometry(0.1, 0.3, 0.2), matDark);
-            pillarL.position.set(-0.8, 0.7, 2.2);
-            const pillarR = new THREE.Mesh(new THREE.BoxGeometry(0.1, 0.3, 0.2), matDark);
-            pillarR.position.set(0.8, 0.7, 2.2);
-            const spoilerWing = new THREE.Mesh(new THREE.BoxGeometry(2.0, 0.1, 0.4), matBody);
-            spoilerWing.position.set(0, 0.9, 2.3); spoilerWing.castShadow = true;
-            car.add(pillarL, pillarR, spoilerWing);
+            // 4. White racing stripe down the center (minimalist accent)
+            const stripe = new THREE.Mesh(new THREE.BoxGeometry(0.3, 0.02, 4.6), matWhiteAccent);
+            stripe.position.set(0, 0.57, -0.1);
+            car.add(stripe);
 
-            // 4. LED Front Headlamps & Rear Lights
-            const hlL = new THREE.Mesh(new THREE.BoxGeometry(0.4, 0.1, 0.1), matHeadlight); hlL.position.set(-0.7, 0.5, -2.4);
-            const hlR = new THREE.Mesh(new THREE.BoxGeometry(0.4, 0.1, 0.1), matHeadlight); hlR.position.set(0.7, 0.5, -2.4);
-            const tlL = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.1, 0.1), matTaillight); tlL.position.set(-0.7, 0.5, 2.4);
-            const tlR = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.1, 0.1), matTaillight); tlR.position.set(0.7, 0.5, 2.4);
-            car.add(hlL, hlR, tlL, tlR);
+            // 5. Subtle rear diffuser lip (no big wing - minimalist)
+            const diffuser = new THREE.Mesh(new THREE.BoxGeometry(2.0, 0.08, 0.3), matDark);
+            diffuser.position.set(0, 0.25, 2.55);
+            car.add(diffuser);
 
-            // 5. 4 Custom Mechanical Wheels
-            const wheelGeo = new THREE.CylinderGeometry(0.44, 0.44, 0.42, 16); wheelGeo.rotateZ(Math.PI / 2);
-            [[-1.1, 0.42, 1.4], [1.1, 0.42, 1.4], [-1.1, 0.42, -1.4], [1.1, 0.42, -1.4]].forEach(pos => {
+            // 6. Slim LED headlamps
+            const hlL = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.06, 0.08), matHeadlight); hlL.position.set(-0.65, 0.45, -2.5);
+            const hlR = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.06, 0.08), matHeadlight); hlR.position.set(0.65, 0.45, -2.5);
+            car.add(hlL, hlR);
+
+            // 7. Full-width LED taillight bar
+            const tlBar = new THREE.Mesh(new THREE.BoxGeometry(1.8, 0.06, 0.08), matTaillight); tlBar.position.set(0, 0.45, 2.52);
+            car.add(tlBar);
+
+            // 8. Side air intakes (white accent)
+            const intakeL = new THREE.Mesh(new THREE.BoxGeometry(0.08, 0.15, 0.6), matWhiteAccent); intakeL.position.set(-1.05, 0.4, 0.5);
+            const intakeR = new THREE.Mesh(new THREE.BoxGeometry(0.08, 0.15, 0.6), matWhiteAccent); intakeR.position.set(1.05, 0.4, 0.5);
+            car.add(intakeL, intakeR);
+
+            // 9. Lightweight alloy wheels (silver/white accent)
+            const wheelGeo = new THREE.CylinderGeometry(0.42, 0.42, 0.38, 16); wheelGeo.rotateZ(Math.PI / 2);
+            const wheelCapGeo = new THREE.CylinderGeometry(0.18, 0.18, 0.4, 8); wheelCapGeo.rotateZ(Math.PI / 2);
+            [[-1.05, 0.42, 1.4], [1.05, 0.42, 1.4], [-1.05, 0.42, -1.4], [1.05, 0.42, -1.4]].forEach(pos => {
                 const wheel = new THREE.Mesh(wheelGeo, matDark);
                 wheel.position.set(...pos); wheel.castShadow = true; car.add(wheel);
+                // White center cap
+                const cap = new THREE.Mesh(wheelCapGeo, matWheelSilver);
+                cap.position.set(...pos); car.add(cap);
             });
 
             return car;
@@ -339,15 +359,15 @@
             return truck;
         }
 
-        // Spawn Player's classic Sports Car (Signature Red)
-        const playerCar = createSleekSportsCar(0xff4757, true);
+        // Spawn Player's Sports Racer (Racing Blue + White)
+        const playerCar = createSleekSportsCar(0x2980b9, true);
         scene.add(playerCar);
 
         // Add physical active taillight brake flare mesh inside player car
         const activeBrakeLightL = new THREE.Mesh(new THREE.BoxGeometry(0.52, 0.12, 0.12), matTaillightBrake);
-        activeBrakeLightL.position.set(-0.7, 0.5, 2.42); activeBrakeLightL.visible = false;
+        activeBrakeLightL.position.set(-0.5, 0.45, 2.54); activeBrakeLightL.visible = false;
         const activeBrakeLightR = new THREE.Mesh(new THREE.BoxGeometry(0.52, 0.12, 0.12), matTaillightBrake);
-        activeBrakeLightR.position.set(0.7, 0.5, 2.42); activeBrakeLightR.visible = false;
+        activeBrakeLightR.position.set(0.5, 0.45, 2.54); activeBrakeLightR.visible = false;
         playerCar.add(activeBrakeLightL, activeBrakeLightR);
 
         // Add real PointLight to illuminate ground when pengereman
@@ -362,16 +382,16 @@
 
         // Front-left blinker
         const blinkerFL = new THREE.Mesh(new THREE.BoxGeometry(0.25, 0.12, 0.12), matBlinkerAmber.clone());
-        blinkerFL.position.set(-1.05, 0.5, -2.35);
+        blinkerFL.position.set(-1.0, 0.45, -2.45);
         // Front-right blinker
         const blinkerFR = new THREE.Mesh(new THREE.BoxGeometry(0.25, 0.12, 0.12), matBlinkerAmber.clone());
-        blinkerFR.position.set(1.05, 0.5, -2.35);
+        blinkerFR.position.set(1.0, 0.45, -2.45);
         // Rear-left blinker
         const blinkerRL = new THREE.Mesh(new THREE.BoxGeometry(0.25, 0.12, 0.12), matBlinkerAmber.clone());
-        blinkerRL.position.set(-1.05, 0.5, 2.35);
+        blinkerRL.position.set(-1.0, 0.45, 2.48);
         // Rear-right blinker
         const blinkerRR = new THREE.Mesh(new THREE.BoxGeometry(0.25, 0.12, 0.12), matBlinkerAmber.clone());
-        blinkerRR.position.set(1.05, 0.5, 2.35);
+        blinkerRR.position.set(1.0, 0.45, 2.48);
 
         playerCar.add(blinkerFL, blinkerFR, blinkerRL, blinkerRR);
 
@@ -918,7 +938,7 @@
                 if(currentDist === 640) createPitStopArea();
                 if(currentDist === 790) createPotholes();
 
-                articleQuizzes.forEach(q => { if(currentDist === q.dist && !q.triggered) triggerQuiz(q); });
+                articleQuizzes.forEach(q => { if(!q.triggered && currentDist >= q.dist + 7) triggerQuiz(q); });
 
                 if (!hasDonePitStop) {
                     gas = 100 - (distance / 640) * 100;
