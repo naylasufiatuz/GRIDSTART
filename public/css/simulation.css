@@ -384,12 +384,13 @@ canvas {
 
 .hud-badge.yellow {
   background: rgba(203, 184, 157, 0.12);
+  color: var(--brand-taupe-dark);
   border: 1px solid var(--brand-accent-race);
 }
 
 .hud-badge.green {
   background: rgba(143, 163, 130, 0.18);
-  color: var(--brand-sage-dark);
+  color: var(--brand-taupe-dark);
   border: 1px solid var(--brand-sage);
 }
 
@@ -546,7 +547,7 @@ canvas {
 
 
 /* ==========================================================================
-   6b. QUIZ BOTTOM PANEL (Inline, No Popup)
+   6b. QUIZ BOTTOM PANEL (Cream Modal Style — matches pause/finish popups)
    ========================================================================== */
 #quiz-panel {
   position: absolute;
@@ -554,7 +555,7 @@ canvas {
   left: 0;
   right: 0;
   z-index: 500;
-  background: rgba(54, 50, 46, 0.92);
+  background: linear-gradient(180deg, #ede6dc 0%, #f7f3ee 100%);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-top: 2px solid var(--brand-accent-race);
@@ -582,13 +583,13 @@ canvas {
 #quiz-panel .tech-title {
   font-size: 16px;
   margin: 0 0 6px 0;
-  color: var(--brand-cream);
+  color: var(--brand-taupe-dark);
   letter-spacing: 0;
 }
 
 #quiz-panel .tech-desc {
   font-size: 13px;
-  color: var(--brand-cream-soft);
+  color: var(--brand-taupe-soft);
   margin-bottom: 12px;
   line-height: 1.4;
 }
@@ -600,24 +601,24 @@ canvas {
 }
 
 #quiz-panel .quiz-btn {
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(203, 184, 157, 0.25);
-  color: var(--brand-cream);
+  background: #fff;
+  border: 1.5px solid rgba(63, 58, 54, 0.12);
+  color: var(--brand-taupe-dark);
   padding: 10px 14px;
   font-size: 12px;
   border-radius: 4px;
 }
 
 #quiz-panel .quiz-btn:hover {
-  background: rgba(203, 184, 157, 0.18);
+  background: #fffbf5;
   border-color: var(--brand-accent-race);
   transform: none;
 }
 
 #quiz-panel .quiz-btn::before {
-  background: rgba(203, 184, 157, 0.15);
-  border-color: rgba(203, 184, 157, 0.3);
-  color: var(--brand-cream);
+  background: var(--brand-cream-soft);
+  border-color: rgba(63, 58, 54, 0.15);
+  color: var(--brand-taupe-dark);
   width: 20px;
   height: 20px;
   min-width: 20px;
@@ -627,7 +628,7 @@ canvas {
 
 #quiz-panel .quiz-btn:hover::before {
   background: var(--brand-accent-race);
-  color: var(--brand-taupe-dark);
+  color: #fff;
 }
 
 #quiz-panel .hud-badge {
@@ -637,7 +638,7 @@ canvas {
 #quiz-panel .hud-timer-wrap {
   flex: 1;
   height: 6px;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(63, 58, 54, 0.08);
   border-radius: 3px;
   overflow: hidden;
 }
