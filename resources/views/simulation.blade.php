@@ -618,7 +618,7 @@
         // ==========================================
         // 8. STATE & GAMEPLAY CONTROL ENGINE
         // ==========================================
-        let speed = 0.3; 
+        let speed = 0.45;
         let isPaused = true; 
         let distance = 0;
         let score = 0;
@@ -757,6 +757,7 @@
         fetchQuizzes();
 
         let pitIndex = 0; let pitTimer; let timeLeft = 100;
+                let pitCorrectCount = 0; // Track correct answers during pit stop
         const qPanel = document.getElementById('quiz-panel');
         const qBtns = document.querySelectorAll('.quiz-btn');
 
@@ -782,6 +783,7 @@
         function triggerPitStop() {
             if (hasDonePitStop) return; 
             currentQuizMode = 'pitstop'; isPaused = true; hasDonePitStop = true; pitIndex = 0;
+            pitCorrectCount = 0; // Reset correct answer counter
             playerCar.position.x = -8; 
             showQuizPanel(); loadPitQ();
         }
@@ -802,22 +804,36 @@
         function handlePitAnswer(isCorrect) {
             clearInterval(pitTimer);
             if(isCorrect) { 
-                gas += 18; if(gas>100) gas=100; 
-                showToast("Benar! +1 Bar Bensin.", "success"); 
+                pitCorrectCount++;
+                score += 10;
+                showToast(`Benar! (${pitCorrectCount} tepat)`, "success"); 
             } else { 
-                gas += 5; if(gas>100) gas=100;
-                showToast("Salah / Waktu Habis! Bensin sedikit.", "error"); 
+                showToast("Salah / Waktu Habis!", "error"); 
             }
             
             pitIndex++;
             if(pitIndex < pitStopQs.length) {
                 loadPitQ();
             } else {
+                // Set fuel based on correct answer count
+                // 3 correct = 100% (full tank, comfortable finish)
+                // 2 correct = 50%  (can finish at normal speed, but accelerating burns more)
+                // 1 correct = 25%  (can drive but can't reach finish)
+                // 0 correct = 0%   (immediate game over)
+                const fuelMap = { 0: 0, 1: 25, 2: 75, 3: 100 };
+                gas = fuelMap[pitCorrectCount] || 0;
+
                 hideQuizPanel(); currentQuizMode = '';
                 if(gas <= 0) { 
+                    showToast("Bensin habis! Pit stop gagal total.", "error");
                     triggerGameOver();
                 } else { 
-                    showToast("Pit Stop Selesai! Melanjutkan perjalanan.", "success"); 
+                    const msgs = {
+                        3: "Pit Stop Sempurna! Bensin penuh 100%!",
+                        2: "Pit Stop cukup baik! Bensin 80% — hemat ya!",
+                        1: "Pit Stop kurang baik. Bensin hanya 25%..."
+                    };
+                    showToast(msgs[pitCorrectCount] || "", pitCorrectCount >= 2 ? "success" : "error"); 
                     playerCar.position.x = 0; isPaused = false; 
                 } 
             }
@@ -941,10 +957,22 @@
                 articleQuizzes.forEach(q => { if(!q.triggered && currentDist >= q.dist + 7) triggerQuiz(q); });
 
                 if (!hasDonePitStop) {
-                    gas = 100 - (distance / 640) * 100;
-                    if(gas <= 0) gas = 0; 
+                    // Pre-pit: fuel drains linearly, but player arrives at pit (~640m) with ~12% fuel
+                    gas = 100 - (distance / 730) * 100;
+                    if(gas <= 0) {
+                        gas = 0;
+                        triggerGameOver();
+                    }
                 } else if (currentQuizMode !== 'pitstop') { 
-                    gas -= 0.09;
+                    // Post-pit: fuel drains proportionally to distance traveled
+                    // Normal: 0.20 fuel/m → 100 fuel = 500m range (easily finishes 360m)
+                    // Accelerating: 0.35 fuel/m → 100 fuel = 286m (risky, burns fast)
+                    // Braking: 0.10 fuel/m → 100 fuel = 1000m (very efficient)
+                    // 2 correct (50 fuel): normal=250m (not enough), braking=500m (can finish)
+                    // 1 correct (25 fuel): braking=250m (still can't reach 360m finish)
+                    const fuelPerMeter = accelerating ? 0.35 : (braking ? 0.10 : 0.20);
+                    const distTraveled = moveSpeed * 0.2;
+                    gas -= fuelPerMeter * distTraveled;
                     if(gas <= 0) {
                         gas = 0;
                         triggerGameOver();
