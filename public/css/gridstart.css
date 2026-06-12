@@ -211,12 +211,12 @@ background: linear-gradient(98deg, #F2ECE5 57.47%, #D1DDD3 72.25%, #D1DDD3 87.02
   color: #fff;
   text-decoration: none;
   margin-right: 6px;
+  text-decoration: underline;
 }
 
 .navbar-cta--dashboard:hover {
-  background: var(--accent-race);
+  background: #fff;
   color: var(--navbar-dark);
-  border-color: var(--accent-race);
 }
 
 .navbar-toggle {

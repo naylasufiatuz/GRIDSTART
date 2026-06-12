@@ -356,6 +356,76 @@
         playerCar.add(brakePointLight);
 
         // ==========================================
+        // TURN SIGNAL / HAZARD LIGHTS (Auto-activate on steering)
+        // ==========================================
+        const matBlinkerAmber = new THREE.MeshBasicMaterial({ color: 0xff9f43, transparent: true, opacity: 0.3 });
+
+        // Front-left blinker
+        const blinkerFL = new THREE.Mesh(new THREE.BoxGeometry(0.25, 0.12, 0.12), matBlinkerAmber.clone());
+        blinkerFL.position.set(-1.05, 0.5, -2.35);
+        // Front-right blinker
+        const blinkerFR = new THREE.Mesh(new THREE.BoxGeometry(0.25, 0.12, 0.12), matBlinkerAmber.clone());
+        blinkerFR.position.set(1.05, 0.5, -2.35);
+        // Rear-left blinker
+        const blinkerRL = new THREE.Mesh(new THREE.BoxGeometry(0.25, 0.12, 0.12), matBlinkerAmber.clone());
+        blinkerRL.position.set(-1.05, 0.5, 2.35);
+        // Rear-right blinker
+        const blinkerRR = new THREE.Mesh(new THREE.BoxGeometry(0.25, 0.12, 0.12), matBlinkerAmber.clone());
+        blinkerRR.position.set(1.05, 0.5, 2.35);
+
+        playerCar.add(blinkerFL, blinkerFR, blinkerRL, blinkerRR);
+
+        // Amber PointLights for each side
+        const signalLightL = new THREE.PointLight(0xffa500, 0, 6);
+        signalLightL.position.set(-1.1, 0.5, 0);
+        const signalLightR = new THREE.PointLight(0xffa500, 0, 6);
+        signalLightR.position.set(1.1, 0.5, 0);
+        playerCar.add(signalLightL, signalLightR);
+
+        // Signal state
+        let signalLeft = false;
+        let signalRight = false;
+        let signalBlinkFrame = 0;
+        let signalBlinkOn = false;
+
+        const btnLeft = document.getElementById('btn-left');
+        const btnRight = document.getElementById('btn-right');
+
+        function updateSignalBlinkers() {
+            // Auto-activate signals based on steering input
+            signalLeft = keys.ArrowLeft;
+            signalRight = keys.ArrowRight;
+
+            // Update D-pad button glow
+            btnLeft.classList.toggle('signal-active', signalLeft);
+            btnRight.classList.toggle('signal-active', signalRight);
+
+            // Blinking logic
+            signalBlinkFrame++;
+            if (signalBlinkFrame >= 18) {
+                signalBlinkFrame = 0;
+                signalBlinkOn = !signalBlinkOn;
+            }
+
+            const leftOn = signalLeft && signalBlinkOn;
+            const rightOn = signalRight && signalBlinkOn;
+
+            // Front/rear left blinkers
+            blinkerFL.material.opacity = leftOn ? 1.0 : 0.3;
+            blinkerFL.material.color.setHex(leftOn ? 0xffa500 : 0xff9f43);
+            blinkerRL.material.opacity = leftOn ? 1.0 : 0.3;
+            blinkerRL.material.color.setHex(leftOn ? 0xffa500 : 0xff9f43);
+            signalLightL.intensity = leftOn ? 2.5 : 0;
+
+            // Front/rear right blinkers
+            blinkerFR.material.opacity = rightOn ? 1.0 : 0.3;
+            blinkerFR.material.color.setHex(rightOn ? 0xffa500 : 0xff9f43);
+            blinkerRR.material.opacity = rightOn ? 1.0 : 0.3;
+            blinkerRR.material.color.setHex(rightOn ? 0xffa500 : 0xff9f43);
+            signalLightR.intensity = rightOn ? 2.5 : 0;
+        }
+
+        // ==========================================
         // 6. SCENERY CONSTRUCTIONS - LOW POLY ORGANIC
         // ==========================================
         function createLowPolyTree() {
@@ -764,6 +834,9 @@
                 activeBrakeLightL.visible = braking;
                 activeBrakeLightR.visible = braking;
                 brakePointLight.intensity = braking ? 2.0 : 0;
+
+                // Update turn signal blinkers
+                updateSignalBlinkers();
 
                 // Auto-slowdown when a scene/event is approaching (within z=-80 to z=10)
                 let sceneNearby = false;
