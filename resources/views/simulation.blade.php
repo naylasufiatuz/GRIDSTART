@@ -172,15 +172,27 @@
             </div>
             
             <div style="display: flex; gap: 12px; width: 100%;">
-                <button id="btn-restart-game" class="btn-primary" style="flex: 1; background: linear-gradient(135deg, var(--brand-sage-dark) 0%, var(--brand-taupe-dark) 100%); border: none;">
+                <button id="btn-restart-game" class="btn-primary btn-secondary" style="flex: 1; border: none;">
                     <span class="btn-shine"></span>
                     Coba Lagi
                 </button>
-                <button id="btn-exit-game" class="btn-primary" style="flex: 1; background: linear-gradient(135deg, #a49685 0%, #7e7160 100%); border: none;">
+                <button id="btn-exit-game" class="btn-primary btn-danger" style="flex: 1; border: none;">
                     <span class="btn-shine"></span>
                     Keluar
                 </button>
             </div>
+        </div>
+    </div>
+
+    <div id="pause-overlay" class="overlay-bg" style="display: none;">
+        <div class="modal-card" style="text-align: center;">
+            <div class="hud-badge yellow">PAUSED</div>
+            <h2 class="tech-title" style="margin-top: 20px;">SIMULATION PAUSED</h2>
+            <p class="tech-desc">Kendali telah ditangguhkan untuk sementara.</p>
+            <button id="btn-resume-game" class="btn-primary" style="width: 100%; margin-top: 20px;">
+                <span class="btn-shine"></span>
+                Lanjutkan
+            </button>
         </div>
     </div>
 
@@ -659,10 +671,34 @@
         document.getElementById('pause-btn').onclick = () => {
             const isAnyModalOpen = document.getElementById('quiz-panel').style.display === 'block' || 
                                    document.getElementById('finish-overlay').style.display === 'flex' ||
-                                   document.getElementById('start-overlay').style.display === 'flex';
+                                   document.getElementById('start-overlay').style.display === 'flex' ||
+                                   document.getElementById('pause-overlay').style.display === 'flex';
             if(!isGameOver && !hasHitFinishLine && !isAnyModalOpen) { 
-                isPaused = !isPaused; 
+                isPaused = true;
+                document.getElementById('pause-overlay').style.display = 'flex';
             }
+        };
+
+        document.getElementById('btn-resume-game').onclick = () => {
+            const pauseCard = document.querySelector('#pause-overlay .modal-card');
+            let count = 3;
+            const countdownEl = document.createElement('div');
+            countdownEl.className = 'tech-title';
+            countdownEl.style.fontSize = '4rem';
+            countdownEl.style.marginTop = '10px';
+            countdownEl.style.color = 'var(--brand-cyan)';
+            pauseCard.appendChild(countdownEl);
+            
+            const interval = setInterval(() => {
+                countdownEl.innerText = count;
+                count--;
+                if(count < 0) {
+                    clearInterval(interval);
+                    countdownEl.remove();
+                    document.getElementById('pause-overlay').style.display = 'none';
+                    isPaused = false;
+                }
+            }, 1000);
         };
 
         document.getElementById('close-finish-btn').onclick = () => { window.location.href = '/finish-line'; };
@@ -830,7 +866,7 @@
                 } else { 
                     const msgs = {
                         3: "Pit Stop Sempurna! Bensin penuh 100%!",
-                        2: "Pit Stop cukup baik! Bensin 80% — hemat ya!",
+                        2: "Pit Stop cukup baik! Bensin 70% — hemat ya!",
                         1: "Pit Stop kurang baik. Bensin hanya 25%..."
                     };
                     showToast(msgs[pitCorrectCount] || "", pitCorrectCount >= 2 ? "success" : "error"); 
@@ -902,7 +938,9 @@
                 distance += (moveSpeed * 0.2); 
                 let currentDist = Math.floor(distance);
                 document.getElementById('distance-ui').innerText = currentDist;
-                document.getElementById('speed-ui').innerText = Math.round(moveSpeed * 200);
+                // UI speed: base speed shows 60 km/h, accelerating capped at 99 km/h
+                const displaySpeed = Math.min(99, Math.round(moveSpeed / speed * 60));
+                document.getElementById('speed-ui').innerText = displaySpeed;
 
                 envSpawnTimer++;
                 if(envSpawnTimer > 30 / moveSpeed) { spawnEnvironment(); envSpawnTimer = 0; }

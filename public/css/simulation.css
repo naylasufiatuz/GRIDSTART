@@ -810,42 +810,62 @@ canvas {
 .btn-primary {
   position: relative;
   overflow: hidden;
-  color: #fff !important; 
-  border: none; 
-  padding: 15px 32px; 
-  font-size: 14px; 
-  font-weight: 800; 
+  color: #fff !important;
+  border: none;
+  padding: 15px 32px;
+  font-size: 14px;
+  font-weight: 800;
   cursor: pointer;
-  box-shadow: 0 5px 15px rgba(63, 58, 54, 0.15); 
+  box-shadow: 0 5px 15px rgba(63, 58, 54, 0.15);
   transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.2);
   font-family: var(--font-body);
   letter-spacing: 1px;
   text-transform: uppercase;
   border-radius: var(--border-radius-sm);
-}
-
-.btn-gas-start {
   background: linear-gradient(135deg, var(--brand-accent-race) 0%, var(--brand-taupe-dark) 100%);
-  width: 100%;
-}
-.btn-gas-start:hover {
-  transform: translateY(-2px);
-  background: linear-gradient(135deg, var(--brand-taupe-dark) 0%, var(--brand-accent-race) 100%);
-  box-shadow: 0 8px 20px rgba(63, 58, 54, 0.25);
 }
 
-.btn-finish {
-  background: linear-gradient(135deg, var(--brand-sage-dark) 0%, var(--brand-taupe-dark) 100%);
-  width: 100%;
-}
-.btn-finish:hover {
+.btn-primary:hover {
   transform: translateY(-2px);
-  background: linear-gradient(135deg, var(--brand-taupe-dark) 0%, var(--brand-sage-dark) 100%);
   box-shadow: 0 8px 20px rgba(63, 58, 54, 0.25);
 }
 
 .btn-primary:active {
   transform: translateY(-1px);
+}
+
+/* Primary CTA — warm beige to dark taupe */
+.btn-gas-start {
+  background: linear-gradient(135deg, var(--brand-accent-race) 0%, var(--brand-taupe-dark) 100%);
+  width: 100%;
+}
+.btn-gas-start:hover {
+  background: linear-gradient(135deg, var(--brand-taupe-dark) 0%, var(--brand-accent-race) 100%);
+}
+
+/* Success/finish — sage to dark taupe */
+.btn-finish {
+  background: linear-gradient(135deg, var(--brand-sage-dark) 0%, var(--brand-taupe-dark) 100%);
+  width: 100%;
+}
+.btn-finish:hover {
+  background: linear-gradient(135deg, var(--brand-taupe-dark) 0%, var(--brand-sage-dark) 100%);
+}
+
+/* Secondary — warm gray taupe */
+.btn-secondary {
+  background: linear-gradient(135deg, var(--brand-taupe-soft) 0%, var(--brand-taupe-dark) 100%);
+}
+.btn-secondary:hover {
+  background: linear-gradient(135deg, var(--brand-taupe-dark) 0%, var(--brand-taupe-soft) 100%);
+}
+
+/* Danger/exit — brick red accent (only non-palette exception for UX semantics) */
+.btn-danger {
+  background: linear-gradient(135deg, var(--brand-brick-red) 0%, var(--brand-taupe-dark) 100%);
+}
+.btn-danger:hover {
+  background: linear-gradient(135deg, var(--brand-taupe-dark) 0%, var(--brand-brick-red) 100%);
 }
 
 .btn-shine {
