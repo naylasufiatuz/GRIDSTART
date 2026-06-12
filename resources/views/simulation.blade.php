@@ -80,7 +80,7 @@
 
             <p class="tech-desc"><strong>Pengenalan Keselamatan Berkendara</strong><br><br>Persiapkan mental dan pahami prinsip <em>Safety First</em>. Hindari kelalaian, dan selalu utamakan keselamatan di atas kecepatan!</p>
             
-            <button id="btn-start-game" class="btn-primary btn-gas-start">
+            <button id="btn-start-game" class="btn-primary" style="width: 100%;">
                 <span class="btn-shine"></span>
                 TANCAP GAS!
             </button>
@@ -144,7 +144,7 @@
                 <p id="saving-status">Mencatat lap time ke leaderboard...</p>
             </div>
             
-            <button id="close-finish-btn" class="btn-primary btn-finish" style="display: none; width: 100%;">
+            <button id="close-finish-btn" class="btn-primary" style="display: none; width: 100%;">
                 <span class="btn-shine"></span>
                 Lanjutkan
             </button>
@@ -172,11 +172,11 @@
             </div>
             
             <div style="display: flex; gap: 12px; width: 100%;">
-                <button id="btn-restart-game" class="btn-primary btn-secondary" style="flex: 1; border: none;">
+                <button id="btn-restart-game" class="btn-primary" style="flex: 1;">
                     <span class="btn-shine"></span>
                     Coba Lagi
                 </button>
-                <button id="btn-exit-game" class="btn-primary btn-danger" style="flex: 1; border: none;">
+                <button id="btn-exit-game" class="btn-primary" style="flex: 1;">
                     <span class="btn-shine"></span>
                     Keluar
                 </button>
