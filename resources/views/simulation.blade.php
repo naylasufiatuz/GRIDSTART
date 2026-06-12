@@ -157,17 +157,17 @@
             
             <div class="finish-title-wrap">
                 <div class="checkered-accent"></div>
-                <h2 class="tech-title text-brick">BENSIN HABIS!</h2>
+                <h2 class="tech-title text-brick" id="gameover-title">BENSIN HABIS!</h2>
                 <div class="checkered-accent"></div>
             </div>
 
-            <p class="tech-desc">Anda gagal mengelola bahan bakar dengan baik di pit stop. Pastikan untuk menjawab pertanyaan dengan tepat demi menjaga efisiensi berkendara Anda.</p>
+            <p class="tech-desc" id="gameover-desc">Anda gagal mengelola bahan bakar dengan baik di pit stop. Pastikan untuk menjawab pertanyaan dengan tepat demi menjaga efisiensi berkendara Anda.</p>
             
             <div class="telemetry-dashboard" style="margin-bottom: 25px;">
                 <div class="telemetry-tile main-score" style="border-color: var(--brand-brick-red); background: #fffaf9;">
-                    <span class="tile-label" style="color: var(--brand-brick-red);">FUEL LEVEL</span>
-                    <span class="tile-value text-brick" style="color: var(--brand-brick-red);">0%</span>
-                    <span class="tile-unit" style="color: var(--brand-brick-red);">EMPTY</span>
+                    <span class="tile-label" style="color: var(--brand-brick-red);" id="gameover-stat-label">FUEL LEVEL</span>
+                    <span class="tile-value text-brick" style="color: var(--brand-brick-red);" id="gameover-stat-value">0%</span>
+                    <span class="tile-unit" style="color: var(--brand-brick-red);" id="gameover-stat-unit">EMPTY</span>
                 </div>
             </div>
             
@@ -577,7 +577,7 @@
 
             group.add(hauler, prototypeY, prototypeP);
             group.position.set(0, 0, -120);
-            scene.add(group); worldObjects.push({mesh: group, isEvent: true});
+            scene.add(group); worldObjects.push({mesh: group, isEvent: true, isTraffic: true});
         }
 
         // Scene C: Pit Stop (640m) — Reverted to "BEFORE" layout (simple branch road + red roof + dark pillars)
@@ -707,10 +707,30 @@
 
         document.getElementById('close-finish-btn').onclick = () => { window.location.href = '/finish-line'; };
 
-        function triggerGameOver() {
+        function triggerGameOver(reason = 'fuel') {
             isGameOver = true;
             isPaused = true;
-            showToast("GAME OVER! Bensin Habis.", "error");
+            const titleEl = document.getElementById('gameover-title');
+            const descEl = document.getElementById('gameover-desc');
+            const statLabel = document.getElementById('gameover-stat-label');
+            const statValue = document.getElementById('gameover-stat-value');
+            const statUnit = document.getElementById('gameover-stat-unit');
+
+            if (reason === 'collision') {
+                showToast("GAME OVER! Kamu menabrak kendaraan!", "error");
+                titleEl.innerText = 'TABRAKAN!';
+                descEl.innerText = 'Kamu menabrak kendaraan di jalan! Selalu perhatikan kondisi lalu lintas di sekitarmu dan hindari berkendara terlalu dekat dengan kendaraan lain.';
+                statLabel.innerText = 'STATUS';
+                statValue.innerText = 'CRASH';
+                statUnit.innerText = 'ACCIDENT';
+            } else {
+                showToast("GAME OVER! Bensin Habis.", "error");
+                titleEl.innerText = 'BENSIN HABIS!';
+                descEl.innerText = 'Anda gagal mengelola bahan bakar dengan baik di pit stop. Pastikan untuk menjawab pertanyaan dengan tepat demi menjaga efisiensi berkendara Anda.';
+                statLabel.innerText = 'FUEL LEVEL';
+                statValue.innerText = '0%';
+                statUnit.innerText = 'EMPTY';
+            }
             document.getElementById('gameover-overlay').style.display = 'flex';
         }
 
@@ -959,6 +979,30 @@
                         obj.isEvent = false; 
                     }
 
+                    // Traffic collision detection
+                    if (obj.isTraffic) {
+                        // Traffic vehicle definitions: [localX, localZ, halfWidth, halfLength]
+                        const trafficVehicles = [
+                            [3, -11, 1.2, 2.9],  // Hauler (wider, longer)
+                            [3, 0, 1.05, 2.5],   // Yellow sports car
+                            [3, 10.5, 1.05, 2.5]  // Purple sports car
+                        ];
+                        const pHalfW = 1.05, pHalfL = 2.5;
+                        const tol = 0.5; // forgiveness gap (0.5m before visual contact)
+                        for (let v = 0; v < trafficVehicles.length; v++) {
+                            const [lx, lz, tHW, tHL] = trafficVehicles[v];
+                            const worldX = mesh.position.x + lx;
+                            const worldZ = mesh.position.z + lz;
+                            const gapX = Math.abs(worldX - playerCar.position.x) - (pHalfW + tHW);
+                            const gapZ = Math.abs(worldZ - playerCar.position.z) - (pHalfL + tHL);
+                            if (gapX < -tol && gapZ < -tol) {
+                                showToast("TABRAKAN! Kamu menabrak kendaraan di depan!", "error");
+                                triggerGameOver('collision');
+                                break;
+                            }
+                        }
+                    }
+
                     // Flicker accident fire lights
                     if (mesh.userData && mesh.userData.light) {
                         mesh.userData.tick += 0.15;
@@ -1029,7 +1073,7 @@
                 if (fuelPercent) fuelPercent.innerText = Math.round(gas) + "%";
 
                 // Turning & Steering
-                const turnSpeed = 0.15;
+                const turnSpeed = 0.06;
                 if (keys.ArrowLeft && playerCar.position.x > -4.5) playerCar.position.x -= turnSpeed;
                 if (keys.ArrowRight && playerCar.position.x < 4.5) playerCar.position.x += turnSpeed;
                 
