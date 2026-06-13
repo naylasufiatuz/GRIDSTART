@@ -15,6 +15,11 @@ class SocialAuthController extends Controller
             abort(404);
         }
 
+        // Simpan intended URL di session sebelum redirect ke Google
+        if (request()->filled('intended')) {
+            session(['oauth_intended' => request()->input('intended')]);
+        }
+
         $driver = Socialite::driver($provider)->stateless();
         if (config('app.env') === 'local') {
             $driver->setHttpClient(new \GuzzleHttp\Client(['verify' => false]));
@@ -69,7 +74,13 @@ class SocialAuthController extends Controller
             Auth::login($user);
             request()->session()->regenerate();
 
-            return redirect('/app')->with('success', 'Login dengan Google berhasil!');
+            // Redirect ke intended URL jika ada (misal dari tombol Simulasi)
+            $intended = session()->pull('oauth_intended');
+            if ($intended) {
+                return redirect($intended)->with('success', 'Login dengan Google berhasil!');
+            }
+
+            return redirect()->intended(route('app'))->with('success', 'Login dengan Google berhasil!');
 
         } catch (\Exception $e) {
             return redirect('/login')->with('error', $e->getMessage());

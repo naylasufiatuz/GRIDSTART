@@ -69,7 +69,7 @@ Route::get('/roadmap', function () {
 
 Route::get('/simulasi', function () {
     if (!auth()->check()) {
-        return redirect()->route('login')->with('error', 'Silakan login terlebih dahulu untuk mengakses Simulasi Berkendara.');
+        return redirect()->route('login', ['intended' => '/simulasi'])->with('error', 'Silakan login terlebih dahulu untuk mengakses Simulasi Berkendara.');
     }
     return view('simulation');
 });

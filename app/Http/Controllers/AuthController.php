@@ -34,6 +34,11 @@ class AuthController extends Controller
 
         Auth::login($user);
 
+        // Redirect ke intended URL jika ada (misal dari tombol Simulasi)
+        if ($request->filled('intended')) {
+            return redirect($request->input('intended'))->with('success', 'Akun berhasil dibuat!');
+        }
+
         return redirect()->intended(route('app'))->with('success', 'Akun berhasil dibuat!');
     }
 
@@ -65,6 +70,12 @@ class AuthController extends Controller
         if (Hash::check($request->password, $user->password)) {
             Auth::login($user);
             $request->session()->regenerate();
+
+            // Redirect ke intended URL jika ada (misal dari tombol Simulasi)
+            if ($request->filled('intended')) {
+                return redirect($request->input('intended'))->with('success', 'Login berhasil!');
+            }
+
             return redirect()->intended(route('app'))->with('success', 'Login berhasil!');
         }
 

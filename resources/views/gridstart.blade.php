@@ -277,7 +277,7 @@
             color: '#3f3a36'
         }).then((result) => {
             if (result.isConfirmed) {
-                window.location.href = "{{ route('login') }}";
+                window.location.href = "{{ route('login') }}?intended=/simulasi";
             }
         });
     }

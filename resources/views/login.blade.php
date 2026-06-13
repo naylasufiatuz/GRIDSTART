@@ -76,6 +76,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <form method="POST" action="{{ route('login.post') }}">
       @csrf
+      @if(request('intended'))
+        <input type="hidden" name="intended" value="{{ request('intended') }}">
+      @endif
       <div class="form-group">
         <label for="username">Username</label>
         <input type="text" id="username" name="username" placeholder="Username" value="<?= htmlspecialchars($_POST['username'] ?? '') ?>" required/>
@@ -113,13 +116,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <!-- Social Buttons -->
     <div class="social-buttons">
-      <a href="{{ route('social.redirect', 'google') }}" class="btn-social btn-google">
+      <a href="{{ route('social.redirect', 'google') }}{{ request('intended') ? '?intended=' . request('intended') : '' }}" class="btn-social btn-google">
         <i class="fab fa-google"></i>
         <span>Google</span>
       </a>
     </div>
     
-    <p class="register-link">Belum terdaftar sebagai driver? <a href="/signon">Daftar di sini</a></p>
+    <p class="register-link">Belum terdaftar sebagai driver? <a href="/signon{{ request('intended') ? '?intended=' . request('intended') : '' }}">Daftar di sini</a></p>
   </div>
 </div>
 

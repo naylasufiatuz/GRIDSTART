@@ -36,6 +36,9 @@
 
       <form method="POST" action="{{ route('signon') }}">
         @csrf
+        @if(request('intended'))
+          <input type="hidden" name="intended" value="{{ request('intended') }}">
+        @endif
         <div class="form-group">
           <label for="nama">Nama Lengkap</label>
           <input type="text" id="nama" name="username" placeholder="Nama kamu" value="{{ old('username') }}"/>
@@ -85,13 +88,13 @@
 
       <!-- Social Buttons -->
       <div class="social-buttons">
-        <a href="{{ route('social.redirect', 'google') }}" class="btn-social btn-google">
+        <a href="{{ route('social.redirect', 'google') }}{{ request('intended') ? '?intended=' . request('intended') : '' }}" class="btn-social btn-google">
           <i class="fab fa-google"></i>
           <span>Google</span>
         </a>
       </div>
 
-      <p class="login-link">Sudah punya akun? <a href="/login">Login di sini</a></p>
+      <p class="login-link">Sudah punya akun? <a href="/login{{ request('intended') ? '?intended=' . request('intended') : '' }}">Login di sini</a></p>
     </div>
   </div>
 </div>
