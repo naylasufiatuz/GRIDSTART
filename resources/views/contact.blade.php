@@ -7,6 +7,14 @@
 
 <!-- CONTACT HERO -->
 <section class="contact-hero">
+  {{-- BACK TO HOME BUTTON --}}
+  <div class="contact-back-btn-container">
+    <a href="/" class="contact-back-btn">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+      <span>Back to Home</span>
+    </a>
+  </div>
+
   <div class="contact-hero-content fade-up">
     <small class="hero-label">OPEN TEAM RADIO</small>
     <div class="hero-heading">
@@ -27,14 +35,6 @@
 
 <!-- MAIN CONTACT SECTION -->
 <section class="contact-section">
-  {{-- BACK TO HOME BUTTON --}}
-  <div class="contact-back-btn-container">
-    <a href="/" class="contact-back-btn">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
-      <span>Back to Home</span>
-    </a>
-  </div>
-
   <div class="contact-container single-column">
 
     <!-- LEFT: FORM -->

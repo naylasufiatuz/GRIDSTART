@@ -3530,7 +3530,10 @@ transform:translateY(0);
 
 /* CONTACT BACK TO HOME BUTTON */
 .contact-back-btn-container {
-    margin-bottom: 24px;
+    position: absolute;
+    top: 110px;
+    left: 88px;
+    z-index: 3;
     display: flex;
     justify-content: flex-start;
 }
@@ -4100,8 +4103,8 @@ select.form-input {
     }
 
     .contact-back-btn-container {
-        justify-content: center;
-        margin-bottom: 16px;
+        top: 100px;
+        left: 24px;
     }
 
     .contact-container {
