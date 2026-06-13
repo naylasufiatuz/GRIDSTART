@@ -133,8 +133,8 @@ background: linear-gradient(98deg, #F2ECE5 57.47%, #D1DDD3 72.25%, #D1DDD3 87.02
 
 .navbar-brand__mark {
   display: block;
-  height: 40px;
-  width: 180px;
+  height: 50px;
+  width: 300px;
   object-fit: contain;
   filter: drop-shadow(0 0 10px rgba(203, 184, 157, 0.35));
   transition: opacity 0.28s ease, transform 0.28s ease;
@@ -157,7 +157,7 @@ background: linear-gradient(98deg, #F2ECE5 57.47%, #D1DDD3 72.25%, #D1DDD3 87.02
 .navbar-brand__grid,
 .navbar-brand__start {
   font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 800;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -266,7 +266,7 @@ background: linear-gradient(98deg, #F2ECE5 57.47%, #D1DDD3 72.25%, #D1DDD3 87.02
   transform: translate(-50%, -50%);
   pointer-events: none;
   z-index: 0;
-  opacity: 0.85;
+  opacity: 0.60;
 }
 
 .hero-circular-badge svg {
@@ -351,12 +351,35 @@ background: linear-gradient(98deg, #F2ECE5 57.47%, #D1DDD3 72.25%, #D1DDD3 87.02
   transition: all 0.3s ease;
   text-transform: uppercase;
   margin-bottom: -35px;
+  animation: heroCtaGlow 2s ease-in-out infinite;
 }
 
 .hero-content a:hover {
   background-color: #fff;
   color: #000;
   border-color: #fff;
+  animation: none;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+}
+
+.hero-cta-arrow {
+  animation: arrowBounce 1.8s ease-in-out infinite;
+}
+
+@keyframes arrowBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(4px); }
+}
+
+@keyframes heroCtaGlow {
+  0%, 100% {
+    box-shadow: 0 0 4px rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.6);
+  }
+  50% {
+    box-shadow: 0 0 24px rgba(255, 255, 255, 0.4), 0 0 48px rgba(255, 255, 255, 0.15), inset 0 0 8px rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 1);
+  }
 }
 
 .hero-top-left {

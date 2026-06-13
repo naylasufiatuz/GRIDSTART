@@ -98,7 +98,7 @@
 
     <div class="navbar-zone navbar-zone--actions">
       @guest
-        <a href="/login" class="navbar-cta">Mulai Belajar</a>
+        <a href="/login" class="navbar-cta">LOGIN</a>
       @endguest
       @auth
         @if(auth()->user()->is_admin)
